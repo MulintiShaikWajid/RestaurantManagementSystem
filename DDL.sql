@@ -30,7 +30,7 @@ create TABLE staff(
 	role_name text check(role_name in ('manager', 'head-waiter', 'cashier')),--what say?
 	foreign key id references person on delete cascade,
 )
-create TABLE s_t(
+create TABLE staff_time_slot(
 	staff_id int not null,
 	time_slot_id int not null,
 	primary key(staff_id, time_slot_id),
@@ -65,14 +65,14 @@ create TABLE item(
 	name text not null,
 	price numeric 
 )
-create TABLE i_i_t(
+create TABLE item_item_tag(
 	item_id int,
 	tag_id int,
 	primary key(item_id, tag_id),
 	foreign key item_id references item on delete cascade,
 	foreign key tag_id references item_tag on delete cascade --once item_tag is deleted, corresponding i_i_t entry is deleted
 )
-create TABLE i_i(
+create TABLE item_inventory(
 	item_id int,
 	inventory_id int,
 	quantity_needed numeric,
@@ -97,7 +97,7 @@ create TABLE order(
 	status text check(status in ('placing-order', 'order-placed', 'cooking', 'order-served')),
 	foreign key customer_id references customer on delete set null
 )
-create TABLE o_i(
+create TABLE order_item(
 	order_id int,
 	item_id int,
 	quantity int not null,
@@ -121,7 +121,7 @@ create TABLE tables(--note the plural for 'tables' TABLE
 	location text check(location in ('window-side', 'non-window-side')) not null,--can add any other?
 	status text check(status in ('occupied', 'available')) not null
 )
-create TABLE t_o(--no primary because to handle takeaways but do we allow takeaways?
+create TABLE table_order(--no primary because to handle takeaways but do we allow takeaways?
 	order_id int,
 	table_id int,
 	foreign key order_id references order on delete cascade,
