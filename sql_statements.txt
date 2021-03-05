@@ -1,0 +1,65 @@
+1. Registering/Sign up
+
+2. Logging in/Sign in
+
+3. Offline orders
+	i)insert into order (id,customer_id,ordered_time, served_time ,completed_time,amount_paid,status) values (value1, value2, value3, ...);
+	ii) update order set status = " //next stage ", served_time = now() / completed_time = now() where id= value1
+
+
+4. Sort/Filter the menu(can choose NONE(default) to display the menu)
+
+	i) rating -> select name,(cast (avg(stars), as  decimal(3,1)))as average_rating,price from item,rating,item_item_tag where item.id = rating.item_id and item_item_tag.item_id = item.id  group by item.id order by avg(stars) desc limit 10;
+	ii) most ordered items (no of times)-> select name,price from item,order,order_item where order.customer_id = given_cus_id and order.id = order_item.order_id and order_id.item_id = item.id and item.id = item_item_tag.item_id group by name order by count(name) desc limit 10;
+	iii) tag of item -> select name,price from item,item_item_tag where item.id = item_item_tag.item_id and item_item_tag.tag_id = given_tag_id limit 10;//tag type is given then use item_tag table
+
+5. Order online
+	i)insert into order (id,customer_id,ordered_time, served_time ,completed_time,amount_paid,status) values (value1, value2, value3, ...);
+
+6. Review Food items
+	i)insert into rating (given_order_id,given_item_id,stars,review) values (value1, value2, value3, ...);
+
+7. Inventory updating
+	i)update inventory set quantity_remaing = "", threshold = "" where id = given_id;
+
+8. Statistics
+	i) most ordered item -> select name,price from item,order,order_item where order.id = order_item.order_id and order_id.item_id = item.id and item.id = item_item_tag.item_id group by name order by count(name) desc limit 1;
+	ii) dish which takes the longest time to prepare -> select name,price from order,item,order_item where order.id = order_item.order_id , order_item.item_id = item.id group by name,price order by avg(served_time - ordered_time) desc limit 1;
+	iii) favourite day for customers to come to restaurant -> 
+		///////// if bookings/table_orders are must then, it's better to add day in table_req
+		///////// else we need offline or online in orders table ig
+
+9. Create Menu
+	i) update item_inventory set quantity_needed = ""where item_id = given_id;
+	ii) create view menu(id,item_name,price,tag) as select item.id as id, name as item_name,price,item_tag.type as tag from item,item_tag where item.name in (given_set_of_dishes);
+
+10. Get notification
+	i) isn't this a trigger? should this be inserted in notification table? if yes then, insert into notification (id,info,time_stamp,person_id) values (value1, value2, now(), manager_id);
+
+11. Accept Payment of an order
+	i) 
+
+12. Broadcast messages to customers
+	i) insert into notification (id,info,time_stamp,person_id) values (value1, given_text, now(), person_id);
+
+13. Pay using Rcoins
+	i) count of orders by customer -> select count(id) form order where customer_id = given_cus_id; // check this and accept by rcoins
+	ii) update customer set rcoins = rcoins - (select sum(price*quantity) from order_item,item where  order_item.order_id = given_id and item.id = order_item.item_id) where id = given_cus_id;
+
+14. View past orders
+	i) select * from order where order.customer_id = given_cus_id;
+
+15. Update personal details
+	i) update person set attribute1 = "",attribute2 = "" ... where id = given_id;
+
+16. Order delivered
+	i) update order set status = " //next stage ", served_time = now() / completed_time = now() where id= value1
+
+17. Add item to cart
+	i) insert into cart (customer_id,item_id) values (given_cus_id,given_item_id);
+
+18. Book a table
+	i) insert into table_request (request_id,table_id,customer_id,requested_time,	start_time,end_time, status) values (v1,v2,given_cus_id,req_time,s,e,"request-placed");
+
+19. Accept table requests/update table status
+i) update table_request set status = "request-accepted/denied" where request_id = given_req_id;
