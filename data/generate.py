@@ -3,9 +3,12 @@ import string
 import random
 import datetime
 digits = [str(x) for x in range(10)]
+letters = string.ascii_lowercase
+for i in range(2):
+    letters = letters+letters
 def rs(sz):    # stands for random string, 1<=sz<=26
-    letters = string.ascii_lowercase
-    return "'"+ "".join(random.choices(letters,k=sz))+ "'"
+    
+    return "'"+ "".join(random.sample(letters,k=sz))+ "'"
 
 def rd(sz):  # stands for random digits
     ans = ""
@@ -84,7 +87,7 @@ person.write("id,username,password,name,address_house_no,address_street,address_
 for i in range(numCustomers):
     customer.write(f"{i},{random.randint(0,maxRcoins)}\n")
     username = rs(10)[1:-1]
-    person.write(f"{i},'{username}',{hashlib.sha256((username+static_salt).encode()).hexdigest()},{rs(10)},{rs(10)},{rs(10)},{rs(10)},{rs(10)},{rs(10)},{rd(6)}\n")
+    person.write(f"{i},'{username}','{hashlib.sha256((username+static_salt).encode()).hexdigest()}',{rs(10)},{rs(10)},{rs(10)},{rs(10)},{rs(10)},{rs(10)},{rd(6)}\n")
 
 
 # Creating customers and staff simultaneously
@@ -92,7 +95,7 @@ for i in range(numCustomers):
 staff.write("id,salary,dob,role_name\n")
 for i in range(numCustomers,numCustomers+numStaff):
     staff.write(f"{i},10000,'2000-01-01',{get_role(i)}\n")
-    person.write(f"{i},{rs(10)},{hashlib.sha256((username+static_salt).encode()).hexdigest()},{rs(10)},{rs(10)},{rs(10)},{rs(10)},{rs(10)},{rs(10)},{rd(6)}\n")
+    person.write(f"{i},{rs(10)},'{hashlib.sha256((username+static_salt).encode()).hexdigest()}',{rs(10)},{rs(10)},{rs(10)},{rs(10)},{rs(10)},{rs(10)},{rd(6)}\n")
 
 # inserting into phone numbers
 
@@ -154,7 +157,7 @@ for i in range(numItems):
 item_item_tag.write("item_id,tag_id\n")
 
 for i in range(numItems):
-    for j in random.choices(range(numTags),k=2):
+    for j in random.sample(range(numTags),k=2):
         item_item_tag.write(f"{i},{j}\n")
 
 # inserting into item inventory
@@ -162,7 +165,7 @@ for i in range(numItems):
 item_inventory.write("item_id,inventory_id,quantity_needed\n")
 
 for i in range(numItems):
-    for j in random.choices(range(numInventory),k=3):
+    for j in random.sample(range(numInventory),k=3):
         item_inventory.write(f"{i},{j},{random.randint(1,3)}\n")
 
 # inserting into cart
@@ -170,7 +173,7 @@ for i in range(numItems):
 cart.write("customer_id,item_id\n")
 
 for i in range(numCustomers):
-    for j in random.choices(range(numItems),k=random.randint(0,4)):
+    for j in random.sample(range(numItems),k=random.randint(0,4)):
         cart.write(f"{i},{j}\n")
 
 # inserting into order, table_order simultaneously
@@ -197,7 +200,7 @@ order_item.write("order_id,item_id,quantity\n")
 rating.write("order_id,item_id,stars,review\n")
 
 for i in range(numOrders):
-    for j in random.choices(range(numItems),k=3):
+    for j in random.sample(range(numItems),k=3):
         order_item.write(f"{i},{j},{random.randint(1,2)}\n")
         if random.randint(0,1)==1:
             rating.write(f"{i},{j},{random.randint(1,5)},{rs(100)}\n")
