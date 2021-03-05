@@ -101,7 +101,7 @@ for i in range(numCustomers,numCustomers+numStaff):
 
 phone.write("id,phone_number\n")
 for i in range(numStaff+numCustomers):
-    phone.write(f"{i},{rd(10)}")
+    phone.write(f"{i},{rd(10)}\n")
 
 # inserting into time_slot
 
@@ -178,8 +178,8 @@ for i in range(numCustomers):
 
 # inserting into order, table_order simultaneously
 
-order.write("id,customer_id,ordered_time,served_time,amount_paid\n")
-
+order.write("id,customer_id,ordered_time,served_time,completed_time,amount_paid\n")
+table_order.write("order_id,table_id\n")
 init_time = datetime.datetime(2021,6,1,10,0,0)
 delta_time = datetime.timedelta(minutes=60)
 small_time = datetime.timedelta(minutes=15)
@@ -229,5 +229,7 @@ for i in range(numRequests):
             temp = 1
         else:
             temp = 2
-        table_request.write(f"{i},{temp},{random.choice(range(numCustomers))},'{init_time}','{init_time+one_month}','{init_time+one_month+delta_time}'\n")
+        temp = random.randint(0,2)
+        status = 'request-placed' if temp%3==0 else ('request-denied' if temp%3==1 else 'request-accepted')
+        table_request.write(f"{i},{temp},{random.choice(range(numCustomers))},'{init_time}','{init_time+one_month}','{init_time+one_month+delta_time}','{status}'\n")
         init_time = init_time+large_time
