@@ -9,12 +9,12 @@ create TABLE person(
 	address_city text,
 	adderss_state text,
 	address_country text,
-	address_pin_code text,
+	address_pin_code text, -- pincode should have only six digits ?
 	unique(username)
 )
 create TABLE phone(
 	id int not null,
-	phone_number text not null,
+	phone_number text not null,  -- ten digits ?
 	primary key (id, phone_number),
 	foreign key id references person on delete cascade
 )
@@ -27,12 +27,12 @@ create TABLE staff(
 	id int primary key,
 	salary int not null,
 	dob date,
+	role_name text check(role_name in ('manager', 'head-waiter', 'cashier')),--what say?
 	foreign key id references person on delete cascade,
 )
 create TABLE s_t(
 	staff_id int not null,
 	time_slot_id int not null,
-	role_name text check(role_name in ('manager', 'head-waiter', 'cashier')),--what say?
 	primary key(staff_id, time_slot_id),
 	foreign key staff_id references staff on delete,
 	foreign key time_slot_id references time_slot on delete cascade
@@ -52,7 +52,7 @@ create TABLE customer(
 create TABLE inventory(
 	id int primary key,
 	name text not null,
-	quantoty_remaining numeric not null,
+	quantity_remaining numeric not null,
 	threshold numeric not null,
 	units text not null
 )
@@ -90,15 +90,16 @@ create TABLE cart(
 create TABLE order(
 	id int primary key,
 	customer_id int,--customer_id in order can be null, if head waiter places order
-	ordered_time time not null,
-	served_time time,
+	ordered_time timestamp not null,
+	served_time timestamp,
+	completed_time timestamp,
+	amount_paid numeric not null,
 	status text check(status in ('placing-order', 'order-placed', 'cooking', 'order-served')),
 	foreign key customer_id references customer on delete set null
 )
 create TABLE o_i(
 	order_id int,
 	item_id int,
-	amount_paid numeric not null,
 	quantity int not null,
 	primary key(order_id, item_id)
 	foreign key order_id references order on delete set null,
@@ -107,7 +108,7 @@ create TABLE o_i(
 create TABLE rating(
 	order_id int,
 	item_id int,
-	stars char(1) check(stars in ('1', '2', '3', '4', '5')),
+	stars int check(stars in (1, 2, 3, 4, 5)),
 	review text,
 	primary key(order_id, item_id),
 	foreign key order_id references order on delete set null,
