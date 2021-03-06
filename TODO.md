@@ -4,3 +4,4 @@
 4. ~~in table_request.csv the column status is empty for all rows, I dont know this but if it is to be NULL we have to write "NULL" in that column right?~~
 5. ~~in table_order there are no column names in csv file(which may not be problem for creating insert statements)~~
 6. Write constraint that phone number and pincode can contain only digits in DDL.sql
+7. Use indices for attributes which are used often
