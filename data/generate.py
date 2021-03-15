@@ -229,14 +229,7 @@ small_time = datetime.timedelta(minutes=15)
 large_time = datetime.timedelta(minutes=30)
 one_month = datetime.timedelta(days=45)
 for i in range(numRequests):
-    for j in range(numTables):
-        if i%3==0:
-            temp = 0
-        elif i%3==1:
-            temp = 1
-        else:
-            temp = 2
-        temp = random.randint(0,2)
-        status = 'request-placed' if temp%3==0 else ('request-denied' if temp%3==1 else 'request-accepted')
-        table_request.write(f"{i},{temp},{random.choice(range(numCustomers))},'{init_time}','{init_time+one_month}','{init_time+one_month+delta_time}','{status}'\n")
-        init_time = init_time+large_time
+    temp = random.randint(0,1)
+    status = 'request-placed'
+    table_request.write(f"{i},{random.randint(0,numTables-1)},{random.choice(range(numCustomers))},'{init_time}','{init_time+one_month}','{init_time+one_month+delta_time}','{status}'\n")
+    init_time = init_time+large_time
