@@ -69,10 +69,10 @@ item = open("item.csv","w")
 item_item_tag = open("item_item_tag.csv","w")
 item_inventory = open("item_inventory.csv","w")
 cart = open("cart.csv","w")
-order = open("order.csv","w")
+my_order = open("my_order.csv","w")
 order_item = open("order_item.csv","w")
 rating = open("rating.csv","w")
-tables = open("tables.csv","w")
+my_table = open("my_table.csv","w")
 table_order = open("table_order.csv","w")
 table_request = open("table_request.csv","w")
 
@@ -178,26 +178,26 @@ for i in range(numCustomers):
 
 # inserting into order, table_order simultaneously
 
-order.write("id,customer_id,ordered_time,served_time,completed_time,amount_paid\n")
+my_order.write("id,customer_id,ordered_time,served_time,completed_time,amount_paid\n")
 table_order.write("order_id,table_id\n")
 init_time = datetime.datetime(2021,6,1,10,0,0)
 for i in range(0,numOrders-2,3):
     temp_tables = random.sample(range(numTables),k=3)
     serve_delay = datetime.timedelta(minutes=random.randint(10,15))
     time_to_eat = datetime.timedelta(minutes=random.randint(45,60))
-    order.write(f"{i},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{random.randint(500,1000)}\n")
+    my_order.write(f"{i},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{random.randint(500,1000)}\n")
     table_order.write(f"{i},{temp_tables[0]}\n")
     offset1 = datetime.timedelta(minutes=random.randint(15,20))
     init_time = init_time+offset1
     serve_delay = datetime.timedelta(minutes=random.randint(10,15))
     time_to_eat = datetime.timedelta(minutes=random.randint(45,60))
-    order.write(f"{i+1},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{random.randint(500,1000)}\n")
+    my_order.write(f"{i+1},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{random.randint(500,1000)}\n")
     table_order.write(f"{i+1},{temp_tables[1]}\n")
     offset2 = datetime.timedelta(minutes=random.randint(15,20))
     init_time = init_time + offset2
     serve_delay = datetime.timedelta(minutes=random.randint(10,15))
     time_to_eat = datetime.timedelta(minutes=random.randint(45,60))
-    order.write(f"{i+2},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{random.randint(500,1000)}\n")
+    my_order.write(f"{i+2},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{random.randint(500,1000)}\n")
     table_order.write(f"{i+2},{temp_tables[2]}\n")
     init_time = init_time+datetime.timedelta(minutes=80)
 
@@ -215,10 +215,10 @@ for i in range(numOrders):
 
 # inserting into tables
 
-tables.write("id,capacity,location,status\n")
+my_table.write("id,capacity,location,status\n")
 
 for i in range(numTables):
-    tables.write(f"{i},{random.randint(4,8)},'{'window-side' if random.randint(0,1) else 'non-window-side'}','{ 'occupied' if random.randint(0,1) else 'available'}'\n")
+    my_table.write(f"{i},{random.randint(4,8)},'{'window-side' if random.randint(0,1) else 'non-window-side'}','{ 'occupied' if random.randint(0,1) else 'available'}'\n")
 
 # inserting into table_request
 

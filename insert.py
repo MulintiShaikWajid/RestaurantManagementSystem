@@ -14,15 +14,15 @@ req_file.write("delete from item;\n")
 req_file.write("delete from item_item_tag;\n")
 req_file.write("delete from item_inventory;\n")
 req_file.write("delete from cart;\n")
-req_file.write("delete from order;\n")
+req_file.write("delete from my_order;\n")
 req_file.write("delete from order_item;\n")
 req_file.write("delete from rating;\n")
-req_file.write("delete from tables;\n")
+req_file.write("delete from my_table;\n")
 req_file.write("delete from table_order;\n")
 req_file.write("delete from table_request;\n")
 req_file.close()
 
-for table in ["person","phone","time_slot","staff","staff_time_slot","notification","customer","inventory","item_tag","item","item_item_tag","item_inventory","cart","order","order_item","rating","tables","table_order","table_request"]:
+for table in ["person","phone","time_slot","staff","staff_time_slot","notification","customer","inventory","item_tag","item","item_item_tag","item_inventory","cart","my_order","order_item","rating","my_table","table_order","table_request"]:
 	opened_csv=open("./data/"+table+".csv")
 	reader=csv.DictReader(opened_csv)
 	req_file=open("restaurant_data.sql","a")

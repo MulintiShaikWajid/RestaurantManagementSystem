@@ -1,0 +1,11 @@
+id,capacity,location,status
+0,5,'non-window-side','occupied'
+1,6,'window-side','occupied'
+2,7,'non-window-side','available'
+3,6,'window-side','occupied'
+4,8,'non-window-side','occupied'
+5,7,'window-side','available'
+6,7,'non-window-side','occupied'
+7,6,'window-side','available'
+8,8,'non-window-side','available'
+9,4,'window-side','occupied'
