@@ -5,5 +5,5 @@
 5. ~~in table_order there are no column names in csv file(which may not be problem for creating insert statements)~~
 6. Write constraint that phone number and pincode can contain only digits, add primary key to table_order, can set to cascade in table_order  in DDL.sql
 7. Use indices for attributes which are used often
-8. ~~opened_file is not closed in insert.py
-9. ~~DDL.sql gives errors while running
+8. ~~opened_file is not closed in insert.py~~
+9. ~~DDL.sql gives errors while running~~
