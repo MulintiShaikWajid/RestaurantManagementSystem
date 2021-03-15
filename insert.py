@@ -37,3 +37,4 @@ for table in ["person","phone","time_slot","staff","staff_time_slot","notificati
 		ans=ans+')'+';'
 		req_file.write(ans+"\n")
 	req_file.close()
+	opened_csv.close()
