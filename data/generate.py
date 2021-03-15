@@ -233,3 +233,23 @@ for i in range(numRequests):
     status = 'request-placed'
     table_request.write(f"{i},{random.randint(0,numTables-1)},{random.choice(range(numCustomers))},'{init_time}','{init_time+one_month}','{init_time+one_month+delta_time}','{status}'\n")
     init_time = init_time+large_time
+
+person.close()
+phone.close()
+time_slot.close()
+staff.close()
+staff_time_slot.close()
+notification.close()
+customer.close()
+inventory.close()
+item_tag.close()
+item.close()
+item_item_tag.close()
+item_inventory.close()
+cart.close()
+my_order.close()
+order_item.close()
+rating.close()
+my_table.close()
+table_order.close()
+table_request.close()
