@@ -178,37 +178,37 @@ for i in range(numCustomers):
 
 # inserting into order, table_order simultaneously
 
-my_order.write("id,customer_id,ordered_time,served_time,completed_time,amount_paid\n")
+my_order.write("id,customer_id,ordered_time,served_time,completed_time,amount_paid,rcoins_used\n")
 table_order.write("order_id,table_id\n")
 init_time = datetime.datetime(2021,6,1,10,0,0)
 for i in range(0,numOrders-2,3):
     temp_tables = random.sample(range(numTables),k=3)
     serve_delay = datetime.timedelta(minutes=random.randint(10,15))
     time_to_eat = datetime.timedelta(minutes=random.randint(45,60))
-    my_order.write(f"{i},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{random.randint(500,1000)}\n")
+    my_order.write(f"{i},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{random.randint(500,1000)},{random.randint(500,1000)}\n")
     table_order.write(f"{i},{temp_tables[0]}\n")
     offset1 = datetime.timedelta(minutes=random.randint(15,20))
     init_time = init_time+offset1
     serve_delay = datetime.timedelta(minutes=random.randint(10,15))
     time_to_eat = datetime.timedelta(minutes=random.randint(45,60))
-    my_order.write(f"{i+1},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{random.randint(500,1000)}\n")
+    my_order.write(f"{i+1},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{random.randint(500,1000)},{random.randint(500,1000)}\n")
     table_order.write(f"{i+1},{temp_tables[1]}\n")
     offset2 = datetime.timedelta(minutes=random.randint(15,20))
     init_time = init_time + offset2
     serve_delay = datetime.timedelta(minutes=random.randint(10,15))
     time_to_eat = datetime.timedelta(minutes=random.randint(45,60))
-    my_order.write(f"{i+2},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{random.randint(500,1000)}\n")
+    my_order.write(f"{i+2},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{random.randint(500,1000)},{random.randint(500,1000)}\n")
     table_order.write(f"{i+2},{temp_tables[2]}\n")
     init_time = init_time+datetime.timedelta(minutes=80)
 
 # inserting into order_item and ratings simultaneously
 
-order_item.write("order_id,item_id,quantity\n")
+order_item.write("order_id,item_id,quantity,total_price\n")
 rating.write("order_id,item_id,stars,review\n")
 
 for i in range(numOrders):
     for j in random.sample(range(numItems),k=3):
-        order_item.write(f"{i},{j},{random.randint(1,2)}\n")
+        order_item.write(f"{i},{j},{random.randint(1,2)},{random.randint(400,500)}\n")
         if random.randint(0,1)==1:
             rating.write(f"{i},{j},{random.randint(1,5)},{rs(100)}\n")
 
