@@ -114,8 +114,8 @@ CREATE TABLE my_order(
 	ordered_time timestamp not null,
 	served_time timestamp,
 	completed_time timestamp,
-	amount_paid numeric not null,
-	rcoins_used numeric not null,
+	amount_paid numeric,
+	rcoins_used numeric,
 	status text check(status in ('placing-order', 'order-placed', 'cooking', 'order-served')),
 	foreign key (customer_id) references customer on delete set null
 );
