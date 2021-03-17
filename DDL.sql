@@ -26,9 +26,9 @@ CREATE TABLE person(
 	password text not null,--what say?
 	name text not null,
 	address_house_no text,
-	adderss_street text,
+	address_street text,
 	address_city text,
-	adderss_state text,
+	address_state text,
 	address_country text,
 	address_pin_code text, -- pincode should have only six digits ?
 	unique(username)
