@@ -115,6 +115,7 @@ CREATE TABLE my_order(
 	served_time timestamp,
 	completed_time timestamp,
 	amount_paid numeric not null,
+	rcoins_used numeric not null,
 	status text check(status in ('placing-order', 'order-placed', 'cooking', 'order-served')),
 	foreign key (customer_id) references customer on delete set null
 );
@@ -122,6 +123,7 @@ CREATE TABLE order_item(
 	order_id int,
 	item_id int,
 	quantity int not null,
+	total_price numeric not null,
 	primary key(order_id, item_id),
 	foreign key (order_id) references my_order on delete set null,
 	foreign key (item_id) references item on delete set null
