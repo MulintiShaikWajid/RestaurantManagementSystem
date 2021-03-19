@@ -1,43 +1,46 @@
 1. Registering/Sign up
+	i) insert into  person values (value1,value2,...)
+	ii) inset into customer values (value1, 0)
 
 2. Logging in/Sign in
 
 3. Offline orders
-	i)insert into order (id,customer_id,ordered_time, served_time ,completed_time,amount_paid,status) values (value1, value2, value3, ...);
+	i)insert into order (id,customer_id,ordered_time, served_time ,completed_time,amount_paid,status) values (value1, null, value3, ...);
 	ii) update order set status = " //next stage ", served_time = now() / completed_time = now() where id= value1
+	iii) update inventory set quantity_remaing = "", threshold = "" where id = given_id;
 
 
 4. Sort/Filter the menu(can choose NONE(default) to display the menu)
 
-	i) rating -> select name,(cast (avg(stars), as  decimal(3,1)))as average_rating,price from item,rating,item_item_tag where item.id = rating.item_id and item_item_tag.item_id = item.id  group by item.id order by avg(stars) desc limit 10;
-	ii) most ordered items (no of times)-> select name,price from item,order,order_item where order.customer_id = given_cus_id and order.id = order_item.order_id and order_id.item_id = item.id and item.id = item_item_tag.item_id group by name order by count(name) desc limit 10;
-	iii) tag of item -> select name,price from item,item_item_tag where item.id = item_item_tag.item_id and item_item_tag.tag_id = given_tag_id limit 10;//tag type is given then use item_tag table
+	i) rating -> select name,(cast (avg(stars), as  decimal(3,1)))as average_rating,price from item,rating where item.id = rating.item_id  group by item.id order by avg(stars) desc limit 10;
+	ii) most ordered items (no of times)-> select name,(cast (avg(stars), as  decimal(3,1)))as average_rating,price from item,order,order_item,rating where order.customer_id = given_cus_id and order.id = order_item.order_id and order_id.item_id = item.id  and item.id = rating.item_id group by name,price order by count(name) desc limit 10;
+	iii) tag of item -> select name,(cast (avg(stars), as  decimal(3,1)))as average_rating,price from item,item_item_tag,rating where item.id = item_item_tag.item_id and item_item_tag.tag_id = given_tag_id and item.id = rating.item_id group by name,price limit 10;//tag type is given then use item_tag table
 
 5. Order online
-	i)insert into order (id,customer_id,ordered_time, served_time ,completed_time,amount_paid,status) values (value1, value2, value3, ...);
+	i)insert into order (id,customer_id,ordered_time, served_time ,completed_time,amount_paid,status) values (value1, value2, value3,null, ...);
+	ii) update inventory set quantity_remaing = "", threshold = "" where id = given_id;
 
 6. Review Food items
-	i)insert into rating (given_order_id,given_item_id,stars,review) values (value1, value2, value3, ...);
+	i)insert into rating (order_id,item_id,stars,review) values (value1, value2, value3, ...);
 
 7. Inventory updating
 	i)update inventory set quantity_remaing = "", threshold = "" where id = given_id;
 
 8. Statistics
 	i) most ordered items -> select name,price from item,order,order_item where order.id = order_item.order_id and order_id.item_id = item.id and item.id = item_item_tag.item_id group by name order by count(name) desc limit 5;
-	ii) dish which takes the longest time to prepare -> select name,price from order,item,order_item where order.id = order_item.order_id , order_item.item_id = item.id group by name,price order by avg(served_time - ordered_time) desc limit 1;
-	iii) favourite day for customers to come to restaurant -> 
-		///////// if bookings/table_orders are must then, it's better to add day in table_req
-		///////// else we need offline or online in orders table ig
+	ii) dish which takes the longest time to prepare -> select name,price from order,item,order_item where order.id = order_item.order_id , order_item.item_id = item.id group by name,price order by avg(served_time - ordered_time) desc limit 5;
+	iii) favourite day for customers to come to restaurant -> select day as favourite_day from (select DAYNAME(served_time) as day from my_orders) as foo group by day order by count(day) desc limit 1;
+									
 
 9. Create Menu
 	i) update item_inventory set quantity_needed = ""where item_id = given_id;
-	ii) create view menu(id,item_name,price,tag) as select item.id as id, name as item_name,price,item_tag.type as tag from item,item_tag where item.name in (given_set_of_dishes);
+	ii) create view menu(item_name,price,tag,average_rating) as select name as item_name,price,item_tag.type as tag,(cast (avg(stars), as  decimal(3,1)))as average_rating from item,item_tag,rating where item.id = rating.item_id and item.name in (given_set_of_dishes) group by item.name,price,tag;
 
 10. Get notification
 	i) isn't this a trigger? should this be inserted in notification table? if yes then, insert into notification (id,info,time_stamp,person_id) values (value1, value2, now(), manager_id);
 
 11. Accept Payment of an order
-	i) 
+	i) update my_order set amount_paid = (select sum(total_price) from order_item where order_id = given_id) where id = given_id;
 
 12. Broadcast messages to customers
 	i) insert into notification (id,info,time_stamp,person_id) values (value1, given_text, now(), person_id);
