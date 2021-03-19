@@ -48,7 +48,7 @@ CREATE TABLE staff(
 	id int primary key,
 	salary int not null,
 	dob date,
-	role_name text check(role_name in ('manager', 'head-waiter', 'cashier')),--what say?
+	role_name text check(role_name in ('manager', 'head-waiter', 'cashier')),
 	foreign key (id) references person on delete cascade
 );
 CREATE TABLE staff_time_slot(
@@ -138,18 +138,18 @@ CREATE TABLE rating(
 	foreign key (item_id) references item on delete cascade, --item ratings will be erased once the item is deleted
 	check(stars is not null or review is not null)
 );
-CREATE TABLE my_table(--note the plural for 'tables' TABLE
+CREATE TABLE my_table(
 	id int primary key,
 	capacity int not null,
 	location text check(location in ('window-side', 'non-window-side')) not null,--can add any other?
 	status text check(status in ('occupied', 'available')) not null
 );
-CREATE TABLE table_order(--no primary because to handle takeaways but do we allow takeaways?
+CREATE TABLE table_order(
 	order_id int,
 	table_id int,
 	primary key (order_id, table_id),
 	foreign key (order_id) references my_order on delete cascade,
-	foreign key (table_id) references my_table on delete set null--not deleted, can be useful to find if order is takeaway(are we allowing this?)
+	foreign key (table_id) references my_table on delete cascade
 );
 CREATE table table_request(
 	request_id int primary key,
