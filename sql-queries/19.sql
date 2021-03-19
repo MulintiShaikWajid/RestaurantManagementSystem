@@ -8,3 +8,6 @@ select item.name, string_agg(item_tag.type,','),item.price from item,item_item_t
 
 -- place order
 
+insert into order_item values(<order_id>,<item_id>,<quantity>,<quantity>*(select price from item where item.id=<id>));
+
+insert into my_order values(<id>,<customer_id>,<ordered_time>,null,null,null,null,'order-placed');
