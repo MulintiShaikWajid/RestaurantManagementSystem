@@ -1,11 +1,256 @@
 id,name,price
-0,'suhmco',148
-1,'vynnrl',252
-2,'uewvkm',126
-3,'dgmclu',106
-4,'bhgpxt',208
-5,'yvscud',163
-6,'axxppv',292
-7,'qjhyea',226
-8,'lmersx',256
-9,'vqslmt',277
+0,'Balu shahi',279
+1,'Boondi',194
+2,'Gajar ka halwa',103
+3,'Ghevar',299
+4,'Gulab jamun',299
+5,'Imarti',236
+6,'Jalebi',273
+7,'Kaju katli',297
+8,'Kalakand',170
+9,'Kheer',67
+10,'Laddu',285
+11,'Lassi',127
+12,'Nankhatai',126
+13,'Petha',279
+14,'Phirni',224
+15,'Rabri',155
+16,'Sheera',261
+17,'Singori',96
+18,'Sohan halwa',207
+19,'Sohan papdi',258
+20,'Chhena jalebi',160
+21,'Chhena kheeri',107
+22,'Chhena poda',282
+23,'Cham cham',110
+24,'Kheer sagar',214
+25,'Ledikeni',154
+26,'Lyangcha',300
+27,'Malapua',183
+28,'Mihidana',202
+29,'Misti doi',233
+30,'Pantua',188
+31,'Pithe',87
+32,'Rasabali',241
+33,'Ras malai',294
+34,'Rasgulla',245
+35,'Sandesh',171
+36,'Adhirasam',149
+37,'Ariselu',212
+38,'Bandar laddu',266
+39,'Chikki',116
+40,'Dharwad pedha',87
+41,'Double ka meetha',167
+42,'Gavvalu',90
+43,'Kakinada khaja',222
+44,'Kuzhi paniyaram',54
+45,'Mysore pak',107
+46,'Obbattu holige',65
+47,'Palathalikalu',293
+48,'Poornalu',152
+49,'Pongal',260
+50,'Pootharekulu',161
+51,'Qubani ka meetha',237
+52,'Sheer korma',66
+53,'Unni Appam',168
+54,'Kajjikaya',110
+55,'Anarsa',282
+56,'Basundi',225
+57,'Dhondas',173
+58,'Doodhpak',113
+59,'Mahim halwa',288
+60,'Modak',292
+61,'Shankarpali',132
+62,'Shrikhand',122
+63,'Sutar feni',290
+64,'Maach Jhol',291
+65,'Pork Bharta',62
+66,'Chak Hao Kheer',150
+67,'Galho',59
+68,'Aloo gobi',276
+69,'Aloo tikki',169
+70,'Aloo matar',255
+71,'Aloo methi',235
+72,'Aloo shimla mirch',175
+73,'Bhatura',103
+74,'Bhindi masala',216
+75,'Biryani',91
+76,'Butter chicken',231
+77,'Chana masala',190
+78,'Chapati',70
+79,'Chicken razala',156
+80,'Chicken Tikka masala',234
+81,'Chicken Tikka',94
+82,'Chole bhature',103
+83,'Daal baati churma',226
+84,'Daal puri',91
+85,'Dal makhani ',178
+86,'Dal tadka',128
+87,'Dum aloo',91
+88,'Poha',167
+89,'Fara',284
+90,'Kachori',161
+91,'Kadai paneer',102
+92,'Kadhi pakoda',113
+93,'Karela bharta',283
+94,'Khichdi',176
+95,'Kofta',290
+96,'Kulfi falooda',120
+97,'Lauki ke kofte',116
+98,'Lauki ki subji',211
+99,'Litti chokha',293
+100,'Makki di roti sarson da saag',161
+101,'Misi roti',51
+102,'Mushroom do pyaza',95
+103,'Mushroom matar',218
+104,'Naan',75
+105,'Navrattan korma',265
+106,'Palak paneer',202
+107,'Paneer butter masala',183
+108,'Paneer tikka masala',202
+109,'Pani puri',157
+110,'Panjeeri',110
+111,'Papad',70
+112,'Paratha',90
+113,'Pattor',288
+114,'Pindi chana',62
+115,'Rajma chaval',159
+116,'Rongi',246
+117,'Samosa',55
+118,'Sattu ki roti',176
+119,'Shahi paneer',128
+120,'Shahi tukra',105
+121,'Vegetable jalfrezi',186
+122,'Tandoori Chicken',143
+123,'Tandoori Fish Tikka',115
+124,'Attu',92
+125,'Avial',54
+126,'Bisi bele bath',275
+127,'Currivepillai sadam ',287
+128,'Dosa',70
+129,'Idiappam',66
+130,'Idli',260
+131,'Kanji',250
+132,'Kaara kozhambu',172
+133,'Keerai kootu',282
+134,'Keerai masiyal',108
+135,'Keerai sadam',83
+136,'Keerai poriyal',149
+137,'Beef Fry',237
+138,'Kootu',227
+139,'Kos kootu',184
+140,'Koshambri',141
+141,'Kothamali sadam',256
+142,'Kuzhakkattai',244
+143,'Kuzhambu',170
+144,'Masala Dosa',209
+145,'Pachadi',175
+146,'Paniyaram',178
+147,'Papadum',293
+148,'Paravannam',228
+149,'Payasam',106
+150,'Paruppu sadam',256
+151,'Pesarattu',272
+152,'Poriyal',165
+153,'Puli sadam',164
+154,'Rasam',217
+155,'Puttu',277
+156,'Sambar',149
+157,'Sandige',271
+158,'Sevai',231
+159,'Thayir sadam',210
+160,'Theeyal',103
+161,'Uttapam',259
+162,'Vada',283
+163,'Chicken Varuval',189
+164,'Upma',107
+165,'Amti',121
+166,'Zunka',124
+167,'Kolim Jawla',192
+168,'Saath',53
+169,'Bajri no rotlo',287
+170,'Coconut vadi',169
+171,'Bhakri',234
+172,'Bombil fry',231
+173,'Chakali',198
+174,'Chevdo',50
+175,'Chorafali',75
+176,'Copra paak',236
+177,'Daal Dhokli',55
+178,'Kutchi dabeli',60
+179,'Dahi vada',92
+180,'Dalithoy',106
+181,'Dhokla',151
+182,'Dudhi halwa',277
+183,'Gatta curry',165
+184,'Gud papdi',220
+185,'Ghooghra',279
+186,'Handwo',285
+187,'Halvasan',77
+188,'Jeera Aloo',160
+189,'Kansar',156
+190,'Keri no ras',179
+191,'Khakhra',162
+192,'Khandvi',237
+193,'Kombdi vade',58
+194,'Laapsi',265
+195,'Koshimbir',94
+196,'Methi na Gota',274
+197,'Mohanthal',295
+198,'Muthiya',275
+199,'Patra',238
+200,'Pav Bhaji',85
+201,'Puri Bhaji',77
+202,'Sabudana Khichadi',149
+203,'Sev khamani',89
+204,'Sev tameta',57
+205,'Namakpara',263
+206,'Sukhdi',254
+207,'Surnoli',133
+208,'Thalipeeth',143
+209,'Undhiyu',241
+210,'Veg Kolhapuri',97
+211,'Vindaloo',154
+212,'Lilva Kachori',289
+213,'Mag Dhokli',276
+214,'Khichu',177
+215,'Thepla',103
+216,'Farsi Puri',114
+217,'Khaman',105
+218,'Turiya Patra Vatana sabji',260
+219,'Churma Ladoo',257
+220,'Cheera Doi',90
+221,'Gheela Pitha',254
+222,'Khar',193
+223,'Kumol Sawul',174
+224,'Luchi',196
+225,'Alu Pitika',172
+226,'Masor tenga',254
+227,'Bengena Pitika',168
+228,'Bilahi Maas',83
+229,'Black rice',240
+230,'Bora Sawul',184
+231,'Brown Rice',175
+232,'Chingri malai curry',231
+233,'Goja',108
+234,'Hando Guri',240
+235,'Haq Maas',59
+236,'Chingri Bhape',287
+237,'Kabiraji',163
+238,'Khorisa',90
+239,'Koldil Chicken',282
+240,'Konir Dom',253
+241,'Koldil Duck',252
+242,'Masor Koni',68
+243,'Mishti Chholar Dal',109
+244,'Pakhala',205
+245,'Pani Pitha',267
+246,'Payokh',112
+247,'Prawn malai curry',100
+248,'Red Rice',219
+249,'Shukto',159
+250,'Til Pitha',129
+251,'Bebinca',174
+252,'Shufta',269
+253,'Mawa Bati',231
+254,'Pinaca',207

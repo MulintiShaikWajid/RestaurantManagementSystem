@@ -23,7 +23,7 @@
 	i)update inventory set quantity_remaing = "", threshold = "" where id = given_id;
 
 8. Statistics
-	i) most ordered item -> select name,price from item,order,order_item where order.id = order_item.order_id and order_id.item_id = item.id and item.id = item_item_tag.item_id group by name order by count(name) desc limit 1;
+	i) most ordered items -> select name,price from item,order,order_item where order.id = order_item.order_id and order_id.item_id = item.id and item.id = item_item_tag.item_id group by name order by count(name) desc limit 5;
 	ii) dish which takes the longest time to prepare -> select name,price from order,item,order_item where order.id = order_item.order_id , order_item.item_id = item.id group by name,price order by avg(served_time - ordered_time) desc limit 1;
 	iii) favourite day for customers to come to restaurant -> 
 		///////// if bookings/table_orders are must then, it's better to add day in table_req
