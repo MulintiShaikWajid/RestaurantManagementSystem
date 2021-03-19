@@ -116,7 +116,7 @@ CREATE TABLE my_order(
 	completed_time timestamp,
 	amount_paid numeric,
 	rcoins_used numeric,
-	status text check(status in ('placing-order', 'order-placed', 'cooking', 'order-served')),
+	status text check(status in ('order-placed', 'order-served', 'order-completed')),
 	foreign key (customer_id) references customer on delete set null
 );
 CREATE TABLE order_item(
@@ -147,6 +147,7 @@ CREATE TABLE my_table(--note the plural for 'tables' TABLE
 CREATE TABLE table_order(--no primary because to handle takeaways but do we allow takeaways?
 	order_id int,
 	table_id int,
+	primary key (order_id, table_id),
 	foreign key (order_id) references my_order on delete cascade,
 	foreign key (table_id) references my_table on delete set null--not deleted, can be useful to find if order is takeaway(are we allowing this?)
 );
