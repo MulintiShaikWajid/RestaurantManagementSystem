@@ -7,3 +7,7 @@
 7. Use indices for attributes which are used often
 8. ~~opened_file is not closed in insert.py~~
 9. ~~DDL.sql gives errors while running~~
+10. Add curly braces after hyperref
+11. Some hyperrefs are broken for instance add-inventory in interface-11
+12. Add triggers
+13. Can customers recieve notifications?
