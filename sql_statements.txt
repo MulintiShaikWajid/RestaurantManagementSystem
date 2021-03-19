@@ -66,3 +66,6 @@
 
 19. Accept table requests/update table status
 i) update table_request set status = "request-accepted/denied" where request_id = given_req_id;
+
+20. Adding to cart
+	i) insert into cart (given_cus_id,given_item_id);
