@@ -5,10 +5,13 @@ select * from (select item.id,name,price,type,rating from item_tag,item_item_tag
               as A on A.item_id=B.id; 
 
 ---Cart button : 
-select name,price from cart,item where cart.item_id=item.id and customer_id=____from web-page____;
+select name,price from cart,item where cart.item_id=item.id and cart.customer_id=____from web-page____;
 
 ---Previous orders button : 
 select * from my_order where my_order.customer_id=____from web-page____;
+
+---Edit personal details button
+select * from person where id=____from web-page____;
 
 ---Book a table button : 
 select * from my_table;
