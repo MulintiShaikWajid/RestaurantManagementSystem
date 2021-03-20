@@ -5,4 +5,4 @@ select name,price,type,rating from item,item_tag,item_item_tag,
                 and search_field=___input___;
 
 ---Add to cart button : 
-insert into cart(customer_id,item_id) values (___from web-page____);
+insert into cart(customer_id,item_id,quantity) values (___from web-page____);
