@@ -208,7 +208,7 @@ for i in range(numCustomers):
     for j in random.sample(range(numItems),k=random.randint(0,4)):
         cart.write(f"{i},{j}\n")
 
-my_order.write("id,customer_id,ordered_time,served_time,completed_time,amount_paid,rcoins_used\n")
+my_order.write("id,customer_id,ordered_time,served_time,completed_time,amount_paid,rcoins_used,status\n")
 table_order.write("order_id,table_id\n")
 order_item.write("order_id,item_id,quantity,total_price\n")
 rating.write("order_id,item_id,stars,review\n")
@@ -222,7 +222,7 @@ for i in range(0,numOrders-2,3):
     total_price = sum([menu[x]*y for x,y in zip(myitems,myquant)])
     amount_paid = random.randint(0,total_price)
     rcoins_used = total_price-amount_paid
-    my_order.write(f"{i},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used}\n")
+    my_order.write(f"{i},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used},'order-completed'\n")
     table_order.write(f"{i},{temp_tables[0]}\n")
     for x in myitems:
         mytemp = myquant.pop()
@@ -239,7 +239,7 @@ for i in range(0,numOrders-2,3):
     total_price = sum([menu[x]*y for x,y in zip(myitems,myquant)])
     amount_paid = random.randint(0,total_price)
     rcoins_used = total_price-amount_paid
-    my_order.write(f"{i+1},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used}\n")
+    my_order.write(f"{i+1},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used},'order-completed'\n")
     table_order.write(f"{i+1},{temp_tables[1]}\n")
     for x in myitems:
         mytemp = myquant.pop()
@@ -255,7 +255,7 @@ for i in range(0,numOrders-2,3):
     total_price = sum([menu[x]*y for x,y in zip(myitems,myquant)])
     amount_paid = random.randint(0,total_price)
     rcoins_used = total_price-amount_paid
-    my_order.write(f"{i+2},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used}\n")
+    my_order.write(f"{i+2},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used},'order-completed'\n")
     table_order.write(f"{i+2},{temp_tables[2]}\n")
     for x in myitems:
         mytemp = myquant.pop()
