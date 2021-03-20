@@ -11,3 +11,4 @@
 11. Some hyperrefs are broken for instance add-inventory in interface-11
 12. Add triggers
 13. Can customers recieve notifications?
+14. While sending **search** form input to sql query sort the comma seperated fields
