@@ -1,0 +1,1 @@
+---View/Rate button - just change in webpage
