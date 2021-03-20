@@ -152,7 +152,7 @@ CREATE TABLE table_order(
 	foreign key (order_id) references my_order on delete cascade,
 	foreign key (table_id) references my_table on delete cascade
 );
-CREATE table table_request(
+CREATE TABLE table_request(
 	request_id int primary key,
 	table_id int,
 	customer_id int,
@@ -177,7 +177,7 @@ ON person (username,password);
 
 --trigger one
 
-create function temp1() returns trigger as 
+CREATE FUNCTION temp1() returns trigger as 
 $$
 begin
 insert into notifications
@@ -187,7 +187,7 @@ end;
 $$
 language plpgsql;
 
-create trigger low_inventory after update or insert of inventory
+CREATE TRIGGER low_inventory after update or insert of inventory
 referencing new row as nrow
 for each row
 when nrow.quantity_remaining<nrow.threshold
@@ -195,7 +195,7 @@ execute procedure temp1();
 
 --trigger two
 
-create function temp2() returns trigger as 
+CREATE FUNCTION temp2() returns trigger as 
 $$
 begin
 insert into notification values(cast((nrow.rcoins-orow.rcoins) as text)||' rcoins have been added to your account, the new total is '||cast(nrow.rcoins as text),now(),nrow.id);
@@ -204,7 +204,7 @@ end;
 $$
 language plpgsql;
 
-create trigger gift after update of rcoins on customer
+CREATE TRIGGER gift after update of rcoins on customer
 referencing new row as nrow
 referencing old row as orow
 for each row
