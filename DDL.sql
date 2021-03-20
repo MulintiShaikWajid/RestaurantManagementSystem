@@ -104,6 +104,7 @@ CREATE TABLE item_inventory(
 CREATE TABLE cart(
 	customer_id int,
 	item_id int,
+	quantity int not null,
 	primary key(customer_id, item_id),
 	foreign key (customer_id) references customer on delete cascade,
 	foreign key (item_id) references item on delete cascade --once item is deleted, it is automatically removed from cart
