@@ -176,37 +176,40 @@ CREATE INDEX username_password_index
 ON person (username,password);
 
 --trigger one
-
-CREATE FUNCTION temp1() returns trigger as 
+create or replace function temp1() returns trigger as 
 $$
 begin
 insert into notifications
 select 'The following item has fallen below threshold'||new.name||'threshold is'||cast(new.threshold as text)||'quantity remaining is'||cast(new.quantity_remaining as text),now(),staff.id from staff where role_name='manager' ;
-return new
+return new;
 end;
 $$
 language plpgsql;
 
-CREATE TRIGGER low_inventory after update or insert of inventory
-referencing new row as nrow
+
+
+
+create trigger low_inventory after update or insert on inventory
 for each row
-when nrow.quantity_remaining<nrow.threshold
+when (new.quantity_remaining<new.threshold)
 execute procedure temp1();
-
 --trigger two
-
-CREATE FUNCTION temp2() returns trigger as 
+create or replace function temp2() returns trigger as 
 $$
 begin
 insert into notification values(cast((nrow.rcoins-orow.rcoins) as text)||' rcoins have been added to your account, the new total is '||cast(nrow.rcoins as text),now(),nrow.id);
-return new
+return new;
 end;
 $$
 language plpgsql;
 
-CREATE TRIGGER gift after update of rcoins on customer
-referencing new row as nrow
-referencing old row as orow
+
+
+
+create trigger gift after update of rcoins on customer
 for each row
-when nrow.rcoins>orow.rcoins
+when (new.rcoins>old.rcoins)
 execute procedure temp2();
+
+
+
