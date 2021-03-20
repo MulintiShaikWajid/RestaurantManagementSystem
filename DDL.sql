@@ -163,3 +163,12 @@ CREATE table table_request(
 	foreign key (table_id) references my_table on delete cascade,
 	foreign key (customer_id) references customer on delete cascade--cascading makes finding table-availability-status easy
 );
+			  
+CREATE INDEX tab_status
+ON table_request (status);
+			  
+CREATE INDEX my_order_status
+ON my_order(status);
+
+CREATE INDEX username_pass
+ON person (username,password);
