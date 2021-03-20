@@ -53,16 +53,16 @@ def myget2(i):
 # Parameters
 # constraints numTags>=2, numInventory>=3, numItems>=4, numTables>=3 numOrders%3=0
 numStaff = 10
-numOrders = 99
+numOrders = 1000
 numItems = 10
-numCustomers = 5
-maxRcoins = 10
+numCustomers = 1000
+maxRcoins = 100
 static_salt = "squirrel"
-numNotifications = 100
+numNotifications = 1000
 numInventory = 10
 numTags = 4
-numTables = 10
-numRequests = 100
+numTables = 25
+numRequests = 1000
 
 
 
@@ -224,6 +224,7 @@ for i in range(0,numOrders-2,3):
     rcoins_used = total_price-amount_paid
     my_order.write(f"{i},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used},'order-completed'\n")
     table_order.write(f"{i},{temp_tables[0]}\n")
+    myquant.reverse()
     for x in myitems:
         mytemp = myquant.pop()
         order_item.write(f"{i},{x},{mytemp},{mytemp*menu[x]}\n")
@@ -241,6 +242,7 @@ for i in range(0,numOrders-2,3):
     rcoins_used = total_price-amount_paid
     my_order.write(f"{i+1},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used},'order-completed'\n")
     table_order.write(f"{i+1},{temp_tables[1]}\n")
+    myquant.reverse()
     for x in myitems:
         mytemp = myquant.pop()
         order_item.write(f"{i+1},{x},{mytemp},{mytemp*menu[x]}\n")
@@ -257,6 +259,7 @@ for i in range(0,numOrders-2,3):
     rcoins_used = total_price-amount_paid
     my_order.write(f"{i+2},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used},'order-completed'\n")
     table_order.write(f"{i+2},{temp_tables[2]}\n")
+    myquant.reverse()
     for x in myitems:
         mytemp = myquant.pop()
         order_item.write(f"{i+2},{x},{mytemp},{mytemp*menu[x]}\n")
