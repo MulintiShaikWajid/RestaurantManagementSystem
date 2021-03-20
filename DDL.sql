@@ -163,12 +163,50 @@ CREATE table table_request(
 	foreign key (table_id) references my_table on delete cascade,
 	foreign key (customer_id) references customer on delete cascade--cascading makes finding table-availability-status easy
 );
-			  
-CREATE INDEX tab_status
+
+--index
+
+CREATE INDEX table_status_index
 ON table_request (status);
 			  
-CREATE INDEX my_order_status
+CREATE INDEX my_order_status_index
 ON my_order(status);
 
-CREATE INDEX username_pass
+CREATE INDEX username_password_index
 ON person (username,password);
+
+--trigger one
+
+create function temp1() returns trigger as 
+$$
+begin
+insert into notifications
+select 'The following item has fallen below threshold'||new.name||'threshold is'||cast(new.threshold as text)||'quantity remaining is'||cast(new.quantity_remaining as text),now(),staff.id from staff where role_name='manager' ;
+return new
+end;
+$$
+language plpgsql;
+
+create trigger low_inventory after update or insert of inventory
+referencing new row as nrow
+for each row
+when nrow.quantity_remaining<nrow.threshold
+execute procedure temp1();
+
+--trigger two
+
+create function temp2() returns trigger as 
+$$
+begin
+insert into notification values(cast((nrow.rcoins-orow.rcoins) as text)||' rcoins have been added to your account, the new total is '||cast(nrow.rcoins as text),now(),nrow.id);
+return new
+end;
+$$
+language plpgsql;
+
+create trigger gift after update of rcoins on customer
+referencing new row as nrow
+referencing old row as orow
+for each row
+when nrow.rcoins>orow.rcoins
+execute procedure temp2();
