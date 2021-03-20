@@ -30,12 +30,12 @@ CREATE TABLE person(
 	address_city text,
 	address_state text,
 	address_country text,
-	address_pin_code text, -- pincode should have only six digits ?
+	address_pin_code text check(address_pin_code ~ '^[0-9]+$'), -- todo: pincode should have only six digits ?
 	unique(username)
 );
 CREATE TABLE phone(
 	id int not null,
-	phone_number text not null,  -- ten digits ?
+	phone_number text not null check(phone_number ~ '^[+]?[0-9 ]+$'), --todo: ten digits ?
 	primary key (id, phone_number),
 	foreign key (id) references person on delete cascade
 );
@@ -104,7 +104,7 @@ CREATE TABLE item_inventory(
 CREATE TABLE cart(
 	customer_id int,
 	item_id int,
-	quantity int not null,
+	quantity int not null check (quantity >= 0),
 	primary key(customer_id, item_id),
 	foreign key (customer_id) references customer on delete cascade,
 	foreign key (item_id) references item on delete cascade --once item is deleted, it is automatically removed from cart
@@ -123,7 +123,7 @@ CREATE TABLE my_order(
 CREATE TABLE order_item(
 	order_id int,
 	item_id int,
-	quantity int not null,
+	quantity int not null check(quantity > 0),
 	total_price numeric not null,
 	primary key(order_id, item_id),
 	foreign key (order_id) references my_order on delete set null,

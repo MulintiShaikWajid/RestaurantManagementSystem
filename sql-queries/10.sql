@@ -6,8 +6,12 @@
 	--inventory and corresponding quantity
 	select I.name, II.quantity_needed from inventory I, item_inventory II where II.item_id = <item_id> and I.id = II.inventory_id;
 --add item
-	insert into item(name, price) values(<name>, <price>);
+	insert into item values(<new_item_id>, <name>, <price>);
 	--for each item tag
+		--search item_tag
+		select count(*) from item_tag where type = <item_tag>;
+		--if above count is 0, then insert into item_tag
+		insert into item_tag values(<id>, <type>);
 	insert into item_item_tag values(<item_id>, <tag_id>);
 	--for each inventory
 	insert into item_inventory values(<item_id>, <inventory_id>, <quantity_needed>);
