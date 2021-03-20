@@ -186,13 +186,11 @@ end;
 $$
 language plpgsql;
 
-
-
-
 create trigger low_inventory after update or insert on inventory
 for each row
 when (new.quantity_remaining<new.threshold)
 execute procedure temp1();
+
 --trigger two
 create or replace function temp2() returns trigger as 
 $$
@@ -202,9 +200,6 @@ return new;
 end;
 $$
 language plpgsql;
-
-
-
 
 create trigger gift after update of rcoins on customer
 for each row
