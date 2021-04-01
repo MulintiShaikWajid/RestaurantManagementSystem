@@ -37,7 +37,8 @@ CREATE TABLE phone(
 	id int not null,
 	phone_number text not null check(phone_number ~ '^[+]?[0-9 ]+$'), --todo: ten digits ?
 	primary key (id, phone_number),
-	foreign key (id) references person on delete cascade
+	foreign key (id) references person on delete cascade,
+	unique(phone_number)
 );
 CREATE TABLE time_slot(
 	id int primary key,
@@ -75,16 +76,19 @@ CREATE TABLE inventory(
 	name text not null,
 	quantity_remaining numeric not null,
 	threshold numeric not null,
-	units text not null
+	units text not null,
+	unique(name)
 );
 CREATE TABLE item_tag(
 	id int primary key,
-	type text
+	type text,
+	unique(type)
 );
 CREATE TABLE item(
 	id int primary key,
 	name text not null,
-	price numeric 
+	price numeric,
+	unique(name)
 );
 CREATE TABLE item_item_tag(
 	item_id int,
