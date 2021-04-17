@@ -4,5 +4,4 @@ var hello_controller = require('../controllers/hello');
 
 router.get('/',hello_controller.hello_get);
 
-
 module.exports = router;
