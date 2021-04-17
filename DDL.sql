@@ -31,6 +31,7 @@ CREATE TABLE person(
 	address_state text,
 	address_country text,
 	address_pin_code text check(address_pin_code ~ '^[0-9]+$'), -- todo: pincode should have only six digits ?
+	session_id text,
 	unique(username)
 );
 CREATE TABLE phone(

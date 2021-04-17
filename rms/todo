@@ -1,0 +1,2 @@
+1. Change username generation to not include spaces
+2. Index on session_id

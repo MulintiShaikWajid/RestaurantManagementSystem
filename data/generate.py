@@ -92,18 +92,19 @@ table_request = open("table_request.csv","w")
 # Populating customer and persons
 
 customer.write("id,rcoins\n")
-person.write("id,username,password,name,address_house_no,address_street,address_city,address_state,address_country,address_pin_code\n")
+person.write("id,username,password,name,address_house_no,address_street,address_city,address_state,address_country,address_pin_code,session_id\n")
 for i in range(numCustomers):
     customer.write(f"{i},{random.randint(0,maxRcoins)}\n")
     prof = fake.profile()
-    person.write(f"{i},'{prof['username']}','{hashlib.sha256((prof['username']+static_salt).encode()).hexdigest()}','{prof['name']}','{fake.street_address()}','{fake.street_name()}','{fake.city()}','{fake.state()}','{'United States'}','{fake.zipcode()}'\n")
+    username = fake.unique.text(max_nb_chars=10)
+    person.write(f"{i},'{username}','{hashlib.sha256((username+static_salt).encode()).hexdigest()}','{prof['name']}','{fake.street_address()}','{fake.street_name()}','{fake.city()}','{fake.state()}','{'United States'}','{fake.zipcode()}',NULL\n")
 
 staff.write("id,salary,dob,role_name\n")
 for i in range(numCustomers,numCustomers+numStaff):
     staff.write(f"{i},{random.randint(10000,20000)},'{str(fake.date_of_birth())}',{get_role()}\n")
     prof = fake.profile()
-    username = prof['username']
-    person.write(f"{i},'{username}','{hashlib.sha256((username+static_salt).encode()).hexdigest()}','{prof['name']}','{fake.street_address()}','{fake.street_name()}','{fake.city()}','{fake.state()}','{'United States'}','{fake.zipcode()}'\n")
+    username = fake.unique.text(max_nb_chars=10)
+    person.write(f"{i},'{username}','{hashlib.sha256((username+static_salt).encode()).hexdigest()}','{prof['name']}','{fake.street_address()}','{fake.street_name()}','{fake.city()}','{fake.state()}','{'United States'}','{fake.zipcode()}',NULL\n")
 
 phone.write("id,phone_number\n")
 for i in range(numStaff+numCustomers):
@@ -202,11 +203,11 @@ for row in data:
 numItems = sa
 numTags = len(tags)
 numInventory = len(ingredients)
-cart.write("customer_id,item_id\n")
+cart.write("customer_id,item_id,quantity\n")
 
 for i in range(numCustomers):
     for j in random.sample(range(numItems),k=random.randint(0,4)):
-        cart.write(f"{i},{j}\n")
+        cart.write(f"{i},{j},{random.randint(1,4)}\n")
 
 my_order.write("id,customer_id,ordered_time,served_time,completed_time,amount_paid,rcoins_used,status\n")
 table_order.write("order_id,table_id\n")
