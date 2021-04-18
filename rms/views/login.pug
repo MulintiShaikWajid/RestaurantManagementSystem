@@ -11,7 +11,7 @@ html(lang="en")
         h1 Welcome to RMS
         form.formLogin(method="POST",action='')
             input#username(type="text",placeholder='username',name='username')
-            input#password(type="text",placeholder='password',name='password')
+            input#password(type="password",placeholder='password',name='password')
             button(type='submit') Login
         div(style='text-align:center')
             if errors

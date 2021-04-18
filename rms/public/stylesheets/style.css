@@ -20,11 +20,13 @@ input {
   border-radius: 10px;
   margin: 10px;
   height: 25px;
-  size: 30;
+  size: 100;
+  font-size: large;
 }
 
 button{
   border-radius: 10px;
   margin: 10px;
   height: 30px;
+  font-size: large;
 }
