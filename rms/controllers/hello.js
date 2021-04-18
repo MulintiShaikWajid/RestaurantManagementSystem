@@ -18,3 +18,19 @@ exports.hello_get = function(req,res,next){
         )
     }
 }
+
+exports.logout = function(req,res,next){
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.redirect('/login');
+                }
+                else{
+                    Person.logout(req.signedCookies['session_id']).then(
+                        ()=>{
+                            res.redirect('/login');
+                            }).catch(error=>
+                        console.log(error));
+                    }
+                }
+            )}
