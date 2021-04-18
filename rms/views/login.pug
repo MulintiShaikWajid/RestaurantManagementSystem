@@ -1,25 +1,26 @@
-link(rel="stylesheet",href="/css/forms.css")
-link(rel="stylesheet",href="/css/product.css")
 <!DOCTYPE html>
 html(lang="en")
-  body
-    h1(style="text-align:center") Welcome to RMS
-    form(class="product-form",method="POST",action='')
-        div(class="form-control")
-        <!-- ,style="text-align:center") -->
-            div(style="margin-bottom:10px")
-                label(for='username',style='margin-right:10px') Username:
-                input#username(type="text",placeholder='username',name='username')
-            div(style="margin-bottom:10px")
-                label(for='password',style='margin-right:10px') Password:
-                input#password(type="text",placeholder='password',name='password')
-            button(class="btn",type='submit') Login
-    form(class="product-form",action="/signup")
-        p Don't have an account?
-        button(class="btn",type="submit") SignUp
-    div(style='text-align:center')
-        if errors
-            ul
-                for error in errors
-                    li {error.msg}
-        p #{message}
+    head
+    title Login
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel="preconnect" href="https://fonts.gstatic.com")
+    link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet")
+    link(href="stylesheets/style.css" rel="stylesheet")
+    body
+        h1 Welcome to RMS
+        form.formLogin(method="POST",action='')
+            input#username(type="text",placeholder='username',name='username')
+            input#password(type="password",placeholder='password',name='password')
+            button(type='submit') Login
+        form(style='text-align:center',action="/signup")
+            p Don't have an account?
+            button(class="btn",type="submit") SignUp
+        div(style='text-align:center')
+            if errors
+                ul
+                    for error in errors
+                        li {error.msg}
+            p #{message}
+
+
