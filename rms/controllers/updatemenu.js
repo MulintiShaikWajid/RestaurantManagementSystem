@@ -21,7 +21,7 @@ exports.get_page = function(req,res,next){
                 }
                 else{
                 	Updatemenu.items().then((result3)=>{
-                    res.render('updatemenu',{name : result.rows[0]['name'],items:result3});
+                    res.render('updatemenu',{name : result.rows[0]['name'],items:result3.rows});
                 });
                 }
             }

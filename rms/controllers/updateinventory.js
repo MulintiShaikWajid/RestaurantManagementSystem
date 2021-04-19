@@ -21,7 +21,7 @@ exports.get_page = function(req,res,next){
                 }
                 else{
                     Updateinventory.items().then((result3)=>{
-                    res.render('updateinventory',{name : result.rows[0]['name'],items:result3});
+                    res.render('updateinventory',{name : result.rows[0]['name'],items:result3.rows});
                    });}
             }
         )

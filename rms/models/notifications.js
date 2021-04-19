@@ -1,20 +1,9 @@
 const pool = require('../utils/database');
-const Person = require('../models/person');
-exports.get_page = function(req,res,next){
-    if (! ("session_id" in req.signedCookies)){
-        res.redirect('/login');
-        return;
+
+module.exports = class Notifications{
+    // constructor(){
+    // }
+    static notify(id){
+        return pool.query("select * from notification where person_id=$1 order by time_stamp;",[id]);
     }
-    else{
-        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
-            (result)=>{
-                if(result.rowCount===0){
-                    res.redirect('/login');
-                }
-                else{
-                    res.render('notifications',{name : result.rows[0]['name']});
-                }
-            }
-        )
     }
-}

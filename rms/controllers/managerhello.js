@@ -8,6 +8,12 @@ exports.hello_get = function(req,res,next){
     else{
         Person.get_details_from_session_id(req.signedCookies['session_id']).then(
             (result)=>{
+                Person.role(result.rows[0]['id']).then(
+                    (result2)=>{
+                        if(result2.rows[0]['role_name']!="manager"){
+                            res.redirect('/error');
+                        }
+                    })
                 if(result.rowCount===0){
                     res.redirect('/login');
                 }
