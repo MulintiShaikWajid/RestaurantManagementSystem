@@ -7,8 +7,8 @@ exports.login_get = function(req,res,next){
 }
 
 exports.login_post = [
-    body('username', 'Genre name required').trim().isLength({ min: 1 }).escape(),
-    body('password', 'Genre name required').trim().isLength({ min: 1 }).escape(),
+    body('username', 'Username should not be empty').trim().isLength({ min: 1 }).escape(),
+    body('password', 'Password should not be empty').trim().isLength({ min: 1 }).escape(),
     (req,res,next) => {
         const errors = validationResult(req);
         if(!errors.isEmpty()){
@@ -27,9 +27,18 @@ exports.login_post = [
                     else{
                         var session_id = crypto.randomBytes(64).toString('hex');
                         person.update_session_id(session_id).then(
-                            (result)=>{
+                            ()=>{
                                 res.cookie('session_id',session_id,{signed:true});
-                                res.redirect('/hello');
+                                Person.check_customer(result.rows[0]['id']).then(
+                                    (result)=>{
+                                        if(result.rowCount===1){
+                                            res.redirect('/customer/hello')
+                                        }
+                                        else{
+                                            res.redirect('/hello')
+                                        }
+                                    }
+                                )
                             }
                         )
                     }

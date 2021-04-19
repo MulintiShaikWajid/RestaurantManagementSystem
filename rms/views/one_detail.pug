@@ -1,0 +1,35 @@
+extends customer_base
+
+block content
+    div.container
+        h1 Details
+        unless message
+            <table class="table table-striped table-hover table-bordered">
+                <tbody>
+                    <tr>
+                        td Name
+                        td #{name}
+                    </tr>
+                    <tr>
+                        td Price
+                        td #{price}
+                    </tr>
+                    <tr>
+                        td Tags
+                        td #{tags}
+                    </tr>
+                    <tr>
+                        td Ingredients
+                        td #{ingredients}
+                    </tr>
+                    <tr>
+                        td Quantity in cart
+                        td #{quantity}
+                    </tr>
+                </tbody>
+            </table>
+            form(method="POST",action="")
+                input#new_quantity(type='number',min='0',placeholder=quantity,name='new_quantity')
+                button(type='submit') Okay
+        if message
+            div.container #{message}

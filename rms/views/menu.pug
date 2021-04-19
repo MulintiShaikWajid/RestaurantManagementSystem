@@ -1,0 +1,36 @@
+extends customer_base
+
+block content
+    div.container
+        h1 MENU
+        <button id="sort_button" onclick="ascending()">Sort by ascending order of price</button>
+        <br>
+        <button id="search_button" onclick="search()">Search</button>
+        <input id="search" type="text">
+        <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            | Filter by tags
+        </button>
+        <div id="main_drop_down" class="dropdown-menu dropdown-large" aria-labelledby="dropdownMenuButton">
+            each val in all_tags
+                button.dropdown-item(id=val,onclick="filter('"+val+"')") #{val}
+        </div>
+        </div>
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Tags</th>
+                <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody id="main_table">
+                each val in items
+                    <tr>
+                        td 
+                            a(href=val['id']) #{val['name']}
+                        td #{val['tags']}
+                        td #{val['price']}
+                    </tr>
+            </tbody>
+        </table>
