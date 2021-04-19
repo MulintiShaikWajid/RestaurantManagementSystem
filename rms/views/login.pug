@@ -13,9 +13,14 @@ html(lang="en")
             input#username(type="text",placeholder='username',name='username')
             input#password(type="password",placeholder='password',name='password')
             button(type='submit') Login
+        form(style='text-align:center',action="/signup")
+            p Don't have an account?
+            button(class="btn",type="submit") SignUp
         div(style='text-align:center')
             if errors
                 ul
                     for error in errors
                         li {error.msg}
             p #{message}
+
+
