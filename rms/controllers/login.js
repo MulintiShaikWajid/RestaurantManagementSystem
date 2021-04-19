@@ -26,9 +26,13 @@ exports.login_post = [
                     }
                     else{
                         var session_id = crypto.randomBytes(64).toString('hex');
-                        person.update_session_id(session_id).then(
-                            (result)=>{
+                        person.update_session_id(session_id).then(()=>{
                                 res.cookie('session_id',session_id,{signed:true});
+                                Person.role(result.row[0].id).then((result2)=>{
+                                    if(result2.row[0].role_name=="manager"){
+                                        res.redirect('/managerhello')
+                                    }
+                                })
                                 res.redirect('/hello');
                             }
                         )

@@ -1,0 +1,26 @@
+h1(style="text-align:center") Hello !#{name}
+
+form(style="text-align:center",method="GET",action='/updatemenu')
+    button(class="btn",type="submit") Update Menu
+
+form(style="text-align:center",method="GET",action='/updateinventory')
+    button(class="btn",type="submit") Update Inventory
+
+form(style="text-align:center",method="GET",action='/updatestaff')
+    button(class="btn",type="submit") Update Staff
+
+form(style="text-align:center",method="POST",action='/currentorders')
+    button(class="btn",type="submit") View Current Orders and Table Statuses
+
+
+form(style="text-align:center",method="GET",action='/updatedetails')
+    button(class="btn",type="submit") Edit Person al Details
+
+form(style="text-align:center",method="GET",action='/statistics')
+    button(class="btn",type="submit") View Statistics
+
+form(style="text-align:center",method="GET",action='/notifications')
+    button(class="btn",type="submit") Notofications
+
+form(style="text-align:center",method="POST",action='/logout')
+    button(class="btn",type="submit") Logout

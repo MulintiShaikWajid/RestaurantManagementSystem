@@ -9,6 +9,19 @@ var usersRouter = require('./routes/users');
 
 var loginRouter = require('./routes/login');
 var helloRouter = require('./routes/hello');
+
+var managerhello = require('./routes/managerhello')
+
+var updatemenu = require('./routes/updatemenu')
+var updateinventory = require('./routes/updateinventory')
+var updatestaff = require('./routes/updatestaff')
+var currentorders = require('./routes/currentorders')
+var updatedetails = require('./routes/updatedetails')
+var statistics = require('./routes/statistics')
+var notifications = require('./routes/notifications')
+
+
+
 var app = express();
 
 // view engine setup
@@ -25,6 +38,15 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login',loginRouter);
 app.use('/hello',helloRouter);
+app.use('/managerhello',managerhello);
+app.use('/updatemenu',updatemenu)
+app.use('/updateinventory',updateinventory)
+app.use('/updatestaff',updatestaff)
+app.use('/currentorders',currentorders)
+app.use('/updatedetails',updatedetails)
+app.use('/statistics',statistics)
+app.use('/notifications',notifications)
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

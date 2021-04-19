@@ -1,0 +1,23 @@
+link(rel="stylesheet" href="/css/forms.css")
+link(rel="stylesheet" href="/css/product.css")
+
+body
+    h2(Menu-Items)
+    
+    div(class="grid")
+        for(var i=0;i<items.rows.length;i++){
+            article(class="card product-item")
+                header(class="card__header")
+                    h1(class="product__title")
+                        items.rows[i].name 
+                div(class="card__content")
+                    h3(class="product__price")Price:
+                        items.rows[i].price
+                    h3(class"product__description")Tags:
+                        items.rows[i].tags
+                    h3(class="product__description")Inventory:
+                        items.rows[i].inventory
+                div(class="card__actions")
+                    button(class="btn" type="submit")Update
+                    input(type="hidden" name="product_id" value=items.rows[i].id)
+        }

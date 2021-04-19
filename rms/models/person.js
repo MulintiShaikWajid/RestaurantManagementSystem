@@ -17,4 +17,8 @@ module.exports = class Person{
     static logout(session_id){
         return pool.query('update person set session_id = $1 where session_id = $2',[null,session_id]);
     }
+    static role(id){
+        return pool.query('select role_name from staff where id=$1 ',[id]);
+    }
+
 }
