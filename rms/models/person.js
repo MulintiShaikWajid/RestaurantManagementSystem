@@ -14,6 +14,9 @@ module.exports = class Person{
     static get_details_from_session_id(session_id){
         return pool.query('select * from person where session_id = $1',[session_id]);
     }
+    static check_customer(id){
+        return pool.query('select * from customer where id=$1',[id]);
+    }
     static logout(session_id){
         return pool.query('update person set session_id = $1 where session_id = $2',[null,session_id]);
     }

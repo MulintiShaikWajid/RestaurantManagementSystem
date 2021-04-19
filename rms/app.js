@@ -19,8 +19,7 @@ var currentorders = require('./routes/currentorders')
 var updatedetails = require('./routes/updatedetails')
 var statistics = require('./routes/statistics')
 var notifications = require('./routes/notifications')
-
-
+var customerRouter =  require('./routes/customer');
 
 var app = express();
 
@@ -33,11 +32,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("secret"));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/customer',express.static(path.join(__dirname, 'public')));
+app.use('/customer/menu',express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login',loginRouter);
 app.use('/hello',helloRouter);
+
 app.use('/managerhello',managerhello);
 app.use('/updatemenu',updatemenu)
 app.use('/updateinventory',updateinventory)
@@ -46,7 +48,7 @@ app.use('/currentorders',currentorders)
 app.use('/updatedetails',updatedetails)
 app.use('/statistics',statistics)
 app.use('/notifications',notifications)
-
+app.use('/customer',customerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

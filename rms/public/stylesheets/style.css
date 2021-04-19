@@ -1,7 +1,7 @@
 body {
   padding: 50px;
   font-family: 'Noto Sans JP', sans-serif;
-  background-color: aqua;
+  font-size: large;
 }
 
 h1 {
@@ -16,7 +16,7 @@ h1 {
 }
 
 
-input {
+.formLogin input {
   border-radius: 10px;
   margin: 10px;
   height: 25px;
@@ -24,9 +24,13 @@ input {
   font-size: large;
 }
 
-button{
+.formLogin button{
   border-radius: 10px;
   margin: 10px;
   height: 30px;
   font-size: large;
+}
+
+.jumbotron{
+  text-align: center;
 }
