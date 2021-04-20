@@ -40,8 +40,11 @@ exports.login_post = [
                                         console.log(result2);
                                         if(result2.rows[0]['role_name']=='manager'){
                                             res.redirect('/managerhello')
-                                        }
-                                        else{
+                                        }else if(result2.rows[0]['role_name']=='cashier'){
+                                            res.redirect('/cashierhello')   
+                                        }else if(result2.rows[0]['role_name']=='head-waiter'){
+                                            res.redirect('/headwaiterhello')
+                                        }else{
                                             res.redirect('/hello');
                                         }
                                 });})}})}}]

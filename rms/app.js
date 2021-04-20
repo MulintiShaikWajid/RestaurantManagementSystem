@@ -21,6 +21,9 @@ var statistics = require('./routes/statistics')
 var notifications = require('./routes/notifications')
 var customerRouter =  require('./routes/customer');
 
+var cashierhello = require('./routes/cashierhello');
+//var headwaiterhello = require('./routes/headwaiterhello');
+
 var app = express();
 
 // view engine setup
@@ -49,6 +52,9 @@ app.use('/updatedetails',updatedetails)
 app.use('/statistics',statistics)
 app.use('/notifications',notifications)
 app.use('/customer',customerRouter);
+
+app.use('/cashierhello', cashierhello);
+//app.use('/headwaiterhello', headwaiterhello);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
