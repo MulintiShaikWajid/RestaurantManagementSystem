@@ -12,10 +12,13 @@ html(lang="en")
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="javascripts/sort.js"></script>
     body
-        h1 Details
+        h1(style='text-align:center') Update Item
         div.container
             unless message
                 form(method="POST",action="")
+                    button(type='submit') Update
+                    br
+                    br
                     <label for="name">Name:</label>
                     input(type="text",id="name",value=item['name'],name='name')
                     br
@@ -23,11 +26,20 @@ html(lang="en")
                     input(type="text",id="price",value=item['price'],name='price')
                     br
                     each tag in tags
-                        <label for="tag">#{tag['type']}</label>
-                        input(type='checkbox',id='tag',name='tag',value=tag['id'])
+                        if item_tags.indexOf(tag['id'])!=-1
+                            input(type='checkbox',name="tag_".concat(tag['id'].toString()), id='tag', checked='true', value=tag['id'])
+                            <label for="tag">#{tag['type']}</label>
+                        else
+                            input(type='checkbox',name="tag_".concat(tag['id'].toString()), id='tag', value=tag['id'])
+                            <label for="tag">#{tag['type']}</label>
                     br
-                    each item in inven
-                        <label for="inven">#{item['name']}</label>
-                        input(type='text',name='inven',value='0')
-                    br
-                    button(type='submit') Update
+                    each inventory in inven
+                        if item_inven.indexOf(inventory['id'])!=-1
+                            <label for="inven">#{inventory['name']}</label>
+                            input(type='number',name="inven_".concat(inventory['id'].toString()), id='inven', value=inven_qua[inventory['id']])
+                        else
+                            <label for="inven">#{inventory['name']}</label>
+                            input(type='number',name="inven_".concat(inventory['id'].toString()), id='inven')
+                
+
+
