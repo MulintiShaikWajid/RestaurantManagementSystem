@@ -13,6 +13,17 @@ module.exports = class Updatemenu{
             where item.id=A.item_id and item.id=C.item_id;");
     }
     // 'INSERT INTO cart(user_id,item_id,quantity) VALUES ($1, $2, $3) ON CONFLICT (user_id,item_id) DO NOTHING;',[1,this.item_id,0]);
-// 'INSERT INTO orders(user_id,item_id,quantity) SELECT user_id,item_id,quantity FROM cart ON CONFLICT (user_id,item_id) DO UPDATE SET quantity=orders.quantity+EXCLUDED.quantity;');
-
+    // 'INSERT INTO orders(user_id,item_id,quantity) SELECT user_id,item_id,quantity FROM cart ON CONFLICT (user_id,item_id) DO UPDATE SET quantity=orders.quantity+EXCLUDED.quantity;');
+    static get_item(id){
+        return pool.query("select item.id,item.name,item.price,inventory_id,quantity_needed,tag_id\
+         from item,item_tag,item_item_tag,inventory,item_inventory \
+         where item.id=item_item_tag.item_id and item_item_tag.tag_id=item_tag.id and \
+         inventory.id=item_inventory.inventory_id and item.id=item_inventory.item_id and item.id=$1;",[id])
+    }
+    static all_inven(){
+        return pool.query("select * from inventory;")
+    }
+    static all_tags(){
+        return pool.query("select * from item_tag;")
+    }
     }
