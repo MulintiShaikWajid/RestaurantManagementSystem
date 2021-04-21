@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel="preconnect" href="https://fonts.gstatic.com")
+    link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet")
+    link(href="stylesheets/style.css" rel="stylesheet")
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="javascripts/sort.js"></script>
+    body
+        h1(style="text-align:center", id = "top_of_page") Hello Head waiter, #{name}!
+        div.container
+            form(method="GET",action='/editpersonaldetails')
+                input(type='hidden', name='id',value=id)
+                button(class="btn",type="submit", style = 'background-color:Blue;color:White') Edit personal details
+            br
+            form(method="POST",action='/headwaiterhello/placeofflineorder')
+                button(class="btn",type="submit", style = 'background-color:Blue;color:White') Place an Offline order
+            br
+            form(method="POST",action='/headwaiterhello/logout')
+                input(type='hidden', name='id',value=id)
+                button(class="btn",type="submit", style = 'background-color:Blue;color:White') Logout
+            br
+            a(href="#current_orders") go to 'Currently active orders'
+            br
+            br 
+            a(href="#table_requests") go to 'Table requests'
+            br
+            br 
+            a(href="#table_statuses") go to 'Live table statuses'
+            br
+            br 
+
+            h1(id = "current_orders") Currently active orders:
+            <p>Orders will disppear once the bill is paid</p>
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                    <th scope="col">Customer username</th>
+                    <th scope="col">Customer name</th>
+                    <th scope="col">Order id</th>
+                    <th scope="col">Current status</th>
+                    <th scope="col">Order served?</th>
+                    </tr>
+                </thead>
+                <tbody id="main_table">
+                    each val in current_orders
+                        <tr>
+                            td #{val['username']}
+                            td #{val['name']}
+                            td #{val['id']}
+                            td #{val['status']}
+                            td 
+                                if val['status'] != 'order-placed'
+                                    button(class="btn",type="submit", style = 'background-color:White;color:Black;border-color:Black;', disabled) Bill pending
+                                else
+                                    form(style="text-align:center",method="POST",action='/headwaiterhello/nextorderstatus')
+                                        input(type='hidden', name='order_id',value=val['id'])
+                                        button(class="btn",type="submit", style = 'background-color:Blue;color:White') Served?
+                        </tr>                   
+                </tbody>
+            </table>
+            a(href="#top_of_page") go to Top
+            h1(id = "table_requests") Table requests:
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                    <th scope="col">Customer username</th>
+                    <th scope="col">Customer name</th>
+                    <th scope="col">Table id</th>
+                    <th scope="col">Start time</th>
+                    <th scope="col">End time</th>
+                    <th scope="col">Accept?</th>
+                    <th scope="col">Reject?</th>
+                    </tr>
+                </thead>
+                <tbody id="main_table">
+                    each val in table_requests
+                        <tr>
+                            td #{val['username']}
+                            td #{val['name']}
+                            td #{val['table_id']}
+                            td #{val['start_time']}
+                            td #{val['end_time']}
+                            td 
+                                form(style="text-align:center",method="POST",action='/headwaiterhello/accepttablerequest')
+                                    input(type='hidden', name='request_id',value=val['request_id'])
+                                    button(class="btn",type="submit", style = 'background-color:Green;color:White') Accept
+                            td 
+                                form(style="text-align:center",method="POST",action='/headwaiterhello/rejecttablerequest')
+                                    input(type='hidden', name='request_id',value=val['request_id'])
+                                    button(class="btn",type="submit", style = 'background-color:Red;color:White') Reject
+                        </tr>                   
+                </tbody>
+            </table>
+            a(href="#top_of_page") go to Top
+            h1(id = "table_statuses") Live table statuses:
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                    <th scope="col">Table id</th>
+                    <th scope="col">status</th>
+                    <th scope="col">Customer username</th>
+                    <th scope="col">Customer name</th>
+                    </tr>
+                </thead>
+                <tbody id="main_table">
+                    each val in table_status
+                        <tr>
+                            td #{val['id']}
+                            td #{val['status']}
+                            td #{val['username']}
+                            td #{val['name']}
+                        </tr>                   
+                </tbody>
+            </table>
+            a(href="#top_of_page") go to Top
+        

@@ -22,7 +22,8 @@ var notifications = require('./routes/notifications')
 var customerRouter =  require('./routes/customer');
 
 var cashierhello = require('./routes/cashierhello');
-//var headwaiterhello = require('./routes/headwaiterhello');
+var headwaiterhello = require('./routes/headwaiterhello');
+var editpersonaldetails = require('./routes/editpersonaldetails');
 
 var app = express();
 
@@ -54,7 +55,8 @@ app.use('/notifications',notifications)
 app.use('/customer',customerRouter);
 
 app.use('/cashierhello', cashierhello);
-//app.use('/headwaiterhello', headwaiterhello);
+app.use('/headwaiterhello', headwaiterhello);
+app.use('/editpersonaldetails', editpersonaldetails);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

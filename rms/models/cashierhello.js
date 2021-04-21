@@ -15,7 +15,10 @@ module.exports = class Cashierhello{
     	return pool.query("update customer set rcoins = rcoins + $1 from person where person.id = customer.id \
          and person.username = $2;", [0.01*amount_paid, username]);
     }
-    static add_complete_time(order_id, completed_time){
-    	return pool.query("update my_order set completed_time = to_timestamp($1/1000) where id = $2", [completed_time, order_id]);
+    static add_complete_time(order_id){
+    	return pool.query("update my_order set completed_time = to_timestamp($1) where id = $2", [Date.now()/1000, order_id]);
+    }
+    static update_order_status(order_id){
+        return pool.query("update my_order set status = 'order-completed' where id = $1", [order_id]);
     }
 }

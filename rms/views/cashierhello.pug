@@ -13,7 +13,6 @@ html(lang="en")
     <script src="javascripts/sort.js"></script>
     body
         h1(style="text-align:center") Hello Cashier, #{name}!
-        h1 Pending Payments:
         div.container
             a(href=""): button(type="button", class="btn", style='border-color:Black') Edit personal details
             br
@@ -21,6 +20,8 @@ html(lang="en")
             a(href=""): button(type="button", class="btn", style='border-color:Black') Logout
             br
             br
+            h1 Pending Payments:
+            p Use ctrl+F/cmd+F to search customer names.
             <table class="table table-striped table-hover table-bordered">
                 <thead>
                     <tr>

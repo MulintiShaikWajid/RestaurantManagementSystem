@@ -47,13 +47,11 @@ exports.post_page = function(req,res,next){
                     res.redirect('/login');
                 }
                 else{
-                    Cashierhello.complete_payment(req.body.order_id, req.body.amount_paid).then(()=>{
-                        Cashierhello.add_rcoins(req.body.username, req.body.amount_paid).then(()=>{
-                            Cashierhello.add_complete_time(req.body.order_id, Date.now()).then(()=>{
-                                res.redirect('/cashierhello');
-                            })
-                        })
-                    })
+                    Cashierhello.complete_payment(req.body.order_id, req.body.amount_paid);
+                    Cashierhello.add_rcoins(req.body.username, req.body.amount_paid);
+                    Cashierhello.add_complete_time(req.body.order_id);
+                    Cashierhello.update_order_status(req.body.order_id);
+                    res.redirect('/cashierhello');
                 }
             }
         )
