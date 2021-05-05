@@ -76,6 +76,38 @@ exports.get_item = function(req,res,next){
             })}
 }
 
+exports.new_item = function(req,res,next){
+    console.log("hello2");
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+                (result)=>{
+                    Person.role(result.rows[0]['id']).then(
+                        (result2)=>{
+                            if(result2.rows[0]['role_name']!="manager"){
+                                res.redirect('/error');
+                            }
+                        })
+                    if(result.rowCount===0){
+                        res.cookie('redirect',req.url,{signed:true});
+                        res.redirect('/login');
+                    }
+                    else{
+                        Updatemenu.all_inven().then((inven)=>{
+                            console.log("hello");
+                            Updatemenu.all_tags().then((tags)=>{
+                                res.render('new_item',{inven:inven.rows,tags:tags.rows});
+                            })
+                        })
+                        }
+                    })
+    }
+}
+
 exports.update_item = function(req,res,next){
     if (! ("session_id" in req.signedCookies)){
         res.cookie('redirect',req.url,{signed:true});
@@ -97,18 +129,18 @@ exports.update_item = function(req,res,next){
                     }
                     else{
                         // console.log(req.body);
-                        Updatemenu.update_item(req.params.id,req.body['name'],req.body['price']);
-                        Updatemenu.delete_inven(req.params.id);
-                        Updatemenu.delete_tag(req.params.id);
+                        Updatemenu.update_item(parseInt(req.params.id),req.body['name'],parseInt(req.body['price']));
+                        Updatemenu.delete_inven(parseInt(req.params.id));
+                        Updatemenu.delete_tag(parseInt(req.params.id));
                         for (var key in req.body){
                             if(key.length<4){
                                 continue;
                             }
                             if(key.substr(0,4)=="tag_"){
-                                Updatemenu.insert_tag(req.params.id,req.body[key]);
+                                Updatemenu.insert_tag(parseInt(req.params.id),parseInt(req.body[key]));
                             }
                             if(key.substr(0,6)=="inven_" && req.body[key]!=''){
-                                Updatemenu.insert_inven(req.params.id,key.substr(6),req.body[key]);
+                                Updatemenu.insert_inven(parseInt(req.params.id),parseInt(key.substr(6)),parseInt(req.body[key]));
                             }
                         }
                         res.redirect('/updatemenu');
@@ -116,3 +148,43 @@ exports.update_item = function(req,res,next){
         })
     }
 }
+
+exports.additem = function(req,res,next){
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+                (result)=>{
+                    Person.role(result.rows[0]['id']).then(
+                        (result2)=>{
+                            if(result2.rows[0]['role_name']!="manager"){
+                                res.redirect('/error');
+                            }
+                        })
+                    if(result.rowCount===0){
+                        res.cookie('redirect',req.url,{signed:true});
+                        res.redirect('/login');
+                    }
+                    else{
+                        Updatemenu.get_newid().then((ans)=>{
+                            Updatemenu.newitem(ans.rows[0]['new_id'],req.body['name'],parseInt(req.body['price']));
+                            for (var key in req.body){
+                                if(key.length<4){
+                                    continue;
+                                }
+                                if(key.substr(0,4)=="tag_"){
+                                    Updatemenu.insert_tag(ans.rows[0]['new_id'],parseInt(req.body[key]));
+                                }
+                                if(key.substr(0,6)=="inven_" && req.body[key]!=''){
+                                    Updatemenu.insert_inven(ans.rows[0]['new_id'],parseInt(key.substr(6)),req.body[key]);
+                                }
+                            }
+                        })
+                        res.redirect('/updatemenu');
+                    }
+                })
+        }
+    }
