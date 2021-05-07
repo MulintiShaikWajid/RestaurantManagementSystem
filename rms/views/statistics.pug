@@ -1,0 +1,22 @@
+google.charts.load('current', {packages: ['corechart', 'line']})
+google.charts.setOnLoadCallback(drawChart)
+
+function.drawChart() {
+
+      var data = new google.visualization.DataTable()
+      data.addColumn('number', 'X')
+      data.addColumn('number', 'Dogs')
+      script.
+          var tests = #{tests}
+
+      var options = {
+          hAxis : {
+            title : 'Time'},
+          vAxis : {
+            title : 'Popularity'}}
+      
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'))
+
+      chart.draw(tests, options)
+      
