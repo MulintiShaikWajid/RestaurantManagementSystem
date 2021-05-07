@@ -1,22 +1,30 @@
-google.charts.load('current', {packages: ['corechart', 'line']})
-google.charts.setOnLoadCallback(drawChart)
-
-function.drawChart() {
-
-      var data = new google.visualization.DataTable()
-      data.addColumn('number', 'X')
-      data.addColumn('number', 'Dogs')
-      script.
-          var tests = #{tests}
-
-      var options = {
-          hAxis : {
-            title : 'Time'},
-          vAxis : {
-            title : 'Popularity'}}
-      
-
-      var chart = new google.visualization.LineChart(document.getElementById('chart_div'))
-
-      chart.draw(tests, options)
-      
+<!DOCTYPE html>
+head
+    <title>Statistics</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/> 
+    <script src="https://code.angularjs.org/1.4.12/angular.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"/>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    body
+        br
+        div(id = 'mydiv' class="container")
+            br
+            canvas(id = "mychart")
+            console.log(b)
+    script.
+        let mychart = document.getElementById('mychart').getContext('2d');
+        var count = [#{b[0]},#{b[1]},#{b[2]},#{b[3]},#{b[4]},#{b[5]},#{b[6]}];
+        let barchart = new Chart(mychart, {
+            type : 'line',
+            data : {
+                labels : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+                datasets : [{
+                    label : 'Order day wise',
+                    backgroundColor : 'rgb(54, 162, 235)',
+                    data : count,
+                    fill : false,
+                    borderColor : 'rgb(54, 162, 235)',
+                    tension : 0 }]}});
