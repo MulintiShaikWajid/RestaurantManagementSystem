@@ -12,34 +12,35 @@ html(lang="en")
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="javascripts/sort.js"></script>
     body
-        h1(style='text-align:center') Add Item
+        h1(style='text-align:center') Update Ingredients
         div.container
             unless message
                 if err
                     <p style="color:Red">#{err_msg}</p>
+                form(method="POST",action="/updateinventory/delete")
+                    input(type = "hidden", name = "id", value = id)
+                    button(type='submit') Delete
+                    br
+                    br
                 form(method="POST",action="")
-                    button(type='submit') Add
+                    button(type='submit') Update
                     br
                     br
                     <label for="name", style="color:Orange;"><b>Name:</b></label>
                     br
                     <p style="font-size:11px">Enter an unused item name. The data in this form will not be stored otherwise.</p>
-                    input(type="text",id="name",name='name', required)
+                    input(type="text",id="name",name='name', value = info['name'], required)
                     br
+                    <label for="price", style="color:Orange;"><b>Quantity remanining:</b></label>
                     br
-                    <label for="price", style="color:Orange;"><b>Price:</b></label>
+                    input(type="number", step="any", min = "0", value = info['quantity_remaining'],id="quan_remain",name='quan_remain', required)
                     br
-                    input(type="number", step="any", min = "0",id="price",name='price')
+                    <label for="price", style="color:Orange;"><b>Threshold for alert:</b></label>
                     br
-                    <p style="color:Orange;"><b>Tags:</b></p>
-                    each tag in tags
-                        <label for="tag">#{tag['type']}</label>
-                        input(type='checkbox',name="tag_".concat(tag['id'].toString()), id='tag', value=tag['id'], style = "margin: 0 10px 0 0")
+                    input(type="number", step="any", min = "0", value = info['threshold'],id="threshold",name='threshold', required)
                     br
-                    <p style="color:Orange;"><b>Ingredients:</b></p>
-                    each inventory in inven
-                        <label for="inven">#{inventory['name']}</label>
-                        input(type="number", step="any", min = "0",name="inven_".concat(inventory['id'].toString()), id='inven', style = "width:100px;margin: 0 20px 0 0")
-                
-
+                    <label for="price", style="color:Orange;"><b>Units:</b></label>
+                    br
+                    input(type="text",id="units",name='units', value = info['units'], required)
+                    br
 

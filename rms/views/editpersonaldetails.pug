@@ -13,9 +13,59 @@ html(lang="en")
     <script src="javascripts/sort.js"></script>
     body
         h1(style="text-align:center", id = "top_of_page") Hello, #{name}!
-        form(method="POST",action='')
-             
+        
+        div.container
+            h3 Edit your personal details:
+            br
+            br
+            if err
+                <p style = "color:Red">#{err_msg}</p>
+            form(method="POST",action='/editpersonaldetails/update')
+                <label>Full Name:</label>
+                br
+                input(type='text', name = 'full_name', value = name, required)
+                br
+                <label>New Password:</label>
+                br
+                input(type='password', name = 'password', placeholder="Password")
+                input(type = "hidden", name = 'hidden_password', value=pd.password)
+                br
+                <label>Phone numbers(comma separated):</label>
+                br
+                input(type='text', name = 'phone_no', value = phone_numbers)
+                br
+                br
+                <p><b>Address:</b></p>
+                br
+                <label>House No:</label>
+                br
+                input(type='text', name = 'house_no', value = pd.address_house_no)
+                br
+                <label>Street:</label>
+                br
+                input(type='text', name = 'street', value = pd.address_street)
+                br
+                <label>City:</label>
+                br
+                input(type='text', name = 'city', value = pd.address_city)
+                br
+                <label>State:</label>
+                br
+                input(type='text', name = 'state', value = pd.address_state)
+                br
+                <label>Coutry:</label>
+                br
+                input(type='text', name = 'country', value = pd.address_country)
+                br
+                <label>PIN:</label>
+                br
+                input(type='number', min = "0", step = "1", name = 'pin', value = pd.address_pin_code)
+                br
+                br
 
-            input(type='hidden', name='id',value=id)
-            button(class="btn",type="submit", style = 'background-color:Blue;color:White') Update
+                input(type='hidden', name='id',value=id)
+                input(type='hidden', name='role',value=role)
+                br
+                br
+                button(class="btn",type="submit", style = 'background-color:Blue;color:White') Update
         

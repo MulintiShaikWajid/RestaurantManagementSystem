@@ -37,7 +37,7 @@ exports.login_post = [
                                     });
                                         // else{
                                 Person.role(result.rows[0]['id']).then((result2)=>{
-                                        console.log(result2);
+                                        // console.log(result2);
                                         if(result2.rows[0]['role_name']=='manager'){
                                             res.redirect('/managerhello')
                                         }else if(result2.rows[0]['role_name']=='cashier'){

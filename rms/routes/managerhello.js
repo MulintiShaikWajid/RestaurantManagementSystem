@@ -3,5 +3,6 @@ var router = express.Router();
 var managerhello = require('../controllers/managerhello');
 
 router.get('/',managerhello.hello_get);
-// router.post('/',hello_controller.logout)
+//logout is using post of cashier in .pug
+
 module.exports = router;

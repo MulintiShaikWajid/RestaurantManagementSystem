@@ -12,7 +12,7 @@ html(lang="en")
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="javascripts/sort.js"></script>
     body
-        h1(style='text-align:center') Add Item
+        h1(style='text-align:center') Add Ingredients
         div.container
             unless message
                 if err
@@ -26,20 +26,16 @@ html(lang="en")
                     <p style="font-size:11px">Enter an unused item name. The data in this form will not be stored otherwise.</p>
                     input(type="text",id="name",name='name', required)
                     br
+                    <label for="price", style="color:Orange;"><b>Quantity remanining:</b></label>
                     br
-                    <label for="price", style="color:Orange;"><b>Price:</b></label>
+                    input(type="number", step="any", min = "0",id="quan_remain",name='quan_remain', required)
                     br
-                    input(type="number", step="any", min = "0",id="price",name='price')
+                    <label for="price", style="color:Orange;"><b>Threshold for alert:</b></label>
                     br
-                    <p style="color:Orange;"><b>Tags:</b></p>
-                    each tag in tags
-                        <label for="tag">#{tag['type']}</label>
-                        input(type='checkbox',name="tag_".concat(tag['id'].toString()), id='tag', value=tag['id'], style = "margin: 0 10px 0 0")
+                    input(type="number", step="any", min = "0",id="threshold",name='threshold', required)
                     br
-                    <p style="color:Orange;"><b>Ingredients:</b></p>
-                    each inventory in inven
-                        <label for="inven">#{inventory['name']}</label>
-                        input(type="number", step="any", min = "0",name="inven_".concat(inventory['id'].toString()), id='inven', style = "width:100px;margin: 0 20px 0 0")
-                
-
+                    <label for="price", style="color:Orange;"><b>Units:</b></label>
+                    br
+                    input(type="text",id="units",name='units', required)
+                    br
 

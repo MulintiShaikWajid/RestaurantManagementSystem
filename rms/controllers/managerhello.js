@@ -18,7 +18,7 @@ exports.hello_get = function(req,res,next){
                     res.redirect('/login');
                 }
                 else{
-                    res.render('managerhello',{name : result.rows[0]['name']});
+                    res.render('managerhello',{name : result.rows[0]['name'], id: result.rows[0]['id']});
                 }
             }
         )

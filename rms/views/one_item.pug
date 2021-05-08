@@ -11,35 +11,50 @@ html(lang="en")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="javascripts/sort.js"></script>
+ 
     body
         h1(style='text-align:center') Update Item
         div.container
             unless message
+                if err
+                    <p style="color:Red">#{err_msg}</p>
+                form(method="POST",action="/updatemenu/delete")
+                    input(type = "hidden", name = "id", value = id)
+                    button(type='submit') Delete
+                    br
+                    br
                 form(method="POST",action="")
                     button(type='submit') Update
                     br
                     br
-                    <label for="name">Name:</label>
-                    input(type="text",id="name",value=item['name'],name='name')
+                    <label for="name", style="color:Orange;"><b>Name:</b></label>
                     br
-                    <label for="price">Price:</label>
-                    input(type="text",id="price",value=item['price'],name='price')
+                    <p style="font-size:11px">Enter an unused item name. The changes to data in this form will not be stored otherwise.</p>
+                    input(type="text",id="name",value=item['name'],name='name', required)
                     br
+                    br
+                    <label for="price", style="color:Orange;"><b>Price:</b></label>
+                    br
+                    input(type="number", step="any", min = "0",id="price",value=item['price'],name='price')
+                    br
+                    br
+                    <p style="color:Orange;"><b>Tags:</b></p>
                     each tag in tags
                         if item_tags.indexOf(tag['id'])!=-1
-                            input(type='checkbox',name="tag_".concat(tag['id'].toString()), id='tag', checked='true', value=tag['id'])
                             <label for="tag">#{tag['type']}</label>
+                            input(type='checkbox',name="tag_".concat(tag['id'].toString()), id='tag', checked='true', value=tag['id'], style = "margin: 0 10px 0 0")
                         else
-                            input(type='checkbox',name="tag_".concat(tag['id'].toString()), id='tag', value=tag['id'])
                             <label for="tag">#{tag['type']}</label>
+                            input(type='checkbox',name="tag_".concat(tag['id'].toString()), id='tag', value=tag['id'], style = "margin: 0 10px 0 0")
                     br
+                    <p style="color:Orange;"><b>Ingredients:</b></p>
                     each inventory in inven
                         if item_inven.indexOf(inventory['id'])!=-1
                             <label for="inven">#{inventory['name']}</label>
-                            input(type='number',name="inven_".concat(inventory['id'].toString()), id='inven', value=inven_qua[inventory['id']])
+                            input(type="number", step="any", min = "0",name="inven_".concat(inventory['id'].toString()), id='inven', value=inven_qua[inventory['id']], style = "width:100px;margin: 0 20px 0 0")
                         else
                             <label for="inven">#{inventory['name']}</label>
-                            input(type='number',name="inven_".concat(inventory['id'].toString()), id='inven')
+                            input(type="number", step="any", min = "0",name="inven_".concat(inventory['id'].toString()), id='inven', style = "width:100px;margin: 0 20px 0 0")
                 
 
 

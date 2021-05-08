@@ -12,28 +12,34 @@ html(lang="en")
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="javascripts/sort.js"></script>
     body
-        h1(style="text-align:center") Hello! #{name}
-
-        form(style="text-align:center",method="GET",action='/updatemenu')
-            button(class="btn",type="submit") Update Menu
-
-        form(style="text-align:center",method="GET",action='/updateinventory')
-            button(class="btn",type="submit") Update Inventory
-
-        form(style="text-align:center",method="GET",action='/updatestaff')
-            button(class="btn",type="submit") Update Staff
-
-        form(style="text-align:center",method="GET",action='/currentorders')
-            button(class="btn",type="submit") View Current Orders and Table Statuses
-
-        form(style="text-align:center",method="GET",action='/updatedetails')
-            button(class="btn",type="submit") Edit Personal Details
-
-        form(style="text-align:center",method="GET",action='/statistics')
-            button(class="btn",type="submit") View Statistics
-
-        form(style="text-align:center",method="GET",action='/notifications')
-            button(class="btn",type="submit") Notifications
-
-        form(style="text-align:center",method="POST",action='/logout')
-            button(class="btn",type="submit") Logout
+        h1(style="text-align:center") Hello Manager, #{name}!
+        div.container
+            br
+            form(style="text-align:center",method="GET",action='/updatemenu')
+                button(class="btn",type="submit", style="border-color:Black") Update Menu
+            br
+            form(style="text-align:center",method="GET",action='/updateinventory')
+                button(class="btn",type="submit", style="border-color:Black") Update Ingredients
+            br
+            form(style="text-align:center",method="GET",action='/updatetags')
+                button(class="btn",type="submit", style="border-color:Black") Update Item Tags
+            br
+            form(style="text-align:center",method="GET",action='/updatestaff')
+                button(class="btn",type="submit", style="border-color:Black") Update Staff
+            br
+            form(style="text-align:center",method="GET",action='/currentorders')
+                button(class="btn",type="submit", style="border-color:Black") View Current Orders and Table Statuses
+            br
+            form(style="text-align:center",method="POST",action='/editpersonaldetails')
+                input(type='hidden', name='id',value=id)
+                input(type='hidden', name='role',value='manager')
+                button(class="btn",type="submit", style="border-color:Black") Edit Personal Details
+            br
+            form(style="text-align:center",method="GET",action='/statistics')
+                button(class="btn",type="submit", style="border-color:Black") View Statistics
+            br
+            form(style="text-align:center",method="GET",action='/notifications')
+                button(class="btn",type="submit", style="border-color:Black") Notifications
+            br
+            form(style="text-align:center",method="POST",action='cashierhello/logout')
+                button(class="btn",type="submit", style="border-color:Black") Logout

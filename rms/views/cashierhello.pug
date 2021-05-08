@@ -12,12 +12,16 @@ html(lang="en")
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="javascripts/sort.js"></script>
     body
-        h1(style="text-align:center") Hello Cashier, #{name}!
+        h1(style="text-align:center", id = "top_of_page") Hello Cashier, #{name}!
         div.container
-            a(href=""): button(type="button", class="btn", style='border-color:Black') Edit personal details
+            form(method="POST",action='/editpersonaldetails')
+                input(type='hidden', name='id',value=id)
+                input(type='hidden', name='role',value='cashier')
+                button(class="btn",type="submit", style = 'background-color:Blue;color:White') Edit personal details
             br
-            br
-            a(href=""): button(type="button", class="btn", style='border-color:Black') Logout
+            form(method="POST",action='/cashierhello/logout')
+                input(type='hidden', name='id',value=id)
+                button(class="btn",type="submit", style = 'background-color:Blue;color:White') Logout
             br
             br
             h1 Pending Payments:
@@ -40,7 +44,7 @@ html(lang="en")
                             td #{val['id']}
                             td #{val['pending_payment']}
                             td 
-                                form(style="text-align:center",method="POST",action='')
+                                form(style="text-align:center", method="POST", action='')
                                     input(type='hidden', name='order_id',value=val['id'])
                                     input(type='hidden', name='amount_paid',value=val['pending_payment'])
                                     input(type='hidden', name='username',value=val['username'])
@@ -48,4 +52,5 @@ html(lang="en")
                         </tr>                   
                 </tbody>
             </table>
+            a(href="#top_of_page") go to Top
         

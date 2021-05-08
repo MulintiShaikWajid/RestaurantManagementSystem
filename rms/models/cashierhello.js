@@ -21,4 +21,7 @@ module.exports = class Cashierhello{
     static update_order_status(order_id){
         return pool.query("update my_order set status = 'order-completed' where id = $1", [order_id]);
     }
+    static logout(userid){
+        return pool.query("update person set session_id=NULL where id=$1",[userid]);
+    }
 }

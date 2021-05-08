@@ -12,8 +12,11 @@ html(lang="en")
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="javascripts/sort.js"></script>
     body
-        h1 Menu
+        h1(style="text-align:center", id = "top_of_page") Hello Manager, #{name}!
         div.container
+            h1 Menu
+            //- if err
+            //-     <p style="color:Red">#{err_msg}</p>
             form(method="GET",action='updatemenu/newitem')
                 input(type="hidden",name="temp",value="tem")
                 button(type='submit') Add item
@@ -38,3 +41,4 @@ html(lang="en")
                         </tr>
                 </tbody>
             </table>
+            a(href="#top_of_page") go to Top

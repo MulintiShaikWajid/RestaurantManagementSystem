@@ -13,10 +13,10 @@ var helloRouter = require('./routes/hello');
 var managerhello = require('./routes/managerhello')
 
 var updatemenu = require('./routes/updatemenu')
+var updatetags = require('./routes/updatetags')
 var updateinventory = require('./routes/updateinventory')
 var updatestaff = require('./routes/updatestaff')
 var currentorders = require('./routes/currentorders')
-var updatedetails = require('./routes/updatedetails')
 var statistics = require('./routes/statistics')
 var notifications = require('./routes/notifications')
 var customerRouter =  require('./routes/customer');
@@ -45,13 +45,13 @@ app.use('/login',loginRouter);
 app.use('/hello',helloRouter);
 
 app.use('/managerhello',managerhello);
-app.use('/updatemenu',updatemenu)
-app.use('/updateinventory',updateinventory)
-app.use('/updatestaff',updatestaff)
-app.use('/currentorders',currentorders)
-app.use('/updatedetails',updatedetails)
-app.use('/statistics',statistics)
-app.use('/notifications',notifications)
+app.use('/updatemenu',updatemenu);
+app.use('/updatetags',updatetags);
+app.use('/updateinventory',updateinventory);
+app.use('/updatestaff',updatestaff);
+app.use('/currentorders',currentorders);
+app.use('/statistics',statistics);
+app.use('/notifications',notifications);
 app.use('/customer',customerRouter);
 
 app.use('/cashierhello', cashierhello);

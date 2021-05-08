@@ -14,8 +14,9 @@ html(lang="en")
     body
         h1(style="text-align:center", id = "top_of_page") Hello Head waiter, #{name}!
         div.container
-            form(method="GET",action='/editpersonaldetails')
+            form(method="POST",action='/editpersonaldetails')
                 input(type='hidden', name='id',value=id)
+                input(type='hidden', name='role',value='head-waiter')
                 button(class="btn",type="submit", style = 'background-color:Blue;color:White') Edit personal details
             br
             form(method="POST",action='/headwaiterhello/placeofflineorder')
@@ -28,15 +29,15 @@ html(lang="en")
             a(href="#current_orders") go to 'Currently active orders'
             br
             br 
-            a(href="#table_requests") go to 'Table requests'
-            br
-            br 
             a(href="#table_statuses") go to 'Live table statuses'
             br
             br 
+            a(href="#table_requests") go to 'Table requests'
+            br
+            br
 
             h1(id = "current_orders") Currently active orders:
-            <p>Orders will disppear once the bill is paid</p>
+            <p>Orders will disppear once the bill is paid at Cashier</p>
             <table class="table table-striped table-hover table-bordered">
                 <thead>
                     <tr>
@@ -65,39 +66,6 @@ html(lang="en")
                 </tbody>
             </table>
             a(href="#top_of_page") go to Top
-            h1(id = "table_requests") Table requests:
-            <table class="table table-striped table-hover table-bordered">
-                <thead>
-                    <tr>
-                    <th scope="col">Customer username</th>
-                    <th scope="col">Customer name</th>
-                    <th scope="col">Table id</th>
-                    <th scope="col">Start time</th>
-                    <th scope="col">End time</th>
-                    <th scope="col">Accept?</th>
-                    <th scope="col">Reject?</th>
-                    </tr>
-                </thead>
-                <tbody id="main_table">
-                    each val in table_requests
-                        <tr>
-                            td #{val['username']}
-                            td #{val['name']}
-                            td #{val['table_id']}
-                            td #{val['start_time']}
-                            td #{val['end_time']}
-                            td 
-                                form(style="text-align:center",method="POST",action='/headwaiterhello/accepttablerequest')
-                                    input(type='hidden', name='request_id',value=val['request_id'])
-                                    button(class="btn",type="submit", style = 'background-color:Green;color:White') Accept
-                            td 
-                                form(style="text-align:center",method="POST",action='/headwaiterhello/rejecttablerequest')
-                                    input(type='hidden', name='request_id',value=val['request_id'])
-                                    button(class="btn",type="submit", style = 'background-color:Red;color:White') Reject
-                        </tr>                   
-                </tbody>
-            </table>
-            a(href="#top_of_page") go to Top
             h1(id = "table_statuses") Live table statuses:
             <table class="table table-striped table-hover table-bordered">
                 <thead>
@@ -115,6 +83,41 @@ html(lang="en")
                             td #{val['status']}
                             td #{val['username']}
                             td #{val['name']}
+                        </tr>                   
+                </tbody>
+            </table>
+            a(href="#top_of_page") go to Top
+            h1(id = "table_requests") Table requests:
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                    <th scope="col">Customer username</th>
+                    <th scope="col">Customer name</th>
+                    <th scope="col">Table id</th>
+                    <th scope="col">Requested time</th>
+                    <th scope="col">Start time</th>
+                    <th scope="col">End time</th>
+                    <th scope="col">Accept?</th>
+                    <th scope="col">Reject?</th>
+                    </tr>
+                </thead>
+                <tbody id="main_table">
+                    each val in table_requests
+                        <tr>
+                            td #{val['username']}
+                            td #{val['name']}
+                            td #{val['table_id']}
+                            td #{val['requested_time']}
+                            td #{val['start_time']}
+                            td #{val['end_time']}
+                            td 
+                                form(style="text-align:center",method="POST",action='/headwaiterhello/accepttablerequest')
+                                    input(type='hidden', name='request_id',value=val['request_id'])
+                                    button(class="btn",type="submit", style = 'background-color:Green;color:White') Accept
+                            td 
+                                form(style="text-align:center",method="POST",action='/headwaiterhello/rejecttablerequest')
+                                    input(type='hidden', name='request_id',value=val['request_id'])
+                                    button(class="btn",type="submit", style = 'background-color:Red;color:White') Reject
                         </tr>                   
                 </tbody>
             </table>

@@ -116,3 +116,27 @@ exports.reject_table_request = function(req,res,next){
 }
 
 
+exports.logout = (req,res,next) => {
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.cookie('redirect',req.url,{signed:true});
+                    res.redirect('/login');
+                }
+                else{
+                    Headwaiterhello.logout(result.rows[0]['id']).then(
+                        (result1)=>{
+                            res.redirect('/login');
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
