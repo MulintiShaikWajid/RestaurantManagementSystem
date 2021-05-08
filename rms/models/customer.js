@@ -71,5 +71,45 @@ module.exports = class Item{
     static check_phone(phone){
         return pool.query("select * from phone where phone_number=$1",[phone]);
     }
-}
+    static personal_details(id){
+        return pool.query("select * from person where id=$1",[id]);
+    }
+    static phone_numbers(id){
+        return pool.query("select * from phone where id=$1",[id]);
+    }
+    static update_name(id,name){
+        return pool.query("update person set name=$2 where id=$1",[id,name]);
+    }
+    static update_username(id,name){
+        return pool.query("update person set username=$2 where id=$1",[id,username]);
+    }
+    static update_hno(id,name){
+        return pool.query("update person set address_house_no=$2 where id=$1",[id,name]);
+    }
+    static update_street(id,name){
+        return pool.query("update person set address_street=$2 where id=$1",[id,name]);
+    }
+    static update_city(id,name){
+        return pool.query("update person set address_city=$2 where id=$1",[id,name]);
+    }
+    static update_state(id,name){
+        return pool.query("update person set address_state=$2 where id=$1",[id,name]);
+    }
+    static update_country(id,name){
+        return pool.query("update person set address_country=$2 where id=$1",[id,name]);
+    }
+    static update_pin(id,name){
+        return pool.query("update person set address_pin_code=$2 where id=$1",[id,name]);
+    }
+    static update_phone(id,name){
+        console.log(name);
+        return pool.query("delete from phone where id=$1 and phone_number=$2",[id,name]);
+    }
+    static update_password(id,name){
+        return pool.query("update person set password=$2 where id=$1",[id,name]);
+    }
+    static add_phone(id,name){
+        return pool.query("insert into phone values ($1,$2)",[id,name]);
+    }
+}  
 

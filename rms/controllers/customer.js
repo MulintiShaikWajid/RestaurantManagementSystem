@@ -630,3 +630,332 @@ exports.create_post = (req,res,next) => {
     )
 
 }
+
+
+
+exports.edit_get = (req,res,next) => {
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.cookie('redirect',req.url,{signed:true});
+                    res.redirect('/login');
+                }
+                else{
+                    Customer.personal_details(result.rows[0]['id']).then(
+                        (result1) => {
+                            Customer.phone_numbers(result.rows[0]['id']).then(
+                                (result2) => {
+                                    res.render('customer_edit',{details:result1.rows[0],phone_numbers:result2.rows});
+                                }
+                            )
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
+
+
+exports.name_post = (req,res,next) => {
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.cookie('redirect',req.url,{signed:true});
+                    res.redirect('/login');
+                }
+                else{
+                    Customer.update_name(result.rows[0]['id'],req.body.name).then(
+                        (result1) => {
+                            res.redirect('/customer/edit')
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
+
+exports.username_post = (req,res,next) => {
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.cookie('redirect',req.url,{signed:true});
+                    res.redirect('/login');
+                }
+                else{
+                    Customer.check_username(req.body.username).then(
+                        (result1) => {
+                            if(result1.rowCount>0){
+                                res.render('error',{message:"Username already used"});
+                            }
+                            else{
+                                Customer.update_username(result.rows[0]['id'],req.body.username).then(
+                                    (result2) => {
+                                        res.redirect('/customer/edit');
+                                    }
+                                )
+                            }
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
+
+
+exports.password_post = (req,res,next) => {
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.cookie('redirect',req.url,{signed:true});
+                    res.redirect('/login');
+                }
+                else{
+                    password = crypto.createHash('sha256').update(req.body.password+'squirrel').digest('hex');
+                    Customer.update_password(result.rows[0]['id'],password).then(
+                        (result1) => {
+                            res.redirect('/customer/edit')
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
+
+exports.street_post = (req,res,next) => {
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.cookie('redirect',req.url,{signed:true});
+                    res.redirect('/login');
+                }
+                else{
+                    Customer.update_street(result.rows[0]['id'],req.body.street).then(
+                        (result1) => {
+                            res.redirect('/customer/edit')
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
+
+exports.hno_post = (req,res,next) => {
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.cookie('redirect',req.url,{signed:true});
+                    res.redirect('/login');
+                }
+                else{
+                    Customer.update_hno(result.rows[0]['id'],req.body.hno).then(
+                        (result1) => {
+                            res.redirect('/customer/edit')
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
+
+exports.city_post = (req,res,next) => {
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.cookie('redirect',req.url,{signed:true});
+                    res.redirect('/login');
+                }
+                else{
+                    Customer.update_city(result.rows[0]['id'],req.body.city).then(
+                        (result1) => {
+                            res.redirect('/customer/edit')
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
+
+exports.state_post = (req,res,next) => {
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.cookie('redirect',req.url,{signed:true});
+                    res.redirect('/login');
+                }
+                else{
+                    Customer.update_state(result.rows[0]['id'],req.body.state).then(
+                        (result1) => {
+                            res.redirect('/customer/edit')
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
+
+exports.country_post = (req,res,next) => {
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.cookie('redirect',req.url,{signed:true});
+                    res.redirect('/login');
+                }
+                else{
+                    Customer.update_country(result.rows[0]['id'],req.body.country).then(
+                        (result1) => {
+                            res.redirect('/customer/edit')
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
+
+exports.pin_post = (req,res,next) => {
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.cookie('redirect',req.url,{signed:true});
+                    res.redirect('/login');
+                }
+                else{
+                    Customer.update_pin(result.rows[0]['id'],req.body.pin).then(
+                        (result1) => {
+                            res.redirect('/customer/edit')
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
+
+exports.phone_post = (req,res,next) => {
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.cookie('redirect',req.url,{signed:true});
+                    res.redirect('/login');
+                }
+                else{
+                    Customer.update_phone(result.rows[0]['id'],req.params.number).then(
+                        (result1) => {
+                            console.log("WHO")
+                            res.redirect('/customer/edit')
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
+
+exports.add_phone_post = (req,res,next) => {
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.cookie('redirect',req.url,{signed:true});
+                    res.redirect('/login');
+                }
+                else{
+                    console.log("WHERE");
+                    Customer.check_phone(req.body.phone).then(
+                        (result1) => {
+                            if(result1.rowCount>0){
+                                res.render('error',{message:"Phone number already used"});
+                            }
+                            else{
+                                Customer.add_phone(result.rows[0]['id'],req.body.phone).then(
+                                    (result2) => {
+                                        res.redirect('/customer/edit');
+                                    }
+                                )
+                            }
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
