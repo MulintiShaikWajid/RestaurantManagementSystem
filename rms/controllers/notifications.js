@@ -24,7 +24,7 @@ exports.get_page = function(req,res,next){
                         res.render('notifications',{name : result.rows[0]['name'],notify:result3.rows});
                     })
                 }
-            }
+            } 
         )
     }
 }

@@ -2,26 +2,45 @@ extends customer_base
 
 block content
     div.container
-        h1 MENU
-        <button id="sort_button" onclick="ascending()">Sort by ascending order of price</button>
-        <br>
-        <button id="search_button" onclick="search()">Search</button>
-        <input id="search" type="text">
-        <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            | Filter by tags
-        </button>
-        <div id="main_drop_down" class="dropdown-menu dropdown-large" aria-labelledby="dropdownMenuButton">
-            each val in all_tags
-                button.dropdown-item(id=val,onclick="filter('"+val+"')") #{val}
-        </div>
-        </div>
-        <table class="table table-striped table-hover table-bordered">
+        div.container
+            h1(style="font-family: 'Sacramento', cursive; font-size:60px") Menu
+        div.container
+            div.row
+                div.col
+                    <input id="search" type="text">
+                    <button id="search_button" onclick="search()">Search</button>
+                div.col(style="text-align: right")
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                    | Filter by tags
+                    </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Select tags</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    each val in all_tags
+                        button.dropdown-item(id=val,onclick="filter('"+val+"')") #{val}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+            </div>
+        <table class="table-responsive-sm table table-striped table-hover table-bordered">
             <thead>
                 <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Tags</th>
-                <th scope="col">Price</th>
+                <th scope="col"><span>Price<button id="sort_button" style="margin-left: 30px" onclick="ascending()">&darr;</button></span></th>
+                <th scope="col"><span>Average rating<button id="review_sort_button" style="margin-left: 30px" onclick="myascending()">&darr;</button></span></th>
                 </tr>
             </thead>
             <tbody id="main_table">
@@ -31,6 +50,7 @@ block content
                             a(href=val['id']) #{val['name']}
                         td #{val['tags']}
                         td #{val['price']}
+                        td #{val['stars']}
                     </tr>
             </tbody>
         </table>

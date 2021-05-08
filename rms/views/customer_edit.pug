@@ -1,0 +1,93 @@
+extends customer_base
+
+block content
+    div.container
+        div.container
+            h1(style="font-family: 'Sacramento', cursive; font-size:60px") Edit details
+        if message
+            div.container
+                p #{message}
+        <table class="table-responsive-sm table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                <th scope="col">Details</th>
+                <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody id="main_table">
+                    <tr>
+                        td Name
+                        td 
+                            form(class="form-inline" method="POST" action="/customer/name/")
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="name" name="name" placeholder=details['name'])
+                                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    </tr>
+                    <tr>
+                        td Password
+                        td 
+                            form(class="form-inline" method="POST" action="/customer/password/")
+                                input(type="password" required class="form-control mb-2 mr-sm-2" id="password" name="password" placeholder=details['password'])
+                                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    </tr>
+                    <tr>
+                        td Username
+                        td 
+                            form(class="form-inline" method="POST" action="/customer/username/")
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="username" name="username" placeholder=details['username'])
+                                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    </tr>
+                    <tr>
+                        td House Number
+                        td 
+                            form(class="form-inline" method="POST" action="/customer/hno/")
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="hno" name="hno" placeholder=details['address_house_no'])
+                                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    </tr>
+                    <tr>
+                        td Street
+                        td 
+                            form(class="form-inline" method="POST" action="/customer/street/")
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="street" name="street" placeholder=details['address_street'])
+                                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    </tr>
+                    <tr>
+                        td City
+                        td 
+                            form(class="form-inline" method="POST" action="/customer/city/")
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="city" name="city" placeholder=details['address_city'])
+                                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    </tr>
+                    <tr>
+                        td State
+                        td 
+                            form(class="form-inline" method="POST" action="/customer/state/")
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="state" name="state" placeholder=details['address_state'])
+                                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    </tr>
+                    <tr>
+                        td Country
+                        td 
+                            form(class="form-inline" method="POST" action="/customer/country/")
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="country" name="country" placeholder=details['address_country'])
+                                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    </tr>
+                    <tr>
+                        td Pin code
+                        td 
+                            form(class="form-inline" method="POST" action="/customer/name/")
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="pin" name="pin" placeholder=details['address_pin_code'])
+                                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    </tr>
+                    each val in phone_numbers
+                        <tr>
+                            td #{val['phone_number']}
+                            td 
+                                form(class="form-inline" method="POST" action="/customer/phone/"+val['phone_number'])
+                                    <button type="submit" class="btn btn-primary mb-2">Delete</button>
+            </tbody>
+        </table>
+        div.container(style="text-align:center")
+            Add Phone number
+            form(class="form-inline" method="POST" action="/customer/phone/add" style="text-align:center")
+                input(type="text" required class="form-control mb-2 mr-sm-2" id="phone" name="phone" pattern="[0-9]{10}" title="Ten digit mobile number")
+                <button type="submit" class="btn btn-primary mb-2">Add phone number</button>

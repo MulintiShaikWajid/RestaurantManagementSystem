@@ -5,3 +5,4 @@ var statistics = require('../controllers/statistics');
 router.get('/',statistics.get_page);
 
 module.exports = router;
+ 

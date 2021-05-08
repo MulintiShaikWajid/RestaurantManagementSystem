@@ -1,0 +1,30 @@
+extends customer_base
+
+block content
+    div.container
+        <form method="POST" action="/customer/book/">
+            <div class="form-group">
+                <label for="tableno">Table Number</label>
+                input(type="number" required min="0" max=total_tables class="form-control mb-2 mr-sm-2" id="tableno" name="tableno")
+            </div>
+            <div class="form-group">
+                <label for="year">Year</label>
+                input(type="number" min="2021" required class="form-control mb-2 mr-sm-2" id="year" name="year")
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" for="month">Month</label>
+                input(type="number" min="1" max="12" required class="form-control mb-2 mr-sm-2" id="month" name="month")
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" for="day">Day</label>
+                input(type="number" required class="form-control mb-2 mr-sm-2" id="day" name="day")
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" for="hour">Hour</label>
+                input(type="number" min="0" max="23" required class="form-control mb-2 mr-sm-2" id="hour" name="hour")
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    div.container
+        if message
+            p #{message}

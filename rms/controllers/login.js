@@ -1,5 +1,5 @@
 const { body, validationResult, Result } = require('express-validator');
-const Person = require('../models/person');
+const Person = require('../models/customer_person');
 const crypto = require('crypto');
 // const pool = require('../utils/database');
 exports.login_get = function(req,res,next){
@@ -21,7 +21,6 @@ exports.login_post = [
             var person = new Person(req.body.username,hashed_password);
             person.get_details().then(
                 (result)=>{
-                    // console.log(result);
                     if(result.rowCount===0){
                         res.render('login',{message:'Username/Password incorrect'});
                     }
@@ -30,8 +29,9 @@ exports.login_post = [
                         person.update_session_id(session_id).then(
                             ()=>{
                                 res.cookie('session_id',session_id,{signed:true});
-                                Person.check_customer(result.rows[0]['id']).then((result1)=>{
-                                        if(result1.rowCount===1){
+                                Person.check_customer(result.rows[0]['id']).then(
+                                    (result)=>{
+                                        if(result.rowCount===1){
                                             res.redirect('/customer/hello')
                                         }
                                     });
@@ -47,4 +47,13 @@ exports.login_post = [
                                         }else{
                                             res.redirect('/hello');
                                         }
-                                });})}})}}]
+                                    }
+                                )
+                            }
+                        )
+                    }
+                }
+            )
+        }
+    }
+]

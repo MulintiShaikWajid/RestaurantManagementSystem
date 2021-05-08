@@ -23,11 +23,10 @@ def rd(sz):  # stands for random digits
         ans = ans + random.choice(digits)
     return "'"+ans+"'"
 
-def get_role():
-    id = random.randint(1,3)
-    if id%3==0:
+def get_role(id):
+    if id==(numCustomers+1):
         return "'manager'"
-    elif id%3==1:
+    if id%2==1:
         return "'head-waiter'"
     else:
         return "'cashier'"
@@ -94,45 +93,47 @@ table_request = open("table_request.csv","w")
 customer.write("id,rcoins\n")
 person.write("id,username,password,name,address_house_no,address_street,address_city,address_state,address_country,address_pin_code,session_id\n")
 for i in range(numCustomers):
-    customer.write(f"{i},{random.randint(0,maxRcoins)}\n")
     prof = fake.profile()
     username = fake.unique.text(max_nb_chars=10)
-    person.write(f"{i},'{username}','{hashlib.sha256((username+static_salt).encode()).hexdigest()}','{prof['name']}','{fake.street_address()}','{fake.street_name()}','{fake.city()}','{fake.state()}','{'United States'}','{fake.zipcode()}',NULL\n")
+    person.write(f"DEFAULT,'{username}','{hashlib.sha256((username+static_salt).encode()).hexdigest()}','{prof['name']}','{fake.street_address()}','{fake.street_name()}','{fake.city()}','{fake.state()}','{'United States'}','{fake.zipcode()}',NULL\n")
+    customer.write(f"{i+1},{random.randint(0,maxRcoins)}\n")
+    
 
 staff.write("id,salary,dob,role_name\n")
 for i in range(numCustomers,numCustomers+numStaff):
-    staff.write(f"{i},{random.randint(10000,20000)},'{str(fake.date_of_birth())}',{get_role()}\n")
     prof = fake.profile()
     username = fake.unique.text(max_nb_chars=10)
-    person.write(f"{i},'{username}','{hashlib.sha256((username+static_salt).encode()).hexdigest()}','{prof['name']}','{fake.street_address()}','{fake.street_name()}','{fake.city()}','{fake.state()}','{'United States'}','{fake.zipcode()}',NULL\n")
+    person.write(f"DEFAULT,'{username}','{hashlib.sha256((username+static_salt).encode()).hexdigest()}','{prof['name']}','{fake.street_address()}','{fake.street_name()}','{fake.city()}','{fake.state()}','{'United States'}','{fake.zipcode()}',NULL\n")
+    staff.write(f"{i+1},{random.randint(10000,20000)},'{str(fake.date_of_birth())}',{get_role(i+1)}\n")
+    
 
 phone.write("id,phone_number\n")
 for i in range(numStaff+numCustomers):
     for _ in range(2):
-        phone.write(f"{i},{rd(10)}\n")
+        phone.write(f"{i+1},{rd(10)}\n")
         if random.randint(1,2)==1:
             break
 
 
-time_slot.write("id,start_time,end_time\n")
+# time_slot.write("id,start_time,end_time\n")
 
-# only four timeslots
+# # only four timeslots
 
-time_slot.write("1,'7:00','9:00'\n")
-time_slot.write("2,'10:00','12:00'\n")
-time_slot.write("3,'12:00','3:00'\n")
-time_slot.write("4,'19:00','22:00'\n")
+# time_slot.write("1,'7:00','9:00'\n")
+# time_slot.write("2,'10:00','12:00'\n")
+# time_slot.write("3,'12:00','3:00'\n")
+# time_slot.write("4,'19:00','22:00'\n")
 
 staff_time_slot.write("staff_id,time_slot_id\n")
 
 for i in range(numCustomers,numCustomers+numStaff):
-    staff_time_slot.write(f"{i},{random.randint(1,4)}\n")
+    staff_time_slot.write(f"{i+1},{random.randint(0,23)}\n")
 
 
 notification.write("id,info,time_stamp,person_id\n")
 
 for i in range(numNotifications):
-    notification.write(f"{i},'{fake.paragraph(nb_sentences=2)}','{fake.date_time_this_month()}',{random.randint(0,numCustomers+numStaff-1)}\n")
+    notification.write(f"DEFAULT,'{fake.paragraph(nb_sentences=2)}','{fake.date_time_this_month()}',{random.randint(1,numCustomers+numStaff)}\n")
 
 
 
@@ -207,7 +208,7 @@ cart.write("customer_id,item_id,quantity\n")
 
 for i in range(numCustomers):
     for j in random.sample(range(numItems),k=random.randint(0,4)):
-        cart.write(f"{i},{j},{random.randint(1,4)}\n")
+        cart.write(f"{i+1},{j},{random.randint(1,4)}\n")
 
 my_order.write("id,customer_id,ordered_time,served_time,completed_time,amount_paid,rcoins_used,status\n")
 table_order.write("order_id,table_id\n")
@@ -223,14 +224,14 @@ for i in range(0,numOrders-2,3):
     total_price = sum([menu[x]*y for x,y in zip(myitems,myquant)])
     amount_paid = random.randint(0,total_price)
     rcoins_used = total_price-amount_paid
-    my_order.write(f"{i},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used},'order-completed'\n")
-    table_order.write(f"{i},{temp_tables[0]}\n")
+    my_order.write(f"DEFAULT,{random.randint(1,numCustomers)},DEFAULT,'{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used},'order-completed'\n")
+    table_order.write(f"{i+1},{temp_tables[0]}\n")
     myquant.reverse()
     for x in myitems:
         mytemp = myquant.pop()
-        order_item.write(f"{i},{x},{mytemp},{mytemp*menu[x]}\n")
+        order_item.write(f"{i+1},{x},{mytemp},{mytemp*menu[x]}\n")
         if random.randint(0,1)==1:
-            rating.write(f"{i},{x},{random.randint(1,5)},'{fake.paragraph(nb_sentences=2)}'\n")
+            rating.write(f"{i+1},{x},{random.randint(1,5)},'{fake.paragraph(nb_sentences=2)}'\n")
 
     offset1 = datetime.timedelta(minutes=random.randint(15,20))
     init_time = init_time+offset1
@@ -241,14 +242,14 @@ for i in range(0,numOrders-2,3):
     total_price = sum([menu[x]*y for x,y in zip(myitems,myquant)])
     amount_paid = random.randint(0,total_price)
     rcoins_used = total_price-amount_paid
-    my_order.write(f"{i+1},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used},'order-completed'\n")
-    table_order.write(f"{i+1},{temp_tables[1]}\n")
+    my_order.write(f"DEFAULT,{random.randint(1,numCustomers)},DEFAULT,'{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used},'order-completed'\n")
+    table_order.write(f"{i+2},{temp_tables[1]}\n")
     myquant.reverse()
     for x in myitems:
         mytemp = myquant.pop()
-        order_item.write(f"{i+1},{x},{mytemp},{mytemp*menu[x]}\n")
+        order_item.write(f"{i+2},{x},{mytemp},{mytemp*menu[x]}\n")
         if random.randint(0,1)==1:
-            rating.write(f"{i+1},{x},{random.randint(1,5)},'{fake.paragraph(nb_sentences=2)}'\n")
+            rating.write(f"{i+2},{x},{random.randint(1,5)},'{fake.paragraph(nb_sentences=2)}'\n")
     offset2 = datetime.timedelta(minutes=random.randint(15,20))
     init_time = init_time + offset2
     serve_delay = datetime.timedelta(minutes=random.randint(10,15))
@@ -258,14 +259,14 @@ for i in range(0,numOrders-2,3):
     total_price = sum([menu[x]*y for x,y in zip(myitems,myquant)])
     amount_paid = random.randint(0,total_price)
     rcoins_used = total_price-amount_paid
-    my_order.write(f"{i+2},{random.randint(0,numCustomers-1)},'{str(init_time)}','{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used},'order-completed'\n")
-    table_order.write(f"{i+2},{temp_tables[2]}\n")
+    my_order.write(f"DEFAULT,{random.randint(1,numCustomers)},DEFAULT,'{str(init_time+serve_delay)}','{str(init_time+serve_delay+time_to_eat)}',{amount_paid},{rcoins_used},'order-completed'\n")
+    table_order.write(f"{i+3},{temp_tables[2]}\n")
     myquant.reverse()
     for x in myitems:
         mytemp = myquant.pop()
-        order_item.write(f"{i+2},{x},{mytemp},{mytemp*menu[x]}\n")
+        order_item.write(f"{i+3},{x},{mytemp},{mytemp*menu[x]}\n")
         if random.randint(0,1)==1:
-            rating.write(f"{i+2},{x},{random.randint(1,5)},'{fake.paragraph(nb_sentences=2)}'\n")
+            rating.write(f"{i+3},{x},{random.randint(1,5)},'{fake.paragraph(nb_sentences=2)}'\n")
     init_time = init_time+datetime.timedelta(minutes=80)
 
 my_table.write("id,capacity,location,status\n")
@@ -274,17 +275,19 @@ for i in range(numTables):
     my_table.write(f"{i},{random.randint(4,8)},'{'window-side' if random.randint(0,1) else 'non-window-side'}','{ 'occupied' if random.randint(0,1) else 'available'}'\n")
 
 
-table_request.write("request_id,table_id,customer_id,requested_time,start_time,end_time,status\n")
+table_request.write("request_id,table_id,customer_id,requested_time,booked_day,time_slot,status\n")
 init_time = datetime.datetime(2021,6,1,10,0,0)
 delta_time = datetime.timedelta(minutes=60)
 small_time = datetime.timedelta(minutes=15)
 large_time = datetime.timedelta(minutes=30)
 one_month = datetime.timedelta(days=45)
+tempdate = datetime.date.today()
 for i in range(numRequests):
     temp = random.randint(0,1)
     status = 'request-placed'
-    table_request.write(f"{i},{random.randint(0,numTables-1)},{random.choice(range(numCustomers))},'{init_time}','{init_time+one_month}','{init_time+one_month+delta_time}','{status}'\n")
-    init_time = init_time+large_time
+    table_request.write(f"DEFAULT,{random.randint(0,numTables-1)},{random.choice(range(1,numCustomers+1))},'{init_time}','{tempdate.__str__()}',{random.randint(0,23)},'{status}'\n")
+    # init_time = init_time+large_time
+    tempdate+datetime.timedelta(days=1)
 
 person.close()
 phone.close()
