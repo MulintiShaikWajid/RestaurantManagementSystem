@@ -6,7 +6,7 @@ exports.hello_get = function(req,res,next){
         return;
     }
     else{
-        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+        Person.my_get_details_from_session_id(req.signedCookies['session_id']).then(
             (result)=>{
                 if(result.rowCount===0){
                     res.cookie('redirect',req.url,{signed:true});
