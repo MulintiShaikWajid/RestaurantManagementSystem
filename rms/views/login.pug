@@ -8,14 +8,13 @@ html(lang="en")
     link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet")
     link(href="stylesheets/style.css" rel="stylesheet")
     body
-        h1 Welcome to Restaurant Management System
+        h1 Welcome to RMS
         form.formLogin(method="POST",action='')
             input#username(type="text",placeholder='username',name='username')
             input#password(type="password",placeholder='password',name='password')
             button(type='submit') Login
-        form(style='text-align:center',action="/signup")
-            p Don't have an account?
-            button(class="btn",type="submit") SignUp
+        div.container(style="text-align:center")
+            <a style="font-size: 20px" href="/customer/create">Dont have an account</a>
         div(style='text-align:center')
             if errors
                 ul

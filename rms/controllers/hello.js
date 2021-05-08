@@ -1,4 +1,4 @@
-const Person = require('../models/person');
+const Person = require('../models/customer_person');
 exports.hello_get = function(req,res,next){
     if (! ("session_id" in req.signedCookies)){
         res.cookie('redirect',req.url,{signed:true});

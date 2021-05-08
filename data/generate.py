@@ -23,11 +23,10 @@ def rd(sz):  # stands for random digits
         ans = ans + random.choice(digits)
     return "'"+ans+"'"
 
-def get_role():
-    id = random.randint(1,3)
-    if id%3==0:
+def get_role(id):
+    if id==(numCustomers+1):
         return "'manager'"
-    elif id%3==1:
+    if id%2==1:
         return "'head-waiter'"
     else:
         return "'cashier'"
@@ -105,7 +104,7 @@ for i in range(numCustomers,numCustomers+numStaff):
     prof = fake.profile()
     username = fake.unique.text(max_nb_chars=10)
     person.write(f"DEFAULT,'{username}','{hashlib.sha256((username+static_salt).encode()).hexdigest()}','{prof['name']}','{fake.street_address()}','{fake.street_name()}','{fake.city()}','{fake.state()}','{'United States'}','{fake.zipcode()}',NULL\n")
-    staff.write(f"{i+1},{random.randint(10000,20000)},'{str(fake.date_of_birth())}',{get_role()}\n")
+    staff.write(f"{i+1},{random.randint(10000,20000)},'{str(fake.date_of_birth())}',{get_role(i+1)}\n")
     
 
 phone.write("id,phone_number\n")

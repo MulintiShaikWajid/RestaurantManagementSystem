@@ -1,4 +1,4 @@
-const Person = require('../models/person');
+const Person = require('../models/customer_person');
 const Item = require('../models/item')
 const Customer = require('../models/customer')
 const { body, validationResult, Result } = require('express-validator');
@@ -416,37 +416,78 @@ exports.book_table_post = (req,res,next) => {
                 if(result.rowCount===0){
                     res.cookie('redirect',req.url,{signed:true});
                     res.redirect('/login');
+                    return;
                 }
                 else{
                     date = req.body.year.toString()+'-'+req.body.month.toString()+'-'+req.body.day.toString();
-                    temp = new Date(req.body.year,req.body.month-1,req.body.day,req.body.hour);
+                    temp = new Date(req.body.year,req.body.month-1,req.body.day,req.body.hour,0);
                     console.log(temp);
                     console.log(req.body.year,req.body.month,req.body.day,req.body.hour);
-                    if(temp < new Date){
+                    flag = false;
+                    given_year = parseInt(req.body.year);
+                    given_month = parseInt(req.body.month);
+                    given_day = parseInt(req.body.day);
+                    given_hour = parseInt(req.body.hour);
+                    mytemp = new Date();
+                    pre_year = mytemp.getYear()+1900;
+                    pre_month = mytemp.getMonth()+1;
+                    pre_day = mytemp.getDate();
+                    pre_hour = mytemp.getHours();
+                    console.log(given_year,given_month,given_day,given_hour);
+                    console.log(pre_year,pre_month,pre_day,pre_hour);
+                    if(given_year>pre_year){
+                        flag=true;
+                    }
+                    else{
+                        if(given_year===pre_year){
+                            if(given_month>pre_month){
+                                flag=true;
+                            }
+                            else{
+                                if(given_month===pre_month){
+                                    if(given_day>pre_day){
+                                        flag=true;
+                                    }
+                                    else{
+                                        if(given_day===pre_day){
+                                            if(given_hour>=pre_hour){
+                                                flag=true;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if(!flag){
                         Customer.get_total_tables().then(
                             (result) => {
                                 console.log("Goku")
                                 res.render('book',{total_tables:result.rowCount-1,message:"past slot can not be selected"});
+                                console.log("Bulma");
                                 return;
                             }
                         )
                     }
-                    Customer.already_booked(result.rows[0]['id'],parseInt(req.body.tableno),date,parseInt(req.body.hour)).then(
-                        (result1) => {
-                            if(result1.rowCount!==0){
-                                res.render('book',{message:"The slot was already booked"});
-                                return;
+                    else{
+                        Customer.already_booked(result.rows[0]['id'],parseInt(req.body.tableno),date,parseInt(req.body.hour)).then(
+                            (result1) => {
+                                if(result1.rowCount!==0){
+                                    res.render('book',{message:"The slot was already booked"});
+                                    return;
+                                }
+                                else{
+                                    Customer.insert_table_request(result.rows[0]['id'],parseInt(req.body.tableno),date,parseInt(req.body.hour)).then(
+                                        (result2) => {
+                                            res.redirect('/customer/prevtable');
+                                            return;
+                                        }
+                                    )
+                                }
                             }
-                            else{
-                                Customer.insert_table_request(result.rows[0]['id'],parseInt(req.body.tableno),date,parseInt(req.body.hour)).then(
-                                    (result2) => {
-                                        res.redirect('/customer/prevtable');
-                                        return;
-                                    }
-                                )
-                            }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         )

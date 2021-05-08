@@ -15,13 +15,12 @@ DROP TABLE IF EXISTS customer;
 DROP TABLE IF EXISTS notification;
 DROP TABLE IF EXISTS staff_time_slot;
 DROP TABLE IF EXISTS staff;
-DROP TABLE IF EXISTS time_slot;
 DROP TABLE IF EXISTS phone;
 DROP TABLE IF EXISTS person;
 
 
 CREATE TABLE person(
-	id int primary key,
+	id serial primary key,
 	username text not null,
 	password text not null,--what say?
 	name text not null,
@@ -41,11 +40,7 @@ CREATE TABLE phone(
 	foreign key (id) references person on delete cascade,
 	unique(phone_number)
 );
-CREATE TABLE time_slot(
-	id int primary key,
-	start_time time not null,
-	end_time time not null
-);
+
 CREATE TABLE staff(
 	id int primary key,
 	salary int not null,
@@ -55,17 +50,16 @@ CREATE TABLE staff(
 );
 CREATE TABLE staff_time_slot(
 	staff_id int not null,
-	time_slot_id int not null,
+	time_slot_id int not null check(time_slot_id<24 and time_slot_id>-1),
 	primary key(staff_id, time_slot_id),
-	foreign key (staff_id) references staff on delete cascade,
-	foreign key (time_slot_id) references time_slot on delete cascade
+	foreign key (staff_id) references staff on delete cascade
 );
 CREATE TABLE notification(
-	id int primary key,
+	id serial primary key,
 	info text not null,
 	time_stamp timestamp not null,
 	person_id int not null,
-	foreign key (person_id) references person on delete set null--even if person is deleted, notification stays
+	foreign key (person_id) references person on delete cascade--even if person is deleted, notification stays
 );
 CREATE TABLE customer(
 	id int primary key,
@@ -88,7 +82,7 @@ CREATE TABLE item_tag(
 CREATE TABLE item(
 	id int primary key,
 	name text not null,
-	price numeric,
+	price numeric not null,
 	unique(name)
 );
 CREATE TABLE item_item_tag(
@@ -115,9 +109,9 @@ CREATE TABLE cart(
 	foreign key (item_id) references item on delete cascade --once item is deleted, it is automatically removed from cart
 );
 CREATE TABLE my_order(
-	id int primary key,
+	id serial primary key,
 	customer_id int,--customer_id in order can be null, if head waiter places order
-	ordered_time timestamp not null,
+	ordered_time timestamp not null default current_timestamp,
 	served_time timestamp,
 	completed_time timestamp,
 	amount_paid numeric,
@@ -131,8 +125,8 @@ CREATE TABLE order_item(
 	quantity int not null check(quantity > 0),
 	total_price numeric not null,
 	primary key(order_id, item_id),
-	foreign key (order_id) references my_order on delete set null,
-	foreign key (item_id) references item on delete set null
+	foreign key (order_id) references my_order on delete cascade,
+	foreign key (item_id) references item on delete cascade
 );
 CREATE TABLE rating(
 	order_id int,
@@ -140,7 +134,7 @@ CREATE TABLE rating(
 	stars int check(stars in (1, 2, 3, 4, 5)),
 	review text,
 	primary key(order_id, item_id),
-	foreign key (order_id) references my_order on delete set null,
+	foreign key (order_id) references my_order on delete cascade,
 	foreign key (item_id) references item on delete cascade, --item ratings will be erased once the item is deleted
 	check(stars is not null or review is not null)
 );
@@ -158,12 +152,12 @@ CREATE TABLE table_order(
 	foreign key (table_id) references my_table on delete cascade
 );
 CREATE TABLE table_request(
-	request_id int primary key,
+	request_id serial primary key,
 	table_id int,
 	customer_id int,
-	requested_time timestamp not null,
-	start_time timestamp not null,
-	end_time timestamp not null,
+	requested_time timestamp not null default current_timestamp,
+	booked_day date not null,
+	time_slot int check(time_slot>-1 and time_slot<24) not null,
 	status text check(status in ('request-placed', 'request-accepted', 'request-denied')),
 	foreign key (table_id) references my_table on delete cascade,
 	foreign key (customer_id) references customer on delete cascade--cascading makes finding table-availability-status easy
@@ -200,7 +194,7 @@ execute procedure temp1();
 create or replace function temp2() returns trigger as 
 $$
 begin
-insert into notification values(cast((nrow.rcoins-orow.rcoins) as text)||' rcoins have been added to your account, the new total is '||cast(nrow.rcoins as text),now(),nrow.id);
+insert into notification values(DEFAULT,cast((new.rcoins-old.rcoins) as text)||' rcoins have been added to your account, the new total is '||cast(new.rcoins as text),now(),new.id);
 return new;
 end;
 $$
@@ -210,6 +204,3 @@ create trigger gift after update of rcoins on customer
 for each row
 when (new.rcoins>old.rcoins)
 execute procedure temp2();
-
-
-

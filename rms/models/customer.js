@@ -42,7 +42,7 @@ module.exports = class Item{
         return pool.query("select info,time_stamp from notification where person_id=$1",[userid]);
     }
     static insert_table_request(userid,tabelno,date,hour){
-        return pool.query("insert into table_request values(2003,$2,$1,DEFAULT,$3,$4,'request-placed')",[userid,tabelno,date,hour]);
+        return pool.query("insert into table_request values(DEFAULT,$2,$1,DEFAULT,$3,$4,'request-placed')",[userid,tabelno,date,hour]);
     }
     static get_total_tables(){
         return pool.query("select * from my_table");

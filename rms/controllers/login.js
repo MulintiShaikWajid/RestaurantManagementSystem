@@ -1,5 +1,5 @@
 const { body, validationResult, Result } = require('express-validator');
-const Person = require('../models/person');
+const Person = require('../models/customer_person');
 const crypto = require('crypto');
 // const pool = require('../utils/database');
 exports.login_get = function(req,res,next){

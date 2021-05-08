@@ -1,0 +1,27 @@
+extends customer_base
+
+block content
+    div.container
+        div.container
+            h1(style="font-family: 'Sacramento', cursive; font-size:60px") Previous Table Requests
+        <table class="table-responsive-sm table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                <th scope="col">Table Id</th>
+                <th scope="col">Requested Time</th>
+                <th scope="col">Booked Day</th>
+                <th scope="col">Time Slot</th>
+                <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody id="main_table">
+                each val in details
+                    <tr>
+                        td #{val['table_id']}
+                        td #{val['requested_time']}
+                        td #{val['booked_day']}
+                        td #{val['time_slot']}
+                        td #{val['status']}
+                    </tr>
+            </tbody>
+        </table>

@@ -3,7 +3,6 @@ import csv
 req_file=open("restaurant_data.sql","w")
 req_file.write("delete from person;\n")
 req_file.write("delete from phone;\n")
-req_file.write("delete from time_slot;\n")
 req_file.write("delete from staff;\n")
 req_file.write("delete from staff_time_slot;\n")
 req_file.write("delete from notification;\n")
@@ -22,7 +21,7 @@ req_file.write("delete from table_order;\n")
 req_file.write("delete from table_request;\n")
 req_file.close()
 
-for table in ["person","phone","time_slot","staff","staff_time_slot","notification","customer","inventory","item_tag","item","item_item_tag","item_inventory","cart","my_order","order_item","rating","my_table","table_order","table_request"]:
+for table in ["person","phone","time_slot","staff","notification","customer","inventory","item_tag","item","item_item_tag","item_inventory","cart","my_order","order_item","rating","my_table","table_order","table_request"]:
 	opened_csv=open("./data/"+table+".csv")
 	reader=csv.DictReader(opened_csv)
 	req_file=open("restaurant_data.sql","a")
