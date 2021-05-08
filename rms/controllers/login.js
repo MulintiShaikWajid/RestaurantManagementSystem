@@ -21,7 +21,6 @@ exports.login_post = [
             var person = new Person(req.body.username,hashed_password);
             person.get_details().then(
                 (result)=>{
-                    // console.log(result);
                     if(result.rowCount===0){
                         res.render('login',{message:'Username/Password incorrect'});
                     }
@@ -30,21 +29,21 @@ exports.login_post = [
                         person.update_session_id(session_id).then(
                             ()=>{
                                 res.cookie('session_id',session_id,{signed:true});
-                                Person.check_customer(result.rows[0]['id']).then((result1)=>{
-                                        if(result1.rowCount===1){
+                                Person.check_customer(result.rows[0]['id']).then(
+                                    (result)=>{
+                                        if(result.rowCount===1){
                                             res.redirect('/customer/hello')
                                         }
-                                    });
-                                        // else{
-                                Person.role(result.rows[0]['id']).then((result2)=>{
-                                        console.log(result2);
-                                        if(result2.rows[0]['role_name']=='manager'){
-                                            res.redirect('/managerhello')
-                                        }else if(result2.rows[0]['role_name']=='cashier'){
-                                            res.redirect('/cashierhello')   
-                                        }else if(result2.rows[0]['role_name']=='head-waiter'){
-                                            res.redirect('/headwaiterhello')
-                                        }else{
-                                            res.redirect('/hello');
+                                        else{
+                                            res.redirect('/hello')
                                         }
-                                });})}})}}]
+                                    }
+                                )
+                            }
+                        )
+                    }
+                }
+            )
+        }
+    }
+]
