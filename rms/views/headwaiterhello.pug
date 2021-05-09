@@ -10,7 +10,10 @@ html(lang="en")
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="javascripts/sort.js"></script>
+    style.
+        body {
+            background-image: none
+        }
     body
         h1(style="text-align:center", id = "top_of_page") Hello Head waiter, #{name}!
         div.container
@@ -88,15 +91,16 @@ html(lang="en")
             </table>
             a(href="#top_of_page") go to Top
             h1(id = "table_requests") Table requests:
+            <p>time slot (x) is the time period from (x):00hrs to ((x+1)mod24):00hrs</p>
             <table class="table table-striped table-hover table-bordered">
                 <thead>
                     <tr>
                     <th scope="col">Customer username</th>
                     <th scope="col">Customer name</th>
                     <th scope="col">Table id</th>
-                    <th scope="col">Requested time</th>
-                    <th scope="col">Start time</th>
-                    <th scope="col">End time</th>
+                    <th scope="col">Requested placed time</th>
+                    <th scope="col">Day needed</th>
+                    <th scope="col">Time slot needed</th>
                     <th scope="col">Accept?</th>
                     <th scope="col">Reject?</th>
                     </tr>
@@ -108,8 +112,8 @@ html(lang="en")
                             td #{val['name']}
                             td #{val['table_id']}
                             td #{val['requested_time']}
-                            td #{val['start_time']}
-                            td #{val['end_time']}
+                            td #{val['booked_day']}
+                            td #{val['time_slot']}
                             td 
                                 form(style="text-align:center",method="POST",action='/headwaiterhello/accepttablerequest')
                                     input(type='hidden', name='request_id',value=val['request_id'])

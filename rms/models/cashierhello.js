@@ -5,8 +5,8 @@ module.exports = class Cashierhello{
     // }
     static pending_payments(){
         return pool.query("select P.username, P.name, M.id, sum(O.total_price) - M.rcoins_used as pending_payment \
-         from person P, my_order M, order_item O where M.customer_id = P.id and M.id = O.order_id\
-         group by (M.id, P.id) having sum(O.total_price) - M.rcoins_used > 0;");
+         from person P, my_order M, order_item O where M.customer_id = P.id and M.id = O.order_id and M.status != 'order-completed' \
+         group by (M.id, P.id) having sum(O.total_price) - M.rcoins_used > 0 order by P.name;");
     }
     static complete_payment(order_id, amount_paid){
     	return pool.query("update my_order set amount_paid = $1 where id = $2", [amount_paid, order_id]);

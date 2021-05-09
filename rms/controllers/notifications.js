@@ -21,7 +21,14 @@ exports.get_page = function(req,res,next){
                 }
                 else{
                     Notifications.notify(result.rows[0]['id']).then((result3)=>{
-                        res.render('notifications',{name : result.rows[0]['name'],notify:result3.rows});
+                        Notifications.check_customer(result.rows[0]['id']).then((result4)=>{
+                            if(result4.rows[0]['count']>0){
+                                res.render('notifications',{name : result.rows[0]['name'],notifications:result3.rows});
+                                return;
+                            }else{
+                                res.render('notification_manager',{name : result.rows[0]['name'],notify:result3.rows});
+                            }
+                        })
                     })
                 }
             } 

@@ -1,5 +1,6 @@
 const { body, validationResult, Result } = require('express-validator');
 const Person = require('../models/customer_person');
+const Person2 = require('../models/person');
 const crypto = require('crypto');
 // const pool = require('../utils/database');
 exports.login_get = function(req,res,next){
@@ -29,28 +30,24 @@ exports.login_post = [
                         person.update_session_id(session_id).then(
                             ()=>{
                                 res.cookie('session_id',session_id,{signed:true});
-                                Person.check_customer(result.rows[0]['id']).then(
-                                    (result)=>{
-                                        if(result.rowCount===1){
-                                            res.redirect('/customer/hello')
-                                        }
+                                Person2.role(result.rows[0]['id']).then((result2)=>{
+                                    Person.check_customer(result.rows[0]['id']).then(
+                                        (result)=>{
+                                            if(result.rowCount===1){
+                                                res.redirect('/customer/hello')
+                                            }
                                     });
-                                        // else{
-                                Person.role(result.rows[0]['id']).then((result2)=>{
-                                        // console.log(result2);
-                                        if(result2.rows[0]['role_name']=='manager'){
-                                            res.redirect('/managerhello')
-                                        }else if(result2.rows[0]['role_name']=='cashier'){
-                                            res.redirect('/cashierhello')   
-                                        }else if(result2.rows[0]['role_name']=='head-waiter'){
-                                            res.redirect('/headwaiterhello')
-                                        }else{
-                                            res.redirect('/hello');
-                                        }
+                                    if(result2.rows[0]['role_name']=='manager'){
+                                        res.redirect('/managerhello')
+                                    }else if(result2.rows[0]['role_name']=='cashier'){
+                                        res.redirect('/cashierhello')   
+                                    }else if(result2.rows[0]['role_name']=='head-waiter'){
+                                        res.redirect('/headwaiterhello')
+                                    }else{
+                                        res.redirect('/hello');
                                     }
-                                )
-                            }
-                        )
+                                })
+                            })
                     }
                 }
             )

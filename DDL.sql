@@ -43,7 +43,7 @@ CREATE TABLE phone(
 
 CREATE TABLE staff(
 	id int primary key,
-	salary int not null,
+	salary numeric not null,
 	dob date,
 	role_name text check(role_name in ('manager', 'head-waiter', 'cashier')),
 	foreign key (id) references person on delete cascade
@@ -115,7 +115,7 @@ CREATE TABLE my_order(
 	served_time timestamp,
 	completed_time timestamp,
 	amount_paid numeric,
-	rcoins_used numeric,
+	rcoins_used numeric default 0,
 	status text check(status in ('order-placed', 'order-served', 'order-completed')),
 	foreign key (customer_id) references customer on delete set null
 );
@@ -171,8 +171,14 @@ ON table_request (status);
 CREATE INDEX my_order_status_index
 ON my_order(status);
 
-CREATE INDEX username_password_index
-ON person (username,password);
+CREATE INDEX username_index
+ON person (username);
+
+CREATE INDEX password_index
+ON person (password);
+
+CREATE INDEX person_session_id_index
+ON person (session_id);
 
 --trigger one
 create or replace function temp1() returns trigger as 

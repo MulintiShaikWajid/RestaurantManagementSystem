@@ -171,8 +171,8 @@ exports.additem = function(req,res,next){
                     else{
                         Updateinventory.checknewingredient(req.body.name).then((result3)=>{
                             if(result3.rows[0]['item_count'] > 0){
-                                res.render('error_item',{err: true, err_msg: "**Update unsucessful: Ingredient named '"+req.body.name+"' already exists. Use an unused ingredient name.", 
-                                err_head: "Invalid input data observed while adding the ingredient:", err_foot: "Use back button of browser to get back to the update ingredient page."});
+                                res.render('error_item',{err: true, err_msg: "**Adding unsucessful: Ingredient named '"+req.body.name+"' already exists. Use an unused ingredient name.", 
+                                err_head: "Invalid input data observed while adding the ingredient:", err_foot: "Use back button of browser to get back to the add ingredient page."});
                                 return;
                             }
                             Updateinventory.get_newid().then((ans)=>{

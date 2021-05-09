@@ -30,5 +30,8 @@ module.exports = class Editpersonaldetails{
 
         return pool.query(ph_string);
     }
+    static get_timeslots(id){
+        return pool.query("select string_agg(cast(time_slot_id as text),',' order by time_slot_id) as time_slots from staff_time_slot where staff_id = $1;", [id]);
+    }
  
 }

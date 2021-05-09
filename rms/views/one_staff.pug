@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel="preconnect" href="https://fonts.gstatic.com")
+    link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet")
+    link(rel="stylesheet" href = "/stylesheets/style.css") 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    style.
+        body {
+            background-image: none
+        }
+    body
+        h1(style='text-align:center') Add Staff
+        div.container
+            unless message
+                form(method="POST",action="/updatestaff/delete")
+                    input(type = "hidden", name = "id", value = id)
+                    button(type='submit') Delete
+                    br
+                    br
+                form(method="POST",action="")
+                    button(type='submit') Update
+                    br
+                    br
+                    <label for="name", style="color:Orange;"><b>Username:</b></label>
+                    br
+                    <p>#{value = info['username']}</p>
+                    <label for="price", style="color:Orange;"><b>Password:</b></label>
+                    br
+                    <p style="font-size:13px">Password can't be changed now by Manager aka you. Cashier/Head-Waiter can change their password by clicking 'Edit Personal Details' in their accounts. Same is the case with their Name.</p>
+                    <label for="price", style="color:Orange;"><b>Name:</b></label>
+                    br
+                    <p>#{value = info['name']}</p>
+                    <label for="price", style="color:Orange;"><b>Salary:</b></label>
+                    br
+                    input(type="number", step="any", min = "0",id="salary",name='salary', value = info['salary'], required)
+                    br
+                    <label for="price", style="color:Orange;"><b>Date of birth:</b></label>
+                    br
+                    //- <p style="font-size:11px">format: 'yyyy-mm-dd'</p>
+                    input(type="date",id="dob",name='dob', value = info['dob'].substring(0,10), required)
+                    br
+                    <label for="price", style="color:Orange;"><b>Role name:</b></label>
+                    br
+                    <select name="role", id="role">
+                        <option value="none">None</option>
+                        if info['role_name'] == 'cashier'
+                            <option value="cashier", selected = "selected">Cashier</option>
+                        else
+                            <option value="cashier">Cashier</option>
+                        if info['role_name'] == 'head-waiter'
+                            <option value="head-waiter", selected = "selected">Head waiter</option>
+                        else
+                            <option value="head-waiter">Head waiter</option>
+                    </select>
+                    br
+                    br
+                    <label for="price", style="color:Orange;"><b>Time slots of work:</b></label>
+                    br
+                    <p style="font-size:11px">time slot (x) is the time period from (x):00hrs to ((x+1)mod24):00hrs</p>
+                    each tag in tags
+                        <label for="tag">#{tag}</label>
+                        - var is_tag = 0
+                        each ts in timeslots
+                            if ts['time_slot_id'] == tag
+                                - is_tag = 1
+                                - break
+                        if is_tag == 1
+                            input(type='checkbox',name="tag_".concat(tag.toString()), id='tag'.concat(tag.toString()), value=tag, style = "margin: 0 10px 0 0",checked)
+                        else
+                            input(type='checkbox',name="tag_".concat(tag.toString()), id='tag'.concat(tag.toString()), value=tag, style = "margin: 0 10px 0 0")

@@ -204,8 +204,8 @@ exports.additem = function(req,res,next){
                     else{
                         Updatemenu.checknewitem(req.body.name).then((result3)=>{
                             if(result3.rows[0]['item_count'] > 0){
-                                res.render('error_item',{err: true, err_msg: "**Update unsucessful: Item named '"+req.body.name+"' already exists. Use an unused item name.", 
-                                err_head: "Invalid input data observed while adding the item:", err_foot: "Use back button of browser to get back to the update item page."});
+                                res.render('error_item',{err: true, err_msg: "**Adding unsucessful: Item named '"+req.body.name+"' already exists. Use an unused item name.", 
+                                err_head: "Invalid input data observed while adding the item:", err_foot: "Use back button of browser to get back to the add item page."});
                                 return;
                             }
                             Updatemenu.get_newid().then((ans)=>{

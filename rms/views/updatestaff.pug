@@ -10,15 +10,26 @@ html(lang="en")
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="javascripts/sort.js"></script>
+    style.
+        body {
+            background-image: none
+        }
     body
         h1(style="text-align:center", id = "top_of_page") Hello Manager, #{name}!
         div.container
             h1 Staff
+            br
+            form(method="GET",action='updatestaff/newitem')
+                input(type="hidden",name="temp",value="tem")
+                button(type='submit') Add staff
+            br
+            <p style="font-size:11px">time slot (x) is the time period from (x):00hrs to ((x+1)mod24):00hrs</p>
             <table class="table table-striped table-hover table-bordered">
                 <thead>
                     <tr>
                     <th scope="col">Username</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date of Birth</th>
                     <th scope="col">Role</th>
                     <th scope="col">Timeslots</th>
                     <th scope="col">Salary</th>
@@ -28,7 +39,12 @@ html(lang="en")
                     each val in staff
                         <tr>
                             td 
-                                a(href=val['id']) #{val['username']}
+                                if val['role_name'] != 'manager'
+                                    a(href='updatestaff/'+val['id']) #{val['username']}
+                                else
+                                    <b>#{val['username']}</b>
+                            td #{val['name']}
+                            td #{val['dob']}
                             td #{val['role_name']}
                             td #{val['time_slots']}
                             td #{val['salary']}

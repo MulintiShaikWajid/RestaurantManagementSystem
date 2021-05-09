@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel="preconnect" href="https://fonts.gstatic.com")
+    link(href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet")
+    link(rel="stylesheet" href = "/stylesheets/style.css") 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    //- script. 
+    //-     function checkcond(event){
+    //-         var count;
+    //-         var cond;
+    //-         var err_str;
+    //-         count = 0; cond = true; err_str = "";
+    //-         for(var i = 0; i < 24; i++){
+    //-             var temp = 'tag'.concat(toString(i));
+    //-             if(document.getElementById(temp).checked){
+    //-                 count++;
+    //-             }
+    //-         }
+    //-         if(count == 0){
+    //-             err_str = err_str+ "There need to be atleast one time slot selected.";
+    //-             cond = cond && false;
+    //-         }
+    //-         if(document.getElementById("role").selectedIndex == 0){
+    //-            err_str = err_str+ "Role name should not be 'None'.";
+    //-             cond = cond && false;
+    //-         }
+    //-         if(!cond){
+    //-             err_str = "**"+err_str;
+    //-             document.getElementById("err_p").innerHTML = err_str;
+    //-             event.preventDefault();
+    //-         }
+    //-         return cond;
+    //-     }
+    style.
+        body {
+            background-image: none
+        }
+    body
+        h1(style='text-align:center') Add Staff
+        div.container
+            unless message
+
+                <p style="color:Red", id="err_p"></p>
+                form(method="POST",action="")
+                    button(type='submit') Add
+                    br
+                    br
+                    <label for="name", style="color:Orange;"><b>Username:</b></label>
+                    br
+                    <p style="font-size:11px">Enter an unused item username. The data in this form will not be stored otherwise.</p>
+                    <p style="font-size:11px">Username of Cashier or Head-Waiter can't be changed later.</p>
+                    input(type="text",id="username",name='username', required)
+                    br
+                    <label for="price", style="color:Orange;"><b>Password:</b></label>
+                    <p style="font-size:11px">Password can't be changed later by Manager aka you.</p>
+                    input(type="password",id="password",name='password', required)
+                    br
+                    <label for="price", style="color:Orange;"><b>Name:</b></label>
+                    br
+                    input(type="text",id="name",name='name', required)
+                    br
+                    <label for="price", style="color:Orange;"><b>Salary:</b></label>
+                    br
+                    input(type="number", step="any", min = "0",id="salary",name='salary', required)
+                    br
+                    <label for="price", style="color:Orange;"><b>Date of birth:</b></label>
+                    br
+                    //- <p style="font-size:11px">format: 'yyyy-mm-dd'</p>
+                    input(type="date",id="dob",name='dob', required)
+                    br
+                    <label for="price", style="color:Orange;"><b>Role name:</b></label>
+                    br
+                    <select name="role" id="role">
+                        <option value="none">None</option>
+                        <option value="cashier">Cashier</option>
+                        <option value="head-waiter">Head waiter</option>
+                    </select>
+                    br
+                    br
+                    <label for="price", style="color:Orange;"><b>Time slots of work:</b></label>
+                    br
+                    <p style="font-size:11px">time slot (x) is the time period from (x):00hrs to ((x+1)mod24):00hrs</p>
+                    each tag in tags
+                        <label for="tag">#{tag}</label>
+                        input(type='checkbox',name="tag_".concat(tag.toString()), id='tag'.concat(tag.toString()), value=tag, style = "margin: 0 10px 0 0")
+

@@ -10,7 +10,10 @@ html(lang="en")
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="javascripts/sort.js"></script>
+    style.
+        body {
+            background-image: none
+        }
     body
         h1(style="text-align:center", id = "top_of_page") Hello, #{name}!
         
@@ -35,8 +38,12 @@ html(lang="en")
                 input(type='text', name = 'phone_no', value = phone_numbers)
                 br
                 br
-                <p><b>Address:</b></p>
+                if role == 'cashier' || role == 'head-waiter'
+                    <p><b>Working hours/ time slots:</b></p>
+                    <p style="font-size:13px">time slot (x) is the time period from (x):00hrs to ((x+1)mod24):00hrs</p>
+                    <p>#{time_slots}</p>
                 br
+                <p><b>Address:</b></p>
                 <label>House No:</label>
                 br
                 input(type='text', name = 'house_no', value = pd.address_house_no)

@@ -23,16 +23,18 @@ exports.get_page = function(req,res,next){
                 else{
                     Editpersonaldetails.get_personal_details(req.body.id).then((result3)=>{
                         Editpersonaldetails.get_phone_numbers(req.body.id).then((result4)=>{
-                            var list_of_phone_numbers = "";
-                            for(row in result4.rows){
-                                list_of_phone_numbers = list_of_phone_numbers.concat(result4.rows[row]['phone_number']);
-                                list_of_phone_numbers = list_of_phone_numbers.concat(", ");
-                            }
-                            if(!(list_of_phone_numbers == "")){
-                                list_of_phone_numbers = list_of_phone_numbers.substring(0, list_of_phone_numbers.length-2);
-                            }
-                            res.render('editpersonaldetails',{err: false, err_msg:"",role : req.body.role, name : result.rows[0]['name'], id:result.rows[0]['id'], 
-                            pd: result3.rows[0], phone_numbers: list_of_phone_numbers}); // pd is personal_details
+                            Editpersonaldetails.get_timeslots(req.body.id).then((result5)=>{
+                                var list_of_phone_numbers = "";
+                                for(row in result4.rows){
+                                    list_of_phone_numbers = list_of_phone_numbers.concat(result4.rows[row]['phone_number']);
+                                    list_of_phone_numbers = list_of_phone_numbers.concat(", ");
+                                }
+                                if(!(list_of_phone_numbers == "")){
+                                    list_of_phone_numbers = list_of_phone_numbers.substring(0, list_of_phone_numbers.length-2);
+                                }
+                                res.render('editpersonaldetails',{err: false, err_msg:"",role : req.body.role, name : result.rows[0]['name'], id:result.rows[0]['id'], 
+                                pd: result3.rows[0], phone_numbers: list_of_phone_numbers, time_slots:result5.rows[0]['time_slots']}); // pd is personal_details
+                            })
                         })
                     })
                 }
