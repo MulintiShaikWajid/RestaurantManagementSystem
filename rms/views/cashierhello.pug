@@ -15,7 +15,8 @@ html(lang="en")
             background-image: none
         }
     body
-        h1(style="text-align:center", id = "top_of_page") Hello Cashier, #{name}!
+        div.container
+            h1(style="text-align:center", id = "top_of_page") Hello Cashier, #{name}!
         div.container
             form(method="POST",action='/editpersonaldetails')
                 input(type='hidden', name='id',value=id)

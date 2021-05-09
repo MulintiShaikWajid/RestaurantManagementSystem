@@ -10,39 +10,13 @@ html(lang="en")
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    //- script. 
-    //-     function checkcond(event){
-    //-         var count;
-    //-         var cond;
-    //-         var err_str;
-    //-         count = 0; cond = true; err_str = "";
-    //-         for(var i = 0; i < 24; i++){
-    //-             var temp = 'tag'.concat(toString(i));
-    //-             if(document.getElementById(temp).checked){
-    //-                 count++;
-    //-             }
-    //-         }
-    //-         if(count == 0){
-    //-             err_str = err_str+ "There need to be atleast one time slot selected.";
-    //-             cond = cond && false;
-    //-         }
-    //-         if(document.getElementById("role").selectedIndex == 0){
-    //-            err_str = err_str+ "Role name should not be 'None'.";
-    //-             cond = cond && false;
-    //-         }
-    //-         if(!cond){
-    //-             err_str = "**"+err_str;
-    //-             document.getElementById("err_p").innerHTML = err_str;
-    //-             event.preventDefault();
-    //-         }
-    //-         return cond;
-    //-     }
     style.
         body {
             background-image: none
         }
     body
-        h1(style='text-align:center') Add Staff
+        div.container
+            h1(style='text-align:center') Add Staff
         div.container
             unless message
 

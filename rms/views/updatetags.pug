@@ -15,8 +15,9 @@ html(lang="en")
             background-image: none
         }
     body
-        h1(style="text-align:center") Hello Manager, #{name}!
-        h1(id = "top_of_page") Item Tags
+        div.container
+            h1(style="text-align:center") Hello Manager, #{name}!
+            h1(id = "top_of_page", style="text-align:center") Item Tags
         div.container
             form(method="GET",action='updatetags/newitem')
                 input(type="hidden",name="temp",value="tem")

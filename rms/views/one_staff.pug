@@ -15,7 +15,8 @@ html(lang="en")
             background-image: none
         }
     body
-        h1(style='text-align:center') Add Staff
+        div.container
+            h1(style='text-align:center') Add Staff
         div.container
             unless message
                 form(method="POST",action="/updatestaff/delete")
