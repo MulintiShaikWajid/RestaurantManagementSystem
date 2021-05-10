@@ -145,7 +145,7 @@ ingredients = []
 
 data = csv.DictReader(indian_food)
 for row in data:
-    ingredients = ingredients+row['ingredients'].split(',')
+    ingredients = ingredients+[x.strip() for x in row['ingredients'].split(',')]
 ingredients = list(set(ingredients))
 ingredients.sort()
 inventory.write("id,name,quantity_remaining,threshold,units\n")
