@@ -21,10 +21,11 @@ exports.get_page = function(req,res,next){
                 }
                 else{
                     Currentorders.orders().then((result3)=>{
-                        Currentorders.tables().then((result4)=>{
-                            res.render('currentorders',{name : result.rows[0]['name'],orders:result3.rows,tables:result4.rows});
+                        Currentorders.offlineorders().then((result5)=>{
+                            Currentorders.tables().then((result4)=>{
+                                res.render('currentorders',{offlineorders: result5.rows,name : result.rows[0]['name'],orders:result3.rows,tables:result4.rows});
+                            })
                         })
-
                     })
                 }
             }
