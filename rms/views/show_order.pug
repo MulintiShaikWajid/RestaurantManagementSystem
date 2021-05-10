@@ -28,10 +28,10 @@ block content
                             td  
                                 form(class="form-inline" method="POST" action="/customer/rate/"+val['itemid']+"/"+orderid)
                                     if allow
-                                        input(required type="number" min="0" max="5" class="form-control mb-2 mr-sm-2" id="rating" name="rating" value=val['mystars'])
+                                        input(required type="number" min="1" max="5" class="form-control mb-2 mr-sm-2" id="rating" name="rating" placeholder=val['mystars'])
                                         <button type="submit" class="btn btn-primary mb-2">Submit</button>
                                     else
-                                        input(required type="number" min="0" max="5" class="form-control mb-2 mr-sm-2" id="rating" name="rating" value=val['mystars'] disabled)
+                                        input(required type="number" min="1" max="5" class="form-control mb-2 mr-sm-2" id="rating" name="rating" placeholder=val['mystars'] disabled)
                                         <button type="submit" class="btn btn-primary mb-2" disabled>Submit</button>
                             td  
                                 form(class="form-inline" method="POST" action="/customer/review/"+val['itemid']+"/"+orderid)
