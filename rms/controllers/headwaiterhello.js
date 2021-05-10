@@ -329,8 +329,8 @@ exports.placeorder = function(req,res,next){
                                 }
                                 Headwaiterhello.changetooccupied(req.body.tableid).then(()=>{
                                     //Headwaiterhello.handleuselessrequests(req.body.tableid).then(()=>{
-                                        Headwaiterhello.getneworderid().then((result6)=>{
-                                            Headwaiterhello.insertorder(result6.rows[0]['newid'],req.body.tableid).then(()=>{
+                                        Headwaiterhello.insertorder(req.body.tableid).then(()=>{  
+                                            Headwaiterhello.getneworderid().then((result6)=>{
                                                 Headwaiterhello.insertorderitem(result6.rows[0]['newid'], items, price).then(()=>{
                                                     Headwaiterhello.removeingredients(inventory).then(()=>{
                                                         res.redirect('/headwaiterhello');

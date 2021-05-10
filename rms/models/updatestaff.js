@@ -12,10 +12,10 @@ module.exports = class Updatestaff{
             return pool.query("select count(*) as item_count from person where username = $1", [username]);
         }
         static get_newid(){
-            return pool.query("select max(id)+1 as new_id from person;");
+            return pool.query("select max(id) as new_id from person;");
         }
         static new_person(id, username, name, password){
-            return pool.query("insert into person(id, username, name, password) values($1,$2,$3,$4);", [id, username, name, password]);
+            return pool.query("insert into person(id, username, name, password) values(default,$2,$3,$4);", [id, username, name, password]);
         }
         static new_staff(id, salary, dob, role){
             return pool.query("insert into staff values($1, $2, $3, $4);",[id, salary, dob, role]);

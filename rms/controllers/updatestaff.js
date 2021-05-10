@@ -217,9 +217,10 @@ exports.additem = function(req,res,next){
                                 err_head: "Invalid input data observed while adding the staff:", err_foot: "Use back button of browser to get back to the add staff page."});
                                 return;
                             }
-                            Updatestaff.get_newid().then((ans)=>{
-                                var hashed_password = crypto.createHash('sha256').update(req.body.password+'squirrel').digest('hex');
-                                Updatestaff.new_person(ans.rows[0]['new_id'],req.body['username'],req.body.name, hashed_password).then(()=>{
+                            
+                            var hashed_password = crypto.createHash('sha256').update(req.body.password+'squirrel').digest('hex');
+                            Updatestaff.new_person(0,req.body['username'],req.body.name, hashed_password).then(()=>{
+                                Updatestaff.get_newid().then((ans)=>{
                                     Updatestaff.new_staff(ans.rows[0]['new_id'],req.body['salary'],req.body.dob, req.body.role).then(()=>{
                                         Updatestaff.bulk_timeslots(ans.rows[0]['new_id'],req.body).then(()=>{
                                             res.redirect('/updatestaff'); 
