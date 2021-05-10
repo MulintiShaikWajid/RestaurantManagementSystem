@@ -63,7 +63,7 @@ CREATE TABLE notification(
 );
 CREATE TABLE customer(
 	id int primary key,
-	rcoins numeric,
+	rcoins numeric check(rcoins>=0),
 	foreign key (id) references person on delete cascade
 );
 CREATE TABLE inventory(

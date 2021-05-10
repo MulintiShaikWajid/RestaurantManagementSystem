@@ -1,5 +1,6 @@
 const { use } = require('../routes/customer');
 const pool = require('../utils/database');
+const client = require('../utils/mydatabase');
 module.exports = class Item{
     static get_cart(userid){
         return pool.query('select item.id,item.name,item.price,cart.quantity from item,cart where item.id=cart.item_id and cart.customer_id=$1',[userid]);
@@ -21,7 +22,7 @@ module.exports = class Item{
         // temp3 as (delete from cart where customer_id=$1),\
         // temp6 as (update my_order set amount_paid=(select sum(total_price) from order_item where order_id=(select max(id) from my_order)) where my_order.id=(select max(id) from my_order)) \
         // insert into table_order(order_id,table_id) values ((select max(id) from my_order),$2);",[userid,tableno]);
-        return pool.query("insert into my_order values (DEFAULT,$1,DEFAULT,NULL,NULL,NULL,0,'order-placed')",[userid]).then(()=>pool.query("update inventory set quantity_remaining=quantity_remaining-quantity*quantity_needed from item_inventory,cart where cart.customer_id=$1 and cart.item_id=item_inventory.item_id and inventory.id=item_inventory.inventory_id",[userid])).then(()=>pool.query("insert into order_item(order_id,item_id,quantity,total_price) (select (select max(id) from my_order) as id,item_id,quantity,quantity*price as total_price from cart,item where item.id=cart.item_id and cart.customer_id=$1)",[userid])).then(()=>pool.query("delete from cart where customer_id=$1",[userid])).then(()=>pool.query("update my_order set amount_paid=(select sum(total_price) from order_item where order_id=(select max(id) from my_order)) where my_order.id=(select max(id) from my_order)",[])).then(()=>pool.query("insert into table_order(order_id,table_id) values ((select max(id) from my_order),$1)",[tableno]));
+        return client.query('BEGIN').then(()=>client.query("insert into my_order values (DEFAULT,$1,DEFAULT,NULL,NULL,NULL,0,'order-placed')",[userid])).then(()=>client.query("update inventory set quantity_remaining=quantity_remaining-quantity*quantity_needed from item_inventory,cart where cart.customer_id=$1 and cart.item_id=item_inventory.item_id and inventory.id=item_inventory.inventory_id",[userid])).then(()=>client.query("insert into order_item(order_id,item_id,quantity,total_price) (select (select max(id) from my_order) as id,item_id,quantity,quantity*price as total_price from cart,item where item.id=cart.item_id and cart.customer_id=$1)",[userid])).then(()=>client.query("delete from cart where customer_id=$1",[userid])).then(()=>client.query("update my_order set amount_paid=(select sum(total_price) from order_item where order_id=(select max(id) from my_order)) where my_order.id=(select max(id) from my_order)",[])).then(()=>client.query("insert into table_order(order_id,table_id) values ((select max(id) from my_order),$1)",[tableno])).then(()=>client.query("COMMIT")).catch(()=>client.query("ROLLBACK"));
     }
     static get_previous_orders(userid){
         return pool.query("select my_order.id,my_order.ordered_time,my_order.status,my_order.rcoins_used,STRING_AGG(item.name,',') as items from my_order,order_item,item where my_order.customer_id=$1 and item.id=order_item.item_id and order_item.order_id=my_order.id group by my_order.id;",[userid]);
@@ -82,7 +83,7 @@ module.exports = class Item{
     }
     static insert_phone(id,phone){
         // return pool.query("with temp1 as (insert into phone values($1,$2)) insert into customer values($1,0)",[id,phone]);
-        return pool.query("insert into phone values($1,$2)",[id,phone]).then(()=>{pool.query("insert into customer values($1,0)",[id])});
+        return client.query("BEGIN").then(()=>client.query("insert into phone values($1,$2)",[id,phone])).then(()=>{client.query("insert into customer values($1,0)",[id])}).then(()=>client.query("COMMIT")).catch(()=>client.query("ROLLBACK"));
     }
     static check_phone(phone){
         return pool.query("select * from phone where phone_number=$1",[phone]);
@@ -132,7 +133,7 @@ module.exports = class Item{
     }
     static update_amount_paid(id,order_id,rcoins){
         // return pool.query("with temp1 as (update my_order set amount_paid=amount_paid-$3,rcoins_used=rcoins_used+$3 where customer_id=$1 and order_id=$2) update customer set rcoins=rcoins-$3",[id,order_id,rcoins]);
-        return pool.query("update my_order set amount_paid=amount_paid-$3,rcoins_used=rcoins_used+$3 where customer_id=$1 and order_id=$2",[id,order_id,rcoins]).then(()=>{pool.query("update customer set rcoins=rcoins-$1",[rcoins])})
+        return client.query("BEGIN").then(()=>client.query("update my_order set amount_paid=amount_paid-$3,rcoins_used=rcoins_used+$3 where customer_id=$1 and id=$2",[id,order_id,rcoins])).then(()=>{client.query("update customer set rcoins=rcoins-$1",[rcoins])}).then(()=>client.query("COMMIT")).catch((err)=>client.query("ROLLBACK"))
     }
     static get_table_details(){
         return pool.query("select * from my_table");

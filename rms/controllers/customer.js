@@ -985,27 +985,30 @@ exports.rcoins_post = (req,res,next) => {
                 else{
                     Customer.get_rcoins_used(result.rows[0]['id'],req.params.order_id).then(
                         (result2) => {
-                            myrocins = parseInt(req.body.rcoins)-parseInt(result2.rows[0]['rcoins_used'])
+                            myrcoins = parseInt(req.body.rcoins)-parseInt(result2.rows[0]['rcoins_used'])
                             Customer.update_amount_paid(result.rows[0]['id'],req.params.order_id,myrcoins).then(
                                 (result1) => {
                                     res.redirect('/customer/prevcart');
+                                    return;
                                 }
                             ).catch(
                                 (error1) => {
                                     res.render('error',{message:"Either you do not have sufficient rcoins are you are paying more rcoins than needed"});
+                                    return;
                                 }
                             )
                         }
                     )
-                    Customer.update_amount_paid(result.rows[0]['id'],req.params.order_id,req.body.rcoins).then(
-                        (result1) => {
-                            res.redirect('/customer/prevcart');
-                        }
-                    ).catch(
-                        (error1) => {
-                            res.render('error',{message:"Either you do not have sufficient rcoins are you are paying more rcoins than needed"});
-                        }
-                    )
+                    // myrcoins = parseInt(req.body.rcoins)-parseInt(result2.rows[0]['rcoins_used'])
+                    // Customer.update_amount_paid(result.rows[0]['id'],req.params.order_id,myrcoins).then(
+                    //     (result1) => {
+                    //         res.redirect('/customer/prevcart');
+                    //     }
+                    // ).catch(
+                    //     (error1) => {
+                    //         res.render('error',{message:"Either you do not have sufficient rcoins are you are paying more rcoins than needed"});
+                    //     }
+                    // )
                 }
             }
         )
