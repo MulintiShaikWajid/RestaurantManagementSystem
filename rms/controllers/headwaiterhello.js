@@ -84,7 +84,16 @@ exports.accept_table_request = function(req,res,next){
                 }
                 else{
                     Headwaiterhello.accept_table_request(req.body.request_id).then((result3)=>{
-                        res.redirect('/headwaiterhello');
+                        Headwaiterhello.checkcurrentablestatus(req.body.request_id).then((result4)=>{
+                            if(result4.rows[0]['count'] > 0){
+                                res.render('error_item',{err: true, err_msg: "**Accepting request unsucessful: request for table ID that is being accepted is occupied.", 
+                                err_head: "Invalid input data observed while accepting table request:", err_foot: "Use back button of browser to get back to the head waiter hello page."});
+                                return; 
+                            }else{
+                                res.redirect('/headwaiterhello');
+                                return;
+                            }
+                        })
                     })
                 }
             }
@@ -165,9 +174,9 @@ exports.changetooccupied = function(req,res,next){
                 }
                 else{
                     Headwaiterhello.changetooccupied(req.body.table_id_1).then((result3)=>{
-                        Headwaiterhello.handleuselessrequests(req.body.table_id_1).then((result4)=>{
+                        //Headwaiterhello.handleuselessrequests(req.body.table_id_1).then((result4)=>{
                             res.redirect('/headwaiterhello');
-                        })
+                        //})
                     })
                 }
             }
@@ -319,7 +328,7 @@ exports.placeorder = function(req,res,next){
                                     return;
                                 }
                                 Headwaiterhello.changetooccupied(req.body.tableid).then(()=>{
-                                    Headwaiterhello.handleuselessrequests(req.body.tableid).then(()=>{
+                                    //Headwaiterhello.handleuselessrequests(req.body.tableid).then(()=>{
                                         Headwaiterhello.getneworderid().then((result6)=>{
                                             Headwaiterhello.insertorder(result6.rows[0]['newid'],req.body.tableid).then(()=>{
                                                 Headwaiterhello.insertorderitem(result6.rows[0]['newid'], items, price).then(()=>{
@@ -329,7 +338,7 @@ exports.placeorder = function(req,res,next){
                                                 })
                                             })
                                         })
-                                    })
+                                    //})
                                 })
                             })
                         })

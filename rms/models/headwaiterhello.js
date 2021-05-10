@@ -49,6 +49,10 @@ module.exports = class Headwaiterhello{
         return pool.query("update table_request set status = 'request-denied' where table_id = $3 and $1 = booked_day and \
         $2 = time_slot;",[new Date().toISOString().slice(0, 10), new Date().getHours(), table_id])
     }
+    static checkcurrenttablestatus(request_id){
+        return pool.query("select count(*) as count from table_request T, my_table M where M.id = T.table_id and M.status = 'occupied' and $2 = booked_day and \
+        $3 = time_slot and T.request_id = $1;", [request_id, new Date().toISOString().slice(0, 10), new Date().getHours()]);
+    }
     static openofflineorder(){
         return pool.query("select I.id, I.name, I.price, string_agg(IT.type,',') as tags from item I, item_tag IT, \
          item_item_tag IIT where I.id = IIT.item_id and IT.id = IIT.tag_id group by (I.id, I.name, I.price) order by I.name");
