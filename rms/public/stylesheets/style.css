@@ -1,11 +1,16 @@
 body {
   font-family: 'Signika', sans-serif;
   font-size: large;
-  background-image: url("../images/background.png");
+  /* background-image: url("../images/background.png"); */
+  background: repeating-linear-gradient(-45deg, white, white 10px, black 5px, black 15px);
   background-attachment: fixed;
 }
 h1 {
   text-align: center;
+}
+
+#parent_block{
+  background: white;
 }
 
 .formLogin {

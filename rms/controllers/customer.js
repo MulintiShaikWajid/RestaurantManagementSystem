@@ -481,7 +481,12 @@ exports.book_table_post = (req,res,next) => {
                         )
                     }
                     else{
-                        Customer.already_booked(result.rows[0]['id'],parseInt(req.body.tableno),date,parseInt(req.body.hour)).then(
+                        [y,m,d] = date.split('-')
+                        py=new Date().getYear()+1900;
+                        pm=new Date().getMonth()+1;
+                        pd=new Date().getDate();
+                        ph=new Date().getHours();
+                        Customer.already_booked(result.rows[0]['id'],parseInt(req.body.tableno),date,parseInt(req.body.hour),y,m,d,py,pm,pd,ph).then(
                             (result1) => {
                                 if(result1.rowCount!==0){
                                     res.render('error',{message:"The slot was already booked"});
