@@ -12,7 +12,7 @@ block content
                 input(type="number" min="2021" required class="form-control mb-2 mr-sm-2" id="year" name="year")
             </div>
             <div class="form-check">
-                <label class="form-check-label" for="month">Month</label>
+                <label class="form-check-label" for="month">Month(1 to 12)</label>
                 input(type="number" min="1" max="12" required class="form-control mb-2 mr-sm-2" id="month" name="month")
             </div>
             <div class="form-check">
@@ -20,11 +20,13 @@ block content
                 input(type="number" required class="form-control mb-2 mr-sm-2" id="day" name="day")
             </div>
             <div class="form-check">
-                <label class="form-check-label" for="hour">Hour</label>
+                <label class="form-check-label" for="hour">Hour(0 to 23, Eg: 9 imply 9am to 10am)</label>
                 input(type="number" min="0" max="23" required class="form-control mb-2 mr-sm-2" id="hour" name="hour")
             </div>
+            br
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        br
         <table class="table-responsive-sm table table-striped table-hover table-bordered">
             <thead>
                 <tr>
