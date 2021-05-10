@@ -4,9 +4,9 @@ module.exports = class Headwaiterhello{
     // constructor(){
     // }
     static get_current_orders(){
-        return pool.query("select username, name, my_order.id, my_order.status, table_id from my_order,person, table_request \
-         where my_order.status != 'order-completed' and my_order.customer_id=person.id and table_request.status = 'request-accepted' \
-         and booked_day = $1 and table_request.time_slot = $2;"
+        return pool.query("select P.username, P.name, M.id, M.status \
+        from person P, my_order M where M.customer_id = P.id and M.status != 'order-completed' \
+        group by (M.id, P.id) order by P.name;"
          , [new Date().toISOString().slice(0, 10), new Date().getHours()]);
     }
     static get_offline_orders(){
