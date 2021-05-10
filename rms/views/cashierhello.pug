@@ -28,7 +28,13 @@ html(lang="en")
                 button(class="btn",type="submit", style = 'background-color:Blue;color:White') Logout
             br
             br
-            h1 Pending Payments:
+            a(href="#current_orders") go to 'Pending online payments'
+            br
+            br
+            a(href="#current_offline_orders") go to 'Pending offline payments'
+            br
+            br 
+            h1(id="current_orders") Pending online payments:
             p Use ctrl+F/cmd+F to search customer names.
             <table class="table table-striped table-hover table-bordered">
                 <thead>
@@ -48,10 +54,35 @@ html(lang="en")
                             td #{val['id']}
                             td #{val['pending_payment']}
                             td 
-                                form(style="text-align:center", method="POST", action='')
+                                form(style="text-align:center", method="POST", action='/cashierhello/onlinepayment')
                                     input(type='hidden', name='order_id',value=val['id'])
                                     input(type='hidden', name='amount_paid',value=val['pending_payment'])
                                     input(type='hidden', name='username',value=val['username'])
+                                    button(class="btn",type="submit", style = 'background-color:Blue;color:White') Paid
+                        </tr>                   
+                </tbody>
+            </table>
+            a(href="#top_of_page",id="current_offline_orders") go to Top
+            h1 Pending offline payments:
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                    <th scope="col">Table ID</th>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Pending Payment</th>
+                    <th scope="col">Paid?</th>
+                    </tr>
+                </thead>
+                <tbody id="main_table">
+                    each val in pendingofflinepayments
+                        <tr>
+                            td #{val['rcoins_used']}
+                            td #{val['id']}
+                            td #{val['pending_payment']}
+                            td 
+                                form(style="text-align:center", method="POST", action='/cashierhello/offlineorderpayment')
+                                    input(type='hidden', name='order_id',value=val['id'])
+                                    input(type='hidden', name='amount_paid',value=val['pending_payment'])
                                     button(class="btn",type="submit", style = 'background-color:Blue;color:White') Paid
                         </tr>                   
                 </tbody>

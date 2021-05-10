@@ -10,7 +10,7 @@ module.exports = class Headwaiterhello{
          , [new Date().toISOString().slice(0, 10), new Date().getHours()]);
     }
     static get_offline_orders(){
-        return pool.query("select * from my_order.id, status from my_order where status != 'order-completed' and customer_id = NULL;");
+        return pool.query("select id, rcoins_used, status from my_order where status != 'order-completed' and customer_id is NULL order by id;");
     }
     static get_table_requests(){
     	return pool.query("select username, name, table_id, requested_time, booked_day, time_slot, request_id from table_request B, person \
@@ -28,7 +28,7 @@ module.exports = class Headwaiterhello{
         
     }
     static next_order_status(order_id){
-        return pool.query("update my_order set status = 'order-served' where id = $1;", [order_id]);
+        return pool.query("update my_order set status = 'order-served', served_time = to_timestamp($2) where id = $1;", [order_id,Date.now()/1000]);
     }
     static accept_table_request(request_id){
         return pool.query("update table_request set status = 'request-accepted' where request_id = $1;", [request_id]);
@@ -69,8 +69,8 @@ module.exports = class Headwaiterhello{
     static getneworderid(){
         return pool.query("select max(id)+1 as newid from my_order;");
     }
-    static insertorder(id){
-        return pool.query("insert into my_order values($1, NULL, to_timestamp($2), NULL, NULL, -1, -1, 'order-placed');",[id,Date.now()/1000]);
+    static insertorder(id, tableid){
+        return pool.query("insert into my_order values($1, NULL, to_timestamp($2), NULL, NULL, -1, $3, 'order-placed');",[id,Date.now()/1000,tableid]);
     }
     static insertorderitem(id, items, price){
         var tag_string = "insert into order_item values";

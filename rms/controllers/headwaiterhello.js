@@ -24,8 +24,11 @@ exports.get_page = function(req,res,next){
                     Headwaiterhello.get_current_orders().then((result3)=>{
                         Headwaiterhello.get_table_requests().then((result4)=>{
                             Headwaiterhello.get_live_table_status().then((result5)=>{
-                                res.render('headwaiterhello',{name : result.rows[0]['name'], id:result.rows[0]['id'], 
-                                current_orders: result3.rows, table_requests:result4.rows, table_status: result5.rows});
+                                Headwaiterhello.get_offline_orders().then((result6)=>{
+                                    //console.log(result6.rows);
+                                    res.render('headwaiterhello',{name : result.rows[0]['name'], id:result.rows[0]['id'], 
+                                    current_orders: result3.rows, table_requests:result4.rows, table_status: result5.rows,offlineorders:result6.rows});
+                                })
                             })
                         })
                     })
@@ -54,7 +57,7 @@ exports.next_order_status = function(req,res,next){
                 }
                 else{
                     Headwaiterhello.next_order_status(req.body.order_id).then((result3)=>{
-                    res.redirect('/headwaiterhello');
+                        res.redirect('/headwaiterhello');
                     });
                 }
             }
@@ -81,7 +84,7 @@ exports.accept_table_request = function(req,res,next){
                 }
                 else{
                     Headwaiterhello.accept_table_request(req.body.request_id).then((result3)=>{
-                    res.redirect('/headwaiterhello');
+                        res.redirect('/headwaiterhello');
                     })
                 }
             }
@@ -108,7 +111,7 @@ exports.reject_table_request = function(req,res,next){
                 }
                 else{
                     Headwaiterhello.reject_table_request(req.body.request_id).then((result3)=>{
-                    res.redirect('/headwaiterhello');
+                        res.redirect('/headwaiterhello');
                     })
                 }
             }
@@ -318,7 +321,7 @@ exports.placeorder = function(req,res,next){
                                 Headwaiterhello.changetooccupied(req.body.tableid).then(()=>{
                                     Headwaiterhello.handleuselessrequests(req.body.tableid).then(()=>{
                                         Headwaiterhello.getneworderid().then((result6)=>{
-                                            Headwaiterhello.insertorder(result6.rows[0]['newid']).then(()=>{
+                                            Headwaiterhello.insertorder(result6.rows[0]['newid'],req.body.tableid).then(()=>{
                                                 Headwaiterhello.insertorderitem(result6.rows[0]['newid'], items, price).then(()=>{
                                                     Headwaiterhello.removeingredients(inventory).then(()=>{
                                                         res.redirect('/headwaiterhello');

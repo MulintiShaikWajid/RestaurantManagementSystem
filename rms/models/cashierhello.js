@@ -8,6 +8,11 @@ module.exports = class Cashierhello{
          from person P, my_order M, order_item O where M.customer_id = P.id and M.id = O.order_id and M.status != 'order-completed' \
          group by (M.id, P.id) having sum(O.total_price) - M.rcoins_used > 0 order by P.name;");
     }
+    static pending_offline_payments(){
+        return pool.query("select M.rcoins_used, M.id, sum(O.total_price) as pending_payment \
+         from my_order M, order_item O where M.customer_id is NULL and M.id = O.order_id and M.status != 'order-completed' \
+         group by (M.id, M.rcoins_used) order by M.id;");
+    }
     static complete_payment(order_id, amount_paid){
     	return pool.query("update my_order set amount_paid = $1 where id = $2", [amount_paid, order_id]);
     }
