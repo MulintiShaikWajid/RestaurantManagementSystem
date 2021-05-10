@@ -74,7 +74,7 @@ module.exports = class Headwaiterhello{
         return pool.query("select max(id)+1 as newid from my_order;");
     }
     static insertorder(id, tableid){
-        return pool.query("insert into my_order values($1, NULL, to_timestamp($2), NULL, NULL, -1, $3, 'order-placed');",[id,Date.now()/1000,tableid]);
+        return pool.query("insert into my_order values($1, NULL, to_timestamp($2), NULL, NULL, 0, $3, 'order-placed');",[id,Date.now()/1000,tableid]);
     }
     static insertorderitem(id, items, price){
         var tag_string = "insert into order_item values";
