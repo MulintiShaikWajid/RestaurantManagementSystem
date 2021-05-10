@@ -52,7 +52,7 @@ def myget2(i):
 # Parameters
 # constraints numTags>=2, numInventory>=3, numItems>=4, numTables>=3 numOrders%3=0
 numStaff = 10
-numOrders = 1000
+numOrders = 999
 numItems = 10
 numCustomers = 1000
 maxRcoins = 100
@@ -131,7 +131,6 @@ for i in range(numCustomers,numCustomers+numStaff):
 
 
 notification.write("id,info,time_stamp,person_id\n")
-
 for i in range(numNotifications):
     notification.write(f"DEFAULT,'{fake.paragraph(nb_sentences=2)}','{fake.date_time_this_month()}',{random.randint(1,numCustomers+numStaff)}\n")
 
@@ -196,7 +195,7 @@ for row in data:
         mytags.append(row['flavor_profile'])
     for x in mytags:
         item_item_tag.write(f"{sa},{tags.index(x)}\n")
-    ingds = row['ingredients'].split(",")
+    ingds = [x.strip() for x in row['ingredients'].split(",")]
     for x in ingds:
         item_inventory.write(f"{sa},{ingredients.index(x)},{random.randint(1,3)}\n")
     sa += 1
