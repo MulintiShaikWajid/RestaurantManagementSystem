@@ -19,6 +19,7 @@ Process:
 * Now, you can open the website in 'localhost:3000/login'
 * Based on login credentials, you will be redirected to customer or manager or head-waiter or cashier hello pages. Everyone with an account can edit their personal details
 * We have a terminology called 'online orders', 'offline orders'. The former refer to those orders placed by customer through his/her account. The latter are those orders which are placed by Head waiter for those customers who don't have an account
+* Where ever you are, you can get to hello pages using 'localhost:3000/<role>hello' where role can be 'customer/' or 'manager' or 'headwaiter' or 'cashier'
 * Customer:
   *
 * Manager:
