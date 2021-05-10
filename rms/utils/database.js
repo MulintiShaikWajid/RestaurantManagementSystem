@@ -20,4 +20,4 @@ pool.connect();
 
 // client.connect();
 
-// module.exports = pool;
+module.exports = pool;
