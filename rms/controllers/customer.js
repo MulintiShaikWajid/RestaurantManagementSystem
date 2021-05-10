@@ -195,19 +195,13 @@ exports.show_cart_post = (req,res,next) => {
                                             res.redirect('/customer/error/2');
                                         }
                                         else{
-                                            Customer.get_max_order_id().then(
-                                                (result3) => {
-                                                    max_id = result3.rows[0]['maxi'];
-                                                    max_id += 1;
-                                                    Customer.place_order(result.rows[0]['id'],parseInt(req.body.tableno),max_id).then(
-                                                        (result4) => {
-                                                            res.redirect('/customer/prevcart');
-                                                        }
-                                                    ).catch(
-                                                        err => {
-                                                            res.render('error',{message:"Ingredients not sufficient to prepare items"})
-                                                        }
-                                                    )
+                                            Customer.place_order(result.rows[0]['id'],parseInt(req.body.tableno)).then(
+                                                (result4) => {
+                                                    res.redirect('/customer/prevcart');
+                                                }
+                                            ).catch(
+                                                err => {
+                                                    res.render('error',{message:"Ingredients not sufficient to prepare items"})
                                                 }
                                             )
                                         }
