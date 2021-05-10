@@ -174,9 +174,6 @@ ON my_order(status);
 CREATE INDEX username_index
 ON person (username);
 
-CREATE INDEX password_index
-ON person (password);
-
 CREATE INDEX person_session_id_index
 ON person (session_id);
 
