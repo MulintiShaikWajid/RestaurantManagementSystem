@@ -14,8 +14,8 @@ module.exports = class Updatestaff{
         static get_newid(){
             return pool.query("select max(id) as new_id from person;");
         }
-        static new_person(id, username, name, password){
-            return pool.query("insert into person(id, username, name, password) values(default,$2,$3,$4);", [id, username, name, password]);
+        static new_person(username, name, password){
+            return pool.query("insert into person(id, username, name, password) values(default,$1,$2,$3);", [username, name, password]);
         }
         static new_staff(id, salary, dob, role){
             return pool.query("insert into staff values($1, $2, $3, $4);",[id, salary, dob, role]);

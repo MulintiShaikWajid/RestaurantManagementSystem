@@ -219,7 +219,7 @@ exports.additem = function(req,res,next){
                             }
                             
                             var hashed_password = crypto.createHash('sha256').update(req.body.password+'squirrel').digest('hex');
-                            Updatestaff.new_person(0,req.body['username'],req.body.name, hashed_password).then(()=>{
+                            Updatestaff.new_person(req.body['username'],req.body.name, hashed_password).then(()=>{
                                 Updatestaff.get_newid().then((ans)=>{
                                     Updatestaff.new_staff(ans.rows[0]['new_id'],req.body['salary'],req.body.dob, req.body.role).then(()=>{
                                         Updatestaff.bulk_timeslots(ans.rows[0]['new_id'],req.body).then(()=>{

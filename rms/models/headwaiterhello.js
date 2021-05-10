@@ -6,8 +6,7 @@ module.exports = class Headwaiterhello{
     static get_current_orders(){
         return pool.query("select P.username, P.name, M.id, M.status \
         from person P, my_order M where M.customer_id = P.id and M.status != 'order-completed' \
-        group by (M.id, P.id) order by P.name;"
-         , [new Date().toISOString().slice(0, 10), new Date().getHours()]);
+        group by (M.id, P.id) order by P.name;");
     }
     static get_offline_orders(){
         return pool.query("select id, rcoins_used, status from my_order where status != 'order-completed' and customer_id is NULL order by id;");
@@ -74,7 +73,7 @@ module.exports = class Headwaiterhello{
         return pool.query("select max(id) as newid from my_order;");
     }
     static insertorder(tableid){
-        return pool.query("insert into my_order values(default, NULL, to_timestamp($2), NULL, NULL, 0, $3, 'order-placed');",[id,Date.now()/1000,tableid]);
+        return pool.query("insert into my_order values(default, NULL, to_timestamp($2), NULL, NULL, 0, $1, 'order-placed');",[tableid,Date.now()/1000]);
     }
     static insertorderitem(id, items, price){
         var tag_string = "insert into order_item values";
