@@ -84,7 +84,7 @@ exports.accept_table_request = function(req,res,next){
                 }
                 else{
                     Headwaiterhello.accept_table_request(req.body.request_id).then((result3)=>{
-                        Headwaiterhello.checkcurrentablestatus(req.body.request_id).then((result4)=>{
+                        Headwaiterhello.checkcurrenttablestatus(req.body.request_id).then((result4)=>{
                             if(result4.rows[0]['count'] > 0){
                                 res.render('error_item',{err: true, err_msg: "**Accepting request unsucessful: request for table ID that is being accepted is occupied.", 
                                 err_head: "Invalid input data observed while accepting table request:", err_foot: "Use back button of browser to get back to the head waiter hello page."});
