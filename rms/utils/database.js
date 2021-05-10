@@ -10,14 +10,14 @@ const pool = new Pool({
 
 pool.connect();
 
-const client = new Client({
-    user: 'wajid',     //your postgres username
-    host: 'localhost', 
-    database: 'test', //your local database 
-    password: 'wajid', //your postgres user password
-    port: 5432, //your postgres running port
-  });
+// const client = new Client({
+//     user: 'wajid',     //your postgres username
+//     host: 'localhost', 
+//     database: 'test', //your local database 
+//     password: 'wajid', //your postgres user password
+//     port: 5432, //your postgres running port
+//   });
 
-client.connect();
+// client.connect();
 
-module.exports = pool;
+// module.exports = pool;
