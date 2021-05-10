@@ -21,7 +21,11 @@ Process:
 * We have a terminology called 'online orders', 'offline orders'. The former refer to those orders placed by customer through his/her account. The latter are those orders which are placed by Head waiter for those customers who don't have an account
 * Where ever you are, you can get to hello pages using 'localhost:3000/<role>hello' where role can be 'customer/' or 'manager' or 'headwaiter' or 'cashier'
 * Customer:
-  * 
+  * Can create, login into his/her account
+  * Can place a request for a table
+  * Can place items in cart from menu and then order
+  * Can see previous orders and rate them
+  * Get notifications when rcoins are added to their account
 * Manager:
   * Can update items, item tags, ingredients, staff
   * Can see statistics, current orders, table statuses
@@ -30,9 +34,10 @@ Process:
   * Can place offline orders for customer with no account
   * Can see the live status of online, offline orders and change its status once the order is served
   * Can accept/reject the table booking orders of customers
-  * Can see live table statuses and change their status in real time. Some protocols:
+  * Can see live table statuses and change their status. Some protocols:
+    1. Make status are available or occupied as necessary based on current live situtation in the restaurant
     1. If a customer who booked the table didn't visit, HW can deny the accepted request and then make the table available so that other customers can book table for current time slot or HW can place offline order
-    1. On placing offline order for an available table, table will be automatically changed to occupied and any requests for that table in current timeslot will be denied
+    1. On placing offline order for an available table, table will be automatically changed to occupied and any requests for that table in current timeslot will be denied automatically
 * Cashier:
   * Can see pending payments for offline, online orders and click 'Paid' if they are paid
 
