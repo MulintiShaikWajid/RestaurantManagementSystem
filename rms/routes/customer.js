@@ -32,4 +32,5 @@ router.post('/country',customer_controller.country_post);
 router.post('/pin',customer_controller.pin_post);
 router.post('/phone/add',customer_controller.add_phone_post);
 router.post('/phone/:number',customer_controller.phone_post);
+router.post('/rcoins/:order_id',customer_controller.rcoins_post);
 module.exports = router;

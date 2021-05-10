@@ -9,6 +9,9 @@ module.exports = class Item{
         return pool.query('select name,price,type,ingredient,coalesce(quantity,0)as quantity from  (select item.id as item_id,item.name as name,item.price,item_tag.type,inventory.name as ingredient from item,item_tag,item_item_tag,item_inventory,inventory where item.id=$1 and item_item_tag.item_id=$1 and item_inventory.item_id=$1 and inventory.id=item_inventory.inventory_id and item_tag.id=item_item_tag.tag_id) as temp left join cart on cart.customer_id=$2 and cart.item_id=temp.item_id',[id,user_id]);
     }
     static update_quantity_of_item(user_id,item_id,new_quantity){
+        if(parseInt(new_quantity)===0){
+            return pool.query("delete from cart where customer_id=$1 and item_id=$2",[user_id,item_id]);
+        }
         return pool.query('insert into cart values($1,$2,$3) on conflict (customer_id,item_id) do update set quantity=$3 where cart.customer_id=$1 and cart.item_id=$2',[user_id,item_id,new_quantity])
     }
     static get_reviews(id){

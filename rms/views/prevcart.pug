@@ -9,6 +9,7 @@ block content
                 <tr>
                 <th scope="col">Ordered Time</th>
                 <th scope="col">Items</th>
+                <th scope="col">Rcoins</th>
                 </tr>
             </thead>
             <tbody id="main_table">
@@ -17,6 +18,14 @@ block content
                         td 
                             a(href='/customer/order/'+val['id']) #{val['ordered_time']}
                         td #{val['items']}
+                        td
+                            form(class="form-inline" method="POST" action="/customer/rcoins/"+val['id'])
+                                if val['status'] === 'order-completed'
+                                    input(required type="number" min="0" class="form-control mb-2 mr-sm-2" id="rcoins" name="coins" disabled value=val['rcoins_used'])
+                                    <button type="submit" class="btn btn-primary mb-2" disabled>Submit</button>
+                                else
+                                    input(required type="number" min="0" class="form-control mb-2 mr-sm-2" id="rcoins" name="rcoins")
+                                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
                     </tr>
             </tbody>
         </table>

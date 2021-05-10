@@ -69,7 +69,7 @@ CREATE TABLE customer(
 CREATE TABLE inventory(
 	id int primary key,
 	name text not null,
-	quantity_remaining numeric not null,
+	quantity_remaining numeric not null check(quantity_remaining>=0),
 	threshold numeric not null,
 	units text not null,
 	unique(name)
@@ -114,8 +114,8 @@ CREATE TABLE my_order(
 	ordered_time timestamp not null default current_timestamp,
 	served_time timestamp,
 	completed_time timestamp,
-	amount_paid numeric,
-	rcoins_used numeric default 0,
+	amount_paid numeric check(amount_paid>=0),
+	rcoins_used numeric check(rcoins_used>=0),
 	status text check(status in ('order-placed', 'order-served', 'order-completed')),
 	foreign key (customer_id) references customer on delete set null
 );
@@ -184,8 +184,8 @@ ON person (session_id);
 create or replace function temp1() returns trigger as 
 $$
 begin
-insert into notifications
-select 'The following item has fallen below threshold'||new.name||'threshold is'||cast(new.threshold as text)||'quantity remaining is'||cast(new.quantity_remaining as text),now(),staff.id from staff where role_name='manager' ;
+insert into notification(info,time_stamp,person_id)
+(select 'The following item has fallen below threshold'||new.name||'threshold is'||cast(new.threshold as text)||'quantity remaining is'||cast(new.quantity_remaining as text),now(),staff.id from staff where role_name='manager') ;
 return new;
 end;
 $$

@@ -187,7 +187,7 @@ exports.show_cart_post = (req,res,next) => {
                                 res.redirect('/customer/cart');
                             }
                             else{ 
-                                Customer.check_table_availability(result.rows[0]['id'],parseInt(req.body.tableno),parseInt((new Date).getHours()),new Date().toISOString().slice(0, 10)).then(
+                                Customer.check_table_availability(result.rows[0]['id'],parseInt(req.body.tableno),parseInt((new Date).getHours()),(new Date).toLocaleString().split(',')[0].split('/').reverse().join('-')).then(
                                     (result2)=>{
                                         // console.log((new Date).getHours(),new Date().toISOString().slice(0, 10))
                                         if(result2.rowCount===0){
@@ -202,6 +202,10 @@ exports.show_cart_post = (req,res,next) => {
                                                     Customer.place_order(result.rows[0]['id'],parseInt(req.body.tableno),max_id).then(
                                                         (result4) => {
                                                             res.redirect('/customer/prevcart');
+                                                        }
+                                                    ).catch(
+                                                        err => {
+                                                            res.render('error',{message:"Ingredients not sufficient to prepare items"})
                                                         }
                                                     )
                                                 }
@@ -234,6 +238,8 @@ exports.show_previous_orders = (req,res,next) => {
                 else{
                     Customer.get_previous_orders(result.rows[0]['id']).then(
                         (result1) => {
+                            allow = true;
+                            if(result1.rows[0])
                             res.render('prevcart',{items : result1.rows});
                         }
                     )   
@@ -394,8 +400,12 @@ exports.book_table_get = (req,res,next) => {
                 }
                 else{
                     Customer.get_total_tables().then(
-                        (result) => {
-                            res.render('book',{total_tables:result.rowCount-1});
+                        (result1) => {
+                            Customer.get_table_details().then(
+                                (result2) => {
+                                    res.render('book',{total_tables:result1.rowCount-1,details:result2.rows});
+                                }
+                            )
                         }
                     )
                 }
@@ -464,7 +474,7 @@ exports.book_table_post = (req,res,next) => {
                         Customer.get_total_tables().then(
                             (result) => {
                                 console.log("Goku")
-                                res.render('book',{total_tables:result.rowCount-1,message:"past slot can not be selected"});
+                                res.render('error',{total_tables:result.rowCount-1,message:"past slot can not be selected"});
                                 console.log("Bulma");
                                 return;
                             }
@@ -474,7 +484,7 @@ exports.book_table_post = (req,res,next) => {
                         Customer.already_booked(result.rows[0]['id'],parseInt(req.body.tableno),date,parseInt(req.body.hour)).then(
                             (result1) => {
                                 if(result1.rowCount!==0){
-                                    res.render('book',{message:"The slot was already booked"});
+                                    res.render('error',{message:"The slot was already booked"});
                                     return;
                                 }
                                 else{
@@ -740,7 +750,7 @@ exports.password_post = (req,res,next) => {
                     password = crypto.createHash('sha256').update(req.body.password+'squirrel').digest('hex');
                     Customer.update_password(result.rows[0]['id'],password).then(
                         (result1) => {
-                            res.redirect('/customer/edit')
+                            res.redirect('/customer/logout')
                         }
                     )
                 }
@@ -952,6 +962,50 @@ exports.add_phone_post = (req,res,next) => {
                                     }
                                 )
                             }
+                        }
+                    )
+                }
+            }
+        )
+    }
+}
+
+
+exports.rcoins_post = (req,res,next) => {
+    if (! ("session_id" in req.signedCookies)){
+        res.cookie('redirect',req.url,{signed:true});
+        res.redirect('/login');
+        return;
+    }
+    else{
+        Person.get_details_from_session_id(req.signedCookies['session_id']).then(
+            (result)=>{
+                if(result.rowCount===0){
+                    res.cookie('redirect',req.url,{signed:true});
+                    res.redirect('/login');
+                }
+                else{
+                    Customer.get_rcoins_used(result.rows[0]['id'],req.params.order_id).then(
+                        (result2) => {
+                            myrocins = parseInt(req.body.rcoins)-parseInt(result2.rows[0]['rcoins_used'])
+                            Customer.update_amount_paid(result.rows[0]['id'],req.params.order_id,myrcoins).then(
+                                (result1) => {
+                                    res.redirect('/customer/prevcart');
+                                }
+                            ).catch(
+                                (error1) => {
+                                    res.render('error',{message:"Either you do not have sufficient rcoins are you are paying more rcoins than needed"});
+                                }
+                            )
+                        }
+                    )
+                    Customer.update_amount_paid(result.rows[0]['id'],req.params.order_id,req.body.rcoins).then(
+                        (result1) => {
+                            res.redirect('/customer/prevcart');
+                        }
+                    ).catch(
+                        (error1) => {
+                            res.render('error',{message:"Either you do not have sufficient rcoins are you are paying more rcoins than needed"});
                         }
                     )
                 }

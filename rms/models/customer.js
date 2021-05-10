@@ -15,13 +15,15 @@ module.exports = class Item{
         return pool.query('select max(id) as maxi from my_order');
     }
     static place_order(userid,tableno,maxi){
-        return pool.query("with temp1 as (insert into my_order values ($3,$1,DEFAULT,NULL,NULL,NULL,NULL,'order-placed')), \
+        return pool.query("with temp1 as (insert into my_order values ($3,$1,DEFAULT,NULL,NULL,NULL,0,'order-placed')), \
+        temp4 as (update inventory set quantity_remaining=quantity_remaining-quantity*quantity_needed from item_inventory,cart where cart.customer_id=$1 and cart.item_id=item_inventory.item_id and inventory.id=item_inventory.inventory_id),    \
+        temp2 as (insert into order_item(order_id,item_id,quantity,total_price) (select $3 as id,item_id,quantity,quantity*price as total_price from cart,item where item.id=cart.item_id and cart.customer_id=$1)),  \
         temp3 as (delete from cart where customer_id=$1),\
-        temp2 as (insert into order_item(order_id,item_id,quantity,total_price) (select $3 as id,item_id,quantity,quantity*price as total_price from cart,item where item.id=cart.item_id and cart.customer_id=$1))  \
+        temp5 as (update my_order set amount_paid=(select sum(total_price) from order_item where order_id=$3) where my_order.id=$3) \
         insert into table_order(order_id,table_id) values ($3,$2);",[userid,tableno,maxi]);
     }
     static get_previous_orders(userid){
-        return pool.query("select my_order.id,my_order.ordered_time,STRING_AGG(item.name,',') as items from my_order,order_item,item where my_order.customer_id=$1 and item.id=order_item.item_id and order_item.order_id=my_order.id group by my_order.id;",[userid]);
+        return pool.query("select my_order.id,my_order.ordered_time,my_order.status,my_order.rcoins_used,STRING_AGG(item.name,',') as items from my_order,order_item,item where my_order.customer_id=$1 and item.id=order_item.item_id and order_item.order_id=my_order.id group by my_order.id;",[userid]);
     }
     static is_order_valid(userid,orderid){
         return pool.query("select * from my_order where customer_id=$1 and id=$2",[userid,orderid]);
@@ -51,7 +53,15 @@ module.exports = class Item{
         return pool.query("select * from table_request where customer_id=$1",[userid]);
     }
     static already_booked(userid,tabelno,date,hour){
-        return pool.query("select * from table_request where customer_id<>$1 and booked_day=$3 and time_slot=$4 and table_id=$2 and status='request-accepted'",[userid,tabelno,date,hour]);
+        [y,m,d] = date.split('-')
+        py=new Date().getYear()+1900;
+        pm=new Date().getMonth()+1;
+        pd=new Date().getDate();
+        ph=new Date().getHours();
+        if(py===y && pm===m && pd==d && hour===ph){
+            return pool.query("(select 1 from table_request where customer_id<>$1 and booked_day=$3 and time_slot=$4 and table_id=$2 and status='request-accepted') union all (select 1 from my_table where id=$2 and status='occupied')",[userid,tabelno,date,hour]);
+        }
+        return pool.query("select 1 from table_request where customer_id<>$1 and booked_day=$3 and time_slot=$4 and table_id=$2 and status='request-accepted'",[userid,tabelno,date,hour]);
     }
     static logout(userid){
         return pool.query("update person set session_id=NULL where id=$1",[userid]);
@@ -110,6 +120,15 @@ module.exports = class Item{
     }
     static add_phone(id,name){
         return pool.query("insert into phone values ($1,$2)",[id,name]);
+    }
+    static get_rcoins_used(id,order_id){
+        return pool.query("select rcoins_used from my_order where customer_id=$1 and id=$2",[id,order_id]);
+    }
+    static update_amount_paid(id,order_id,rcoins){
+        return pool.query("with temp1 as (update my_order set amount_paid=amount_paid-$3,rcoins_used=rcoins_used+$3 where customer_id=$1 and order_id=$2) update customer set rcoins=rcoins-$3",[id,order_id,rcoins]);
+    }
+    static get_table_details(){
+        return pool.query("select * from my_table");
     }
 }  
 

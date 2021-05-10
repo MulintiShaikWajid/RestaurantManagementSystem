@@ -19,63 +19,63 @@ block content
                         td Name
                         td 
                             form(class="form-inline" method="POST" action="/customer/name/")
-                                input(type="text" required class="form-control mb-2 mr-sm-2" id="name" name="name" placeholder=details['name'])
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="name" name="name" value=details['name'])
                                 <button type="submit" class="btn btn-primary mb-2">Submit</button>
                     </tr>
                     <tr>
                         td Password
                         td 
                             form(class="form-inline" method="POST" action="/customer/password/")
-                                input(type="password" required class="form-control mb-2 mr-sm-2" id="password" name="password" placeholder=details['password'])
+                                input(type="password" required class="form-control mb-2 mr-sm-2" id="password" name="password")
                                 <button type="submit" class="btn btn-primary mb-2">Submit</button>
                     </tr>
                     <tr>
                         td Username
                         td 
                             form(class="form-inline" method="POST" action="/customer/username/")
-                                input(type="text" required class="form-control mb-2 mr-sm-2" id="username" name="username" placeholder=details['username'])
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="username" name="username" value=details['username'])
                                 <button type="submit" class="btn btn-primary mb-2">Submit</button>
                     </tr>
                     <tr>
                         td House Number
                         td 
                             form(class="form-inline" method="POST" action="/customer/hno/")
-                                input(type="text" required class="form-control mb-2 mr-sm-2" id="hno" name="hno" placeholder=details['address_house_no'])
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="hno" name="hno" value=details['address_house_no'])
                                 <button type="submit" class="btn btn-primary mb-2">Submit</button>
                     </tr>
                     <tr>
                         td Street
                         td 
                             form(class="form-inline" method="POST" action="/customer/street/")
-                                input(type="text" required class="form-control mb-2 mr-sm-2" id="street" name="street" placeholder=details['address_street'])
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="street" name="street" value=details['address_street'])
                                 <button type="submit" class="btn btn-primary mb-2">Submit</button>
                     </tr>
                     <tr>
                         td City
                         td 
                             form(class="form-inline" method="POST" action="/customer/city/")
-                                input(type="text" required class="form-control mb-2 mr-sm-2" id="city" name="city" placeholder=details['address_city'])
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="city" name="city" value=details['address_city'])
                                 <button type="submit" class="btn btn-primary mb-2">Submit</button>
                     </tr>
                     <tr>
                         td State
                         td 
                             form(class="form-inline" method="POST" action="/customer/state/")
-                                input(type="text" required class="form-control mb-2 mr-sm-2" id="state" name="state" placeholder=details['address_state'])
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="state" name="state" value=details['address_state'])
                                 <button type="submit" class="btn btn-primary mb-2">Submit</button>
                     </tr>
                     <tr>
                         td Country
                         td 
                             form(class="form-inline" method="POST" action="/customer/country/")
-                                input(type="text" required class="form-control mb-2 mr-sm-2" id="country" name="country" placeholder=details['address_country'])
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="country" name="country" value=details['address_country'])
                                 <button type="submit" class="btn btn-primary mb-2">Submit</button>
                     </tr>
                     <tr>
                         td Pin code
                         td 
                             form(class="form-inline" method="POST" action="/customer/name/")
-                                input(type="text" required class="form-control mb-2 mr-sm-2" id="pin" name="pin" placeholder=details['address_pin_code'])
+                                input(type="text" required class="form-control mb-2 mr-sm-2" id="pin" name="pin" value=details['address_pin_code'])
                                 <button type="submit" class="btn btn-primary mb-2">Submit</button>
                     </tr>
                     each val in phone_numbers

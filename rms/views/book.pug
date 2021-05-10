@@ -25,6 +25,23 @@ block content
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <table class="table-responsive-sm table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                <th scope="col">Table id</th>
+                <th scope="col">capacity</th>
+                <th scope="col">location</th>
+                </tr>
+            </thead>
+            <tbody id="main_table">
+                each val in details
+                    <tr>
+                        td #{val['id']}
+                        td #{val['capacity']}
+                        td #{val['location']}
+                    </tr>
+            </tbody>
+        </table>
     div.container
         if message
             p #{message}
