@@ -13,7 +13,7 @@ This a website which can be used for managing a restaurant. Note that there is n
 
 Process:
 * Clone the project and have node installed
-* Create a database and install DDL.sql, restaurant_data.sql
+* Create a database and install DDL.sql, restaurant_data.sql(run 'python3 insert.py' to get restaurant_data.sql from the CSVs in data/)
 * Make sure that database is running and credentials in rms/utils/database.js are correct
 * In rms directory, run 'npm install' and then 'npm run start'
 * Now, you can open the website in 'localhost:3000/login'
@@ -21,7 +21,7 @@ Process:
 * We have a terminology called 'online orders', 'offline orders'. The former refer to those orders placed by customer through his/her account. The latter are those orders which are placed by Head waiter for those customers who don't have an account
 * Where ever you are, you can get to hello pages using 'localhost:3000/<role>hello' where role can be 'customer/' or 'manager' or 'headwaiter' or 'cashier'
 * Customer:
-  *
+  * 
 * Manager:
   * Can update items, item tags, ingredients, staff
   * Can see statistics, current orders, table statuses
