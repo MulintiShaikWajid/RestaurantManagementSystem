@@ -199,6 +199,11 @@ exports.show_cart_post = (req,res,next) => {
                                                 (result4) => {
                                                     res.redirect('/customer/prevcart');
                                                 }
+                                            ).catch(
+                                                (err)=>{
+                                                    res.render('error',{message:"Insufficient ingredients"});
+                                                    return;
+                                                }
                                             )
                                         }
                                     }
@@ -988,6 +993,7 @@ exports.rcoins_post = (req,res,next) => {
                             myrcoins = parseInt(req.body.rcoins)-parseInt(result2.rows[0]['rcoins_used'])
                             Customer.update_amount_paid(result.rows[0]['id'],req.params.order_id,myrcoins).then(
                                 (result1) => {
+                                    console.log("HELLO");
                                     res.redirect('/customer/prevcart');
                                     return;
                                 }
