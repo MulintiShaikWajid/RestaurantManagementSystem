@@ -11,6 +11,7 @@ h1 {
 
 #parent_block{
   background: white;
+  height: 100%;
 }
 
 .formLogin {

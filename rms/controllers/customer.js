@@ -199,10 +199,6 @@ exports.show_cart_post = (req,res,next) => {
                                                 (result4) => {
                                                     res.redirect('/customer/prevcart');
                                                 }
-                                            ).catch(
-                                                err => {
-                                                    res.render('error',{message:"Ingredients not sufficient to prepare items"})
-                                                }
                                             )
                                         }
                                     }
@@ -232,8 +228,6 @@ exports.show_previous_orders = (req,res,next) => {
                 else{
                     Customer.get_previous_orders(result.rows[0]['id']).then(
                         (result1) => {
-                            allow = true;
-                            if(result1.rows[0])
                             res.render('prevcart',{items : result1.rows});
                         }
                     )   

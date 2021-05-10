@@ -15,12 +15,13 @@ module.exports = class Item{
         return pool.query('select max(id) as maxi from my_order');
     }
     static place_order(userid,tableno,maxi){
-        return pool.query("with temp1 as (insert into my_order values (DEFAULT,$1,DEFAULT,NULL,NULL,NULL,0,'order-placed')), \
-        temp4 as (update inventory set quantity_remaining=quantity_remaining-quantity*quantity_needed from item_inventory,cart where cart.customer_id=$1 and cart.item_id=item_inventory.item_id and inventory.id=item_inventory.inventory_id),    \
-        temp2 as (insert into order_item(order_id,item_id,quantity,total_price) (select (select max(id) from my_order) as id,item_id,quantity,quantity*price as total_price from cart,item where item.id=cart.item_id and cart.customer_id=$1)),  \
-        temp3 as (delete from cart where customer_id=$1),\
-        temp6 as (update my_order set amount_paid=(select sum(total_price) from order_item where order_id=(select max(id) from my_order)) where my_order.id=(select max(id) from my_order)) \
-        insert into table_order(order_id,table_id) values ((select max(id) from my_order),$2);",[userid,tableno]);
+        // return pool.query("with temp1 as (insert into my_order values (DEFAULT,$1,DEFAULT,NULL,NULL,NULL,0,'order-placed')), \
+        // temp4 as (update inventory set quantity_remaining=quantity_remaining-quantity*quantity_needed from item_inventory,cart where cart.customer_id=$1 and cart.item_id=item_inventory.item_id and inventory.id=item_inventory.inventory_id),    \
+        // temp2 as (insert into order_item(order_id,item_id,quantity,total_price) (select (select max(id) from my_order) as id,item_id,quantity,quantity*price as total_price from cart,item where item.id=cart.item_id and cart.customer_id=$1)),  \
+        // temp3 as (delete from cart where customer_id=$1),\
+        // temp6 as (update my_order set amount_paid=(select sum(total_price) from order_item where order_id=(select max(id) from my_order)) where my_order.id=(select max(id) from my_order)) \
+        // insert into table_order(order_id,table_id) values ((select max(id) from my_order),$2);",[userid,tableno]);
+        return pool.query("insert into my_order values (DEFAULT,$1,DEFAULT,NULL,NULL,NULL,0,'order-placed')",[userid]).then(()=>pool.query("update inventory set quantity_remaining=quantity_remaining-quantity*quantity_needed from item_inventory,cart where cart.customer_id=$1 and cart.item_id=item_inventory.item_id and inventory.id=item_inventory.inventory_id",[userid])).then(()=>pool.query("insert into order_item(order_id,item_id,quantity,total_price) (select (select max(id) from my_order) as id,item_id,quantity,quantity*price as total_price from cart,item where item.id=cart.item_id and cart.customer_id=$1)",[userid])).then(()=>pool.query("delete from cart where customer_id=$1",[userid])).then(()=>pool.query("update my_order set amount_paid=(select sum(total_price) from order_item where order_id=(select max(id) from my_order)) where my_order.id=(select max(id) from my_order)",[])).then(()=>pool.query("insert into table_order(order_id,table_id) values ((select max(id) from my_order),$1)",[tableno]));
     }
     static get_previous_orders(userid){
         return pool.query("select my_order.id,my_order.ordered_time,my_order.status,my_order.rcoins_used,STRING_AGG(item.name,',') as items from my_order,order_item,item where my_order.customer_id=$1 and item.id=order_item.item_id and order_item.order_id=my_order.id group by my_order.id;",[userid]);
@@ -94,7 +95,7 @@ module.exports = class Item{
         return pool.query("update person set name=$2 where id=$1",[id,name]);
     }
     static update_username(id,name){
-        return pool.query("update person set username=$2 where id=$1",[id,username]);
+        return pool.query("update person set username=$2 where id=$1",[id,name]);
     }
     static update_hno(id,name){
         return pool.query("update person set address_house_no=$2 where id=$1",[id,name]);

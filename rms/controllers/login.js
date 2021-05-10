@@ -35,6 +35,7 @@ exports.login_post = [
                                         (result)=>{
                                             if(result.rowCount===1){
                                                 res.redirect('/customer/hello')
+                                                return;
                                             }
                                     });
                                     if(result2.rows[0]['role_name']=='manager'){
