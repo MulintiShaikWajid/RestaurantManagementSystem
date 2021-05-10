@@ -35,7 +35,7 @@ Process:
   * Can see the live status of online, offline orders and change its status once the order is served
   * Can accept/reject the table booking orders of customers
   * Can see live table statuses and change their status. Some protocols:
-    1. Make status are available or occupied as necessary based on current live situtation in the restaurant
+    1. Update status as available or occupied as necessary based on current live situtation in the restaurant
     1. If a customer who booked the table didn't visit, HW can deny the accepted request and then make the table available so that other customers can book table for current time slot or HW can place offline order
     1. On placing offline order for an available table, table will be automatically changed to occupied and any requests for that table in current timeslot will be denied automatically
 * Cashier:
