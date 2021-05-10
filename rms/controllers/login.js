@@ -38,6 +38,9 @@ exports.login_post = [
                                                 return;
                                             }
                                     });
+                                    if(result2.rowCount===0){
+                                        return;
+                                    }
                                     if(result2.rows[0]['role_name']=='manager'){
                                         res.redirect('/managerhello')
                                     }else if(result2.rows[0]['role_name']=='cashier'){

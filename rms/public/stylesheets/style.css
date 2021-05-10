@@ -2,7 +2,7 @@ body {
   font-family: 'Signika', sans-serif;
   font-size: large;
   /* background-image: url("../images/background.png"); */
-  background: repeating-linear-gradient(-45deg, white, white 10px, black 5px, black 15px);
+  background: repeating-linear-gradient(-45deg, white, white 10px, gray 5px, gray 15px);
   background-attachment: fixed;
 }
 h1 {

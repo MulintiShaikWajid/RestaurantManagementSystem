@@ -63,6 +63,7 @@ module.exports = class Item{
         // pd=new Date().getDate();
         // ph=new Date().getHours();
         if(py===y && pm===m && pd==d && hour===ph){
+            console.log("CUSTOMER1");
             return pool.query("(select 1 from table_request where customer_id<>$1 and booked_day=$3 and time_slot=$4 and table_id=$2 and status='request-accepted') union all (select 1 from my_table where id=$2 and status='occupied')",[userid,tabelno,date,hour]);
         }
         return pool.query("select 1 from table_request where customer_id<>$1 and booked_day=$3 and time_slot=$4 and table_id=$2 and status='request-accepted'",[userid,tabelno,date,hour]);
@@ -80,7 +81,8 @@ module.exports = class Item{
         return pool.query("select id from person where username=$1",[username]);
     }
     static insert_phone(id,phone){
-        return pool.query("with temp1 as (insert into phone values($1,$2)) insert into customer values($1,0)",[id,phone]);
+        // return pool.query("with temp1 as (insert into phone values($1,$2)) insert into customer values($1,0)",[id,phone]);
+        return pool.query("insert into phone values($1,$2)",[id,phone]).then(()=>{pool.query("insert into customer values($1,0)",[id])});
     }
     static check_phone(phone){
         return pool.query("select * from phone where phone_number=$1",[phone]);
@@ -129,7 +131,8 @@ module.exports = class Item{
         return pool.query("select rcoins_used from my_order where customer_id=$1 and id=$2",[id,order_id]);
     }
     static update_amount_paid(id,order_id,rcoins){
-        return pool.query("with temp1 as (update my_order set amount_paid=amount_paid-$3,rcoins_used=rcoins_used+$3 where customer_id=$1 and order_id=$2) update customer set rcoins=rcoins-$3",[id,order_id,rcoins]);
+        // return pool.query("with temp1 as (update my_order set amount_paid=amount_paid-$3,rcoins_used=rcoins_used+$3 where customer_id=$1 and order_id=$2) update customer set rcoins=rcoins-$3",[id,order_id,rcoins]);
+        return pool.query("update my_order set amount_paid=amount_paid-$3,rcoins_used=rcoins_used+$3 where customer_id=$1 and order_id=$2",[id,order_id,rcoins]).then(()=>{pool.query("update customer set rcoins=rcoins-$1",[rcoins])})
     }
     static get_table_details(){
         return pool.query("select * from my_table");
