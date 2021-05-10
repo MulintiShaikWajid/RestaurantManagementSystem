@@ -14,7 +14,7 @@ module.exports = class Headwaiterhello{
     static get_table_requests(){
     	return pool.query("select username, name, table_id, requested_time, booked_day, time_slot, request_id from table_request B, person \
         where customer_id=id and status='request-placed' and not exists(select A.request_id from table_request A \
-        where A.request_id != B.request_id and A.booked_day = B.booked_day and A.time_slot = B.time_slot and \
+        where A.request_id != B.request_id and A.table_id = B.table_id and A.booked_day = B.booked_day and A.time_slot = B.time_slot and \
         A.status = 'request-accepted') order by requested_time;");
     }
     static get_live_table_status(){
