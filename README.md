@@ -9,7 +9,7 @@ Group Project for CS387
 | Sanapathi Sumanth Balaji  | 180050091 |
 
 
-This a website which can be used for managing a restaurant. Note that there is not door delivery option.
+This a website which can be used for managing a restaurant. Note that there is no door delivery option.
 
 Process:
 * Clone the project and have node installed
